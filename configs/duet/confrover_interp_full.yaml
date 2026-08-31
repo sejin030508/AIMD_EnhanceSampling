@@ -1,0 +1,67 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  interpolator_checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_interp_20m_v1_0.pt
+  cache_dir: ${DUET_ASSET_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 256
+  reverse_steps: 200
+  kv_cache_type: offloaded
+  device: cuda:0
+  dtype: float32
+
+trajectory:
+  case_id: manifest_defined
+  seqres: manifest_defined
+  horizon: 8
+  initial_structure: manifest_defined
+  initial_history: null
+
+particles:
+  outer_k: 4
+  inner_m: 4
+  inner_checkpoint_progress: 0.75
+  outer_resampling: systematic
+  inner_resampling: systematic
+
+program:
+  type: ordered
+  lambda_program: 1.0
+  distance_weight: 1.0
+  remaining_event_weight: 0.10
+  deadline_weight: 1.0
+  failure_penalty: 20.0
+  terminal_failure_penalty: 20.0
+  distance_scale: 0.25
+  potential_floor: 1.0e-30
+
+reference:
+  case_manifest: data/duet/official_confrover_interpolation_manifest.yaml
+
+benchmark:
+  frozen_settings_from: outputs/duet_md/phase_e_interp_pilot/frozen_protocol.yaml
+  use_all_official_cases: true
+  tasks: [endpoint, windowed, ordered_if_eligible]
+
+experiment:
+  methods: [frozen, best_of_budget, outer_only, complete_nested, inner_only, naive_dual, duet]
+  method_settings:
+    frozen: {outer_k: 16, inner_m: 1}
+    best_of_budget: {outer_k: 16, inner_m: 1}
+    outer_only: {outer_k: 16, inner_m: 1}
+    inner_only: {outer_k: 1, inner_m: 16}
+    naive_dual: {outer_k: 4, inner_m: 4}
+    complete_nested: {outer_k: 4, inner_m: 4}
+    duet: {outer_k: 4, inner_m: 4}
+  tasks: [endpoint, windowed]
+  task_count: 2
+  seeds: [20260831, 20260901, 20260902]
+  decoder_population_budget: 16
+  cost_budget: {decoder_population_per_step: 16}
+  output_directory: outputs/duet_md/phase_e_interp_full
+  reference_split: official_case_specific
+  evaluation_features: [pca_progress, ca_rmsd, contacts, path_smoothness]
+  maximum_wall_clock: null

@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.cache/
+*.egg-info/
+build/
+dist/
+.DS_Store
+
+outputs/duet_md/**
+!outputs/duet_md/.gitkeep
+
+data/duet/**/design_pca_r1_r2/reference_cv.npz
+data/duet/**/design_pca_r1_r2/seed_frames/

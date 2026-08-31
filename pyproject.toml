@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-md-nsmc"
+version = "0.1.0"
+description = "DuET-MD: training-free dual-time particle steering of frozen full-history MD emulators."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+  "numpy>=1.24,<2",
+  "scipy>=1.10",
+  "scikit-learn>=1.3",
+  "PyYAML>=6",
+  "mdtraj>=1.9.9",
+  "matplotlib>=3.7",
+  "tqdm>=4.65",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "ruff>=0.5"]
+discovery = ["openmm>=8.1", "pdbfixer>=1.9"]
+
+[project.scripts]
+confmh = "confmh.cli:main"
+duet-md = "confmh.duet.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100

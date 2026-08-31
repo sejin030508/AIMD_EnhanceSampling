@@ -1,0 +1,468 @@
+start_pc1: -0.6633495937727882
+start_interval:
+- -0.9133495937727882
+- -0.41334959377278824
+target_interval:
+- 1.944261873915675
+- 2.444261873915675
+intermediate_interval:
+- 0.5154561400714434
+- 1.0154561400714432
+transition_segment_count: 1
+selected_contacts:
+- &id002
+  residue_i: 29
+  residue_j: 127
+  threshold_nm: 4.023117780685425
+  target_contact: 1
+  change_nm: -0.8735346794128418
+  stability: 1.0
+  median_crossing: 4.0
+  crossings:
+  - 4
+- &id001
+  residue_i: 1
+  residue_j: 126
+  threshold_nm: 1.928276002407074
+  target_contact: 1
+  change_nm: -0.9608112573623657
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+candidate_count: 1172
+top_candidates:
+- *id001
+- residue_i: 4
+  residue_j: 126
+  threshold_nm: 1.5165523886680603
+  target_contact: 1
+  change_nm: -0.9286781549453735
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- *id002
+- residue_i: 29
+  residue_j: 128
+  threshold_nm: 4.3357954025268555
+  target_contact: 1
+  change_nm: -0.8694381713867188
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 28
+  residue_j: 127
+  threshold_nm: 4.213048696517944
+  target_contact: 1
+  change_nm: -0.8630642890930176
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 28
+  residue_j: 128
+  threshold_nm: 4.541073560714722
+  target_contact: 1
+  change_nm: -0.8547110557556152
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 0
+  residue_j: 126
+  threshold_nm: 1.8705472350120544
+  target_contact: 1
+  change_nm: -0.8497363328933716
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 27
+  residue_j: 127
+  threshold_nm: 4.469093561172485
+  target_contact: 1
+  change_nm: -0.8040909767150879
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 27
+  residue_j: 128
+  threshold_nm: 4.786669015884399
+  target_contact: 1
+  change_nm: -0.7958388328552246
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 0
+  residue_j: 94
+  threshold_nm: 2.9695218801498413
+  target_contact: 1
+  change_nm: -0.7709672451019287
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 4
+  residue_j: 127
+  threshold_nm: 1.7856287360191345
+  target_contact: 1
+  change_nm: -0.7302395105361938
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 1
+  residue_j: 127
+  threshold_nm: 2.1870983242988586
+  target_contact: 1
+  change_nm: -0.7286442518234253
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 30
+  residue_j: 127
+  threshold_nm: 4.043504953384399
+  target_contact: 1
+  change_nm: -0.726320743560791
+  stability: 1.0
+  median_crossing: 4.0
+  crossings:
+  - 4
+- residue_i: 30
+  residue_j: 128
+  threshold_nm: 4.3445669412612915
+  target_contact: 1
+  change_nm: -0.7255704402923584
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 2
+  residue_j: 74
+  threshold_nm: 2.3988420963287354
+  target_contact: 0
+  change_nm: 0.7244963645935059
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 2
+  residue_j: 75
+  threshold_nm: 2.5779337882995605
+  target_contact: 0
+  change_nm: 0.7138113975524902
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 2
+  residue_j: 128
+  threshold_nm: 2.378091335296631
+  target_contact: 1
+  change_nm: -0.700251579284668
+  stability: 1.0
+  median_crossing: 1.0
+  crossings:
+  - 1
+- residue_i: 0
+  residue_j: 111
+  threshold_nm: 2.9316431283950806
+  target_contact: 0
+  change_nm: 0.6939938068389893
+  stability: 1.0
+  median_crossing: 1.0
+  crossings:
+  - 1
+- residue_i: 26
+  residue_j: 127
+  threshold_nm: 4.424278974533081
+  target_contact: 1
+  change_nm: -0.6762175559997559
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 0
+  residue_j: 128
+  threshold_nm: 2.232803463935852
+  target_contact: 1
+  change_nm: -0.675729513168335
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 26
+  residue_j: 128
+  threshold_nm: 4.74076247215271
+  target_contact: 1
+  change_nm: -0.6675839424133301
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 3
+  residue_j: 75
+  threshold_nm: 2.5918571949005127
+  target_contact: 0
+  change_nm: 0.648308277130127
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 1
+  residue_j: 75
+  threshold_nm: 2.821616768836975
+  target_contact: 0
+  change_nm: 0.6384031772613525
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 6
+  residue_j: 75
+  threshold_nm: 2.1295593976974487
+  target_contact: 0
+  change_nm: 0.6300485134124756
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 28
+  residue_j: 126
+  threshold_nm: 4.270644307136536
+  target_contact: 1
+  change_nm: -0.6278340816497803
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 1
+  residue_j: 74
+  threshold_nm: 2.6455726623535156
+  target_contact: 0
+  change_nm: 0.6220459938049316
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 29
+  residue_j: 126
+  threshold_nm: 4.098252177238464
+  target_contact: 1
+  change_nm: -0.6203873157501221
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 0
+  residue_j: 27
+  threshold_nm: 5.519026517868042
+  target_contact: 1
+  change_nm: -0.6163468360900879
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 21
+  residue_j: 67
+  threshold_nm: 2.562956213951111
+  target_contact: 0
+  change_nm: 0.6134078502655029
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 2
+  residue_j: 127
+  threshold_nm: 2.191460430622101
+  target_contact: 1
+  change_nm: -0.6040099859237671
+  stability: 1.0
+  median_crossing: 1.0
+  crossings:
+  - 1
+- residue_i: 25
+  residue_j: 127
+  threshold_nm: 4.563406705856323
+  target_contact: 1
+  change_nm: -0.6032652854919434
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 31
+  residue_j: 128
+  threshold_nm: 4.212490439414978
+  target_contact: 1
+  change_nm: -0.5968039035797119
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 31
+  residue_j: 127
+  threshold_nm: 3.897623896598816
+  target_contact: 1
+  change_nm: -0.5959007740020752
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 25
+  residue_j: 128
+  threshold_nm: 4.891308546066284
+  target_contact: 1
+  change_nm: -0.5911059379577637
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 0
+  residue_j: 98
+  threshold_nm: 3.317655563354492
+  target_contact: 1
+  change_nm: -0.5889768600463867
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 28
+  residue_j: 90
+  threshold_nm: 2.8787397146224976
+  target_contact: 1
+  change_nm: -0.5881354808807373
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 5
+  residue_j: 75
+  threshold_nm: 2.2351880073547363
+  target_contact: 0
+  change_nm: 0.584714412689209
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 21
+  residue_j: 68
+  threshold_nm: 2.2170793414115906
+  target_contact: 0
+  change_nm: 0.5841275453567505
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 0
+  residue_j: 127
+  threshold_nm: 2.1114648580551147
+  target_contact: 1
+  change_nm: -0.5812351703643799
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 27
+  residue_j: 90
+  threshold_nm: 3.2064626216888428
+  target_contact: 1
+  change_nm: -0.5769901275634766
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 3
+  residue_j: 94
+  threshold_nm: 2.5638113021850586
+  target_contact: 1
+  change_nm: -0.5764327049255371
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 27
+  residue_j: 126
+  threshold_nm: 4.547282457351685
+  target_contact: 1
+  change_nm: -0.5759062767028809
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 5
+  residue_j: 74
+  threshold_nm: 2.0521913170814514
+  target_contact: 0
+  change_nm: 0.5725659132003784
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 0
+  residue_j: 30
+  threshold_nm: 5.232778310775757
+  target_contact: 1
+  change_nm: -0.570946216583252
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 22
+  residue_j: 71
+  threshold_nm: 2.8621957302093506
+  target_contact: 0
+  change_nm: 0.5705323219299316
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2
+- residue_i: 0
+  residue_j: 93
+  threshold_nm: 2.6965951919555664
+  target_contact: 1
+  change_nm: -0.5682306289672852
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 3
+  residue_j: 127
+  threshold_nm: 1.8244822025299072
+  target_contact: 1
+  change_nm: -0.5677523612976074
+  stability: 1.0
+  median_crossing: 1.0
+  crossings:
+  - 1
+- residue_i: 24
+  residue_j: 127
+  threshold_nm: 4.219004392623901
+  target_contact: 1
+  change_nm: -0.5621953010559082
+  stability: 1.0
+  median_crossing: 3.0
+  crossings:
+  - 3
+- residue_i: 0
+  residue_j: 97
+  threshold_nm: 2.9609779119491577
+  target_contact: 1
+  change_nm: -0.5562031269073486
+  stability: 1.0
+  median_crossing: 6.0
+  crossings:
+  - 6
+- residue_i: 21
+  residue_j: 71
+  threshold_nm: 2.518398642539978
+  target_contact: 0
+  change_nm: 0.5503675937652588
+  stability: 1.0
+  median_crossing: 2.0
+  crossings:
+  - 2

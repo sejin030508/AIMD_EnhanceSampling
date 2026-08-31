@@ -1,0 +1,64 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: exact_toy
+  sampler_mode: exact
+  reverse_steps: 3
+  physical_lag_in_10ps: 1
+  device: cpu
+  dtype: float64
+
+trajectory:
+  horizon: 5
+  initial_state: 0
+  initial_structure: null
+  initial_history: null
+
+particles:
+  outer_k: 4
+  inner_m: 4
+  inner_checkpoint_progress: 0.75
+  outer_resampling: systematic
+  inner_resampling: systematic
+
+program:
+  type: ordered
+  lambda_program: 0.35
+  distance_weight: 0.4
+  remaining_event_weight: 0.05
+  deadline_weight: 0.5
+  failure_penalty: 4.0
+  terminal_failure_penalty: 4.0
+  distance_scale: 1.5
+  potential_floor: 1.0e-30
+
+experiment:
+  methods:
+    - frozen
+    - outer_only
+    - inner_only
+    - naive_dual
+    - complete_nested
+    - duet
+  method_settings:
+    frozen: {outer_k: 16, inner_m: 1}
+    outer_only: {outer_k: 16, inner_m: 1}
+    inner_only: {outer_k: 1, inner_m: 16}
+    naive_dual: {outer_k: 4, inner_m: 4}
+    complete_nested: {outer_k: 4, inner_m: 4}
+    duet: {outer_k: 4, inner_m: 4}
+  repetitions: 200
+  proper_weighting_probe:
+    repetitions: 3000
+    inner_m_values: [1, 2, 4, 8, 16]
+  convergence:
+    repetitions: 100
+    scales: [2, 4, 8, 16]
+  seed: 20260831
+  seeds: [20260831]
+  task_count: 3
+  cost_budget: {decoder_population_per_step: 16}
+  output_directory: outputs/duet_md/phase_a_exact_toy
+  reference_split: exact_enumeration
+  evaluation_features: [state, route, event_order]
+  maximum_wall_clock: null
