@@ -97,12 +97,18 @@ def asset_metadata(cfg: dict[str, Any]) -> list[dict[str, Any]]:
 
 def git_metadata(root: str | Path) -> dict[str, Any]:
     root = Path(root)
-    probe = subprocess.run(
-        ["git", "-C", str(root), "rev-parse", "--show-toplevel"],
-        text=True,
-        capture_output=True,
-        check=False,
-    )
+    try:
+        probe = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "--show-toplevel"],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+    except FileNotFoundError:
+        return {
+            "is_git_repository": False,
+            "error": "git executable is not available in this runtime",
+        }
     if probe.returncode != 0:
         return {"is_git_repository": False, "error": probe.stderr.strip()}
     commit = subprocess.run(
