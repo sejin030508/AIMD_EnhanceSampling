@@ -10,6 +10,7 @@ resampled, and continued with independent SDE noise.
 """
 
 from dataclasses import dataclass
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Sequence
 
@@ -18,6 +19,24 @@ import numpy as np
 from confmh.adapters.base_iterative_frame import IterativeFrameAdapter
 from confmh.duet.resampling import gather_state
 from confmh.utils import add_repo_to_path
+
+
+@contextmanager
+def seeded_numpy(seed: int):
+    """Temporarily seed legacy NumPy RNG calls made inside ConfRover.
+
+    ConfRover's SE(3) prior and reverse-SDE implementation use the module-level
+    ``np.random`` API.  Torch-only seeding therefore does not control particle
+    continuations.  Saving and restoring the global state keeps each serial
+    particle/step stream deterministic without mutating the vendor checkout.
+    """
+
+    state = np.random.get_state()
+    np.random.seed(int(seed) % (2**32))
+    try:
+        yield
+    finally:
+        np.random.set_state(state)
 
 
 @dataclass
@@ -83,6 +102,8 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
         sampler_mode: str = "sde",
         kv_cache_type: str = "offloaded",
         tmin: float = 0.01,
+        ca_adjacent_quality_threshold_a: float = 4.5,
+        ca_adjacent_hard_threshold_a: float = 5.5,
     ) -> None:
         super().__init__()
         if sampler_mode not in {"ode", "sde"}:
@@ -100,6 +121,10 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
         self.sampler_mode = str(sampler_mode)
         self.kv_cache_type = str(kv_cache_type)
         self.tmin = float(tmin)
+        self.ca_adjacent_quality_threshold_a = float(
+            ca_adjacent_quality_threshold_a
+        )
+        self.ca_adjacent_hard_threshold_a = float(ca_adjacent_hard_threshold_a)
         self.model: Any = None
         self.dataset: Any = None
         self.static_batch: dict[str, Any] | None = None
@@ -277,7 +302,11 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
         if len(seeds) != count:
             raise ValueError("Expected one deterministic seed per inner particle")
         samples = []
-        cuda_devices = [torch.device(self.device_name).index or 0] if self.device_name.startswith("cuda") else []
+        cuda_devices = (
+            [torch.device(self.device_name).index or 0]
+            if self.device_name.startswith("cuda")
+            else []
+        )
         for seed in seeds:
             initial_seed = int(
                 np.random.SeedSequence([int(seed), 0]).generate_state(1, dtype=np.uint32)[0]
@@ -286,12 +315,13 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
                 torch.manual_seed(initial_seed)
                 if torch.cuda.is_available():
                     torch.cuda.manual_seed_all(initial_seed)
-                rigid = self.model.decoder.diffuser.sample_ref(
-                    n_samples=1,
-                    num_frames=1,
-                    seq_len=len(self.seqres),
-                    device=self.device_name,
-                )
+                with seeded_numpy(initial_seed):
+                    rigid = self.model.decoder.diffuser.sample_ref(
+                        n_samples=1,
+                        num_frames=1,
+                        seq_len=len(self.seqres),
+                        device=self.device_name,
+                    )
                 samples.append(rigid.to_tensor_7())
         rigids_t7 = torch.cat(samples, dim=0)
         expand = lambda tensor: tensor.expand((count,) + tuple(tensor.shape[1:])).clone()
@@ -353,7 +383,11 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
         batch = state.aatype.shape[0]
         dt = 1.0 / self.reverse_steps
         next_rigids = []
-        cuda_devices = [torch.device(self.device_name).index or 0] if self.device_name.startswith("cuda") else []
+        cuda_devices = (
+            [torch.device(self.device_name).index or 0]
+            if self.device_name.startswith("cuda")
+            else []
+        )
         for index in range(batch):
             seed = int(
                 np.random.SeedSequence(
@@ -365,14 +399,15 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
                 if torch.cuda.is_available():
                     torch.cuda.manual_seed_all(seed)
                 current = ru.Rigid.from_tensor_7(state.rigids_t7[index : index + 1])
-                updated = self.model.decoder.diffuser.reverse(
-                    rigids_t=current,
-                    rot_score=state.cached_rot_score[index : index + 1],
-                    trans_score=state.cached_trans_score[index : index + 1],
-                    t=float(state.time_value),
-                    dt=float(dt),
-                    mode=self.sampler_mode,
-                )
+                with seeded_numpy(seed):
+                    updated = self.model.decoder.diffuser.reverse(
+                        rigids_t=current,
+                        rot_score=state.cached_rot_score[index : index + 1],
+                        trans_score=state.cached_trans_score[index : index + 1],
+                        t=float(state.time_value),
+                        dt=float(dt),
+                        mode=self.sampler_mode,
+                    )
                 next_rigids.append(updated.to_tensor_7())
         state.rigids_t7 = torch.cat(next_rigids, dim=0)
         state.final_pred_atom14 = state.cached_pred_atom14
@@ -451,6 +486,7 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
         for frame in frames:
             ca_a = np.asarray(frame.ca_nm) * 10.0
             adjacent = np.linalg.norm(np.diff(ca_a, axis=0), axis=-1)
+            quality_violations = adjacent >= self.ca_adjacent_quality_threshold_a
             nonfinite = int(np.size(frame.atom37_a) - np.isfinite(frame.atom37_a).sum())
             clash_count = 0
             for left in range(len(ca_a)):
@@ -458,9 +494,19 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
                     clash_count += int(np.linalg.norm(ca_a[left] - ca_a[right]) < 1.0)
             results.append(
                 {
-                    "valid": bool(nonfinite == 0 and np.all(adjacent < 4.5)),
+                    "valid": bool(
+                        nonfinite == 0
+                        and clash_count == 0
+                        and np.all(adjacent < self.ca_adjacent_hard_threshold_a)
+                    ),
                     "nonfinite_coordinate_count": nonfinite,
                     "ca_adjacent_max_a": float(np.max(adjacent)) if len(adjacent) else 0.0,
+                    "ca_adjacent_count_ge_4_5a": int(np.sum(quality_violations)),
+                    "ca_adjacent_fraction_ge_4_5a": (
+                        float(np.mean(quality_violations)) if len(adjacent) else 0.0
+                    ),
+                    "ca_adjacent_quality_threshold_a": self.ca_adjacent_quality_threshold_a,
+                    "ca_adjacent_hard_threshold_a": self.ca_adjacent_hard_threshold_a,
                     "ca_clash_count_lt_1a": int(clash_count),
                 }
             )

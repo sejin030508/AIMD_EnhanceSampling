@@ -41,6 +41,7 @@ def _method_particles(cfg: dict[str, Any], method: str) -> tuple[int, int]:
 
 def build_confrover_adapter(cfg: dict[str, Any]) -> ConfRoverDuETAdapter:
     model, trajectory = cfg["model"], cfg["trajectory"]
+    geometry_gate = cfg.get("preflight", {}).get("gate", {})
     return ConfRoverDuETAdapter(
         repository_path=resolve_config_path(cfg, model["repository_path"]),
         checkpoint=resolve_config_path(cfg, model["checkpoint"]),
@@ -54,6 +55,12 @@ def build_confrover_adapter(cfg: dict[str, Any]) -> ConfRoverDuETAdapter:
         reverse_steps=int(model.get("reverse_steps", 200)),
         sampler_mode=str(model.get("sampler_mode", "sde")),
         kv_cache_type=str(model.get("kv_cache_type", "offloaded")),
+        ca_adjacent_quality_threshold_a=float(
+            geometry_gate.get("ca_adjacent_quality_threshold_a", 4.5)
+        ),
+        ca_adjacent_hard_threshold_a=float(
+            geometry_gate.get("ca_adjacent_hard_threshold_a", 5.5)
+        ),
     )
 
 
@@ -140,7 +147,7 @@ def run_experiment_config(
                 active_indices = [selected] if selected is not None else list(range(len(result.particles)))
                 active_particles = [result.particles[index] for index in active_indices]
                 final_values = [
-                    registry.evaluate(particle.history[-1], program.all_observables())
+                    observables.evaluate(particle.history[-1], program.all_observables())
                     for particle in active_particles
                 ]
                 success = [

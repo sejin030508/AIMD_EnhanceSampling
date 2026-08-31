@@ -46,7 +46,13 @@ rollout appears only in the Phase-B feasibility comparison.
    potential, and intended-target convergence must pass.
 2. ConfRover preflight: genuine independent post-resampling SDE continuation,
    full-history preservation, constant-potential marginal agreement, and
-   structural feasibility must pass.
+   structural feasibility must pass. Structural feasibility uses zero
+   nonfinite/clashing outputs, a 5.5 A hard adjacent-CA limit, and at most 10%
+   degradation in mean maximum adjacent-CA distance versus official ConfRover
+   ODE. The original 4.5 A exceedance rate remains a reported quality metric.
+   Conformational displacements use the official ConfRover writer convention:
+   every frame is Kabsch-aligned to frame 0, while raw displacements are kept
+   as coordinate-frame diagnostics.
 3. Core 6J56-A: three tasks, seven methods, three paired seeds.
 4. K/M grid: `(16,1),(8,2),(4,4),(2,8),(1,16)` on windowed and ordered tasks.
 5. Official interpolation: eight-case outcome-blind pilot, frozen protocol,

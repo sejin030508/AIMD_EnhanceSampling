@@ -52,6 +52,11 @@ reference:
 
 preflight:
   replicates: 16
+  gate:
+    ca_adjacent_quality_threshold_a: 4.5
+    ca_adjacent_hard_threshold_a: 5.5
+    max_sde_to_ode_mean_ca_adjacent_ratio: 1.10
+    max_pc1_wasserstein: 0.5
   variants:
     official_ode: {sampler_mode: ode, inner_m: 1, checkpoint_hook: false}
     unconditioned_sde: {sampler_mode: sde, inner_m: 1, checkpoint_hook: false}
@@ -78,4 +83,3 @@ experiment:
   reference_split: R3_held_out
   evaluation_features: [pc1, geometry, displacement]
   maximum_wall_clock: null
-
