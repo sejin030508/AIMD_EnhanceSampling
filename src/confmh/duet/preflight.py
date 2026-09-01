@@ -64,6 +64,10 @@ def _trace_metrics(histories, adapter, pca_model=None):
         ),
         "geometry_valid_rate": float(np.mean([item["valid"] for item in validity])),
         "clash_rate": float(np.mean([item["ca_clash_count_lt_1a"] > 0 for item in validity])),
+        "ca_adjacent_max_a": [float(item["ca_adjacent_max_a"]) for item in validity],
+        "ca_adjacent_fraction_ge_4_5a": [
+            float(item["ca_adjacent_fraction_ge_4_5a"]) for item in validity
+        ],
         "ca_endpoint_displacement_nm": displacement,
         "temporal_displacement_nm": temporal,
         "raw_ca_endpoint_displacement_nm": raw_displacement,
@@ -87,8 +91,13 @@ def evaluate_preflight_gate(results: dict[str, Any], gate_cfg: dict[str, Any]) -
         name: float(wasserstein_distance(base_pc1, results[name]["endpoint_pc1"]))
         for name in ("sde_checkpoint_no_resampling", "sde_constant_resampling")
     }
+    def adjacent_maxima(item):
+        if "ca_adjacent_max_a" in item:
+            return item["ca_adjacent_max_a"]
+        return [row["ca_adjacent_max_a"] for row in item.get("validity", [])]
+
     mean_max = {
-        name: float(np.mean(results[name]["ca_adjacent_max_a"])) for name in sde_names
+        name: float(np.mean(adjacent_maxima(results[name]))) for name in sde_names
     }
     ratios = {name: value / official_mean_max for name, value in mean_max.items()}
     checks = {

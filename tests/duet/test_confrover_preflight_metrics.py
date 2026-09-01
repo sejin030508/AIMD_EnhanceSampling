@@ -20,6 +20,8 @@ class _Adapter:
                 "valid": True,
                 "nonfinite_coordinate_count": 0,
                 "ca_clash_count_lt_1a": 0,
+                "ca_adjacent_max_a": 4.0,
+                "ca_adjacent_fraction_ge_4_5a": 0.0,
             }
             for _ in frames
         ]
@@ -86,3 +88,24 @@ def test_explicit_preflight_gate_uses_hard_and_baseline_relative_checks():
     failed = evaluate_preflight_gate(results, {"max_pc1_wasserstein": 0.5})
     assert not failed["passed"]
     assert not failed["checks"]["sde_mean_max_ca_within_ode_ratio"]
+
+
+def test_preflight_gate_reads_legacy_nested_validity_maxima():
+    results = {
+        "official_ode": _variant(4.7, [-0.5, 0.5]),
+        "unconditioned_sde": _variant(4.9, [-0.4, 0.4]),
+        "sde_checkpoint_no_resampling": _variant(4.95, [-0.3, 0.3]),
+        "sde_constant_resampling": _variant(5.0, [-0.2, 0.2]),
+    }
+    for name in (
+        "unconditioned_sde",
+        "sde_checkpoint_no_resampling",
+        "sde_constant_resampling",
+    ):
+        maxima = results[name].pop("ca_adjacent_max_a")
+        results[name]["validity"] = [
+            {"ca_adjacent_max_a": value} for value in maxima
+        ]
+
+    gate = evaluate_preflight_gate(results, {})
+    assert gate["passed"]
