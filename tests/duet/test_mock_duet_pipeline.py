@@ -58,3 +58,25 @@ def test_constant_potential_outer_normalizer_is_one():
         ).run(initial, horizon=3)
         assert abs(result.log_normalizer_estimate) < 1e-12
         assert np.max(np.abs(result.log_normalizer_increments)) < 1e-12
+
+
+def test_adaptive_outer_resampling_skips_uniform_steps_but_resamples_final():
+    initial = [np.zeros((4, 3))]
+    registry = ObservableRegistry({"motion": lambda frame: 0.0})
+    program = TemporalProgram("terminal", (Event("end", "motion", (-0.5, 0.5), (3, 3)),))
+    result = OuterSMC(
+        adapter=MockIterativeFrameAdapter(reverse_steps=4, residues=4),
+        potential=PrefixPotential(
+            program,
+            registry,
+            PotentialCoefficients(lambda_program=0.0, potential_floor=1e-30),
+            horizon=3,
+        ),
+        method="duet",
+        outer_k=4,
+        inner_m=2,
+        checkpoint_progress=0.75,
+        seed=31,
+        outer_resampling_ess_fraction=0.5,
+    ).run(initial, horizon=3)
+    assert result.outer_resampled == [False, False, True]

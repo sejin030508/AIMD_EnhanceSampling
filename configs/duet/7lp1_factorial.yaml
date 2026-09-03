@@ -1,0 +1,72 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  cache_dir: ${DUET_ASSET_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 256
+  reverse_steps: 200
+  kv_cache_type: offloaded
+  device: cuda:0
+  dtype: float32
+
+trajectory:
+  case_id: 7lp1_A
+  seqres: VTQSFLPPGWEMRIAPNGRPFFIDHNTKTTTWEDPRLKF
+  horizon: 8
+  initial_structure: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_R2F5000_start.pdb
+  initial_history: null
+
+particles:
+  outer_k: 4
+  inner_m: 4
+  inner_checkpoint_progress: 0.75
+  outer_resampling: systematic
+  inner_resampling: systematic
+
+program:
+  type: ordered
+  catalog: data/duet/7lp1_A/duet_programs.yaml
+  lambda_program: 1.0
+  distance_weight: 1.0
+  remaining_event_weight: 0.10
+  deadline_weight: 1.0
+  failure_penalty: 20.0
+  terminal_failure_penalty: 20.0
+  distance_scale: 0.25
+  potential_floor: 1.0e-30
+
+reference:
+  topology: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A.pdb
+  pca_model: data/duet/7lp1_A/design_pca_r1_r2/pca_cv.npz
+  held_out_trajectory: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_prod_R3_fit.xtc
+
+experiment:
+  methods:
+    - frozen
+    - best_of_budget
+    - outer_only
+    - inner_only
+    - naive_dual
+    - complete_nested
+    - duet
+  method_settings:
+    frozen: {outer_k: 16, inner_m: 1}
+    best_of_budget: {outer_k: 16, inner_m: 1}
+    outer_only: {outer_k: 16, inner_m: 1}
+    inner_only: {outer_k: 1, inner_m: 16}
+    naive_dual: {outer_k: 4, inner_m: 4}
+    complete_nested: {outer_k: 4, inner_m: 4}
+    duet: {outer_k: 4, inner_m: 4}
+  tasks: [endpoint, windowed, ordered]
+  task_count: 3
+  seeds: [20260831, 20260901, 20260902]
+  decoder_population_budget: 16
+  cost_budget: {decoder_population_per_step: 16, reverse_steps: 200, horizon: 8}
+  output_directory: outputs/duet_md/extra_proteins/7lp1_A/core
+  reference_split: R1_R2_design_R3_held_out
+  evaluation_features: [pc1, orthogonal_pcs, unspecified_contacts, geometry]
+  maximum_wall_clock: null
+  maximum_gpu_memory: null

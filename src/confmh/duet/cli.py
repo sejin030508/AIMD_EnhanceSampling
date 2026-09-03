@@ -10,6 +10,7 @@ import yaml
 from confmh.duet.atlas_programs import prepare_atlas_programs
 from confmh.duet.config import (
     estimate_decoder_nfe,
+    inner_checkpoint_progresses,
     load_duet_config,
     missing_assets,
     resolve_config_path,
@@ -57,6 +58,7 @@ def _apply_overrides(cfg, args):
 
 def _summary(cfg):
     methods = cfg["experiment"].get("methods", [cfg["experiment"].get("method", "duet")])
+    checkpoint_progresses = inner_checkpoint_progresses(cfg)
     return {
         "config": cfg["_config_path"],
         "model_repository": str(resolve_config_path(cfg, cfg["model"].get("repository_path", "."))),
@@ -66,7 +68,10 @@ def _summary(cfg):
         "methods": methods,
         "K": int(cfg["particles"]["outer_k"]),
         "M": int(cfg["particles"]["inner_m"]),
-        "checkpoint_after_reverse_fraction": float(cfg["particles"]["inner_checkpoint_progress"]),
+        "checkpoint_after_reverse_fraction": float(checkpoint_progresses[-1]),
+        "checkpoint_after_reverse_fractions": [
+            float(item) for item in checkpoint_progresses
+        ],
         "estimated_decoder_nfe": {method: estimate_decoder_nfe(cfg, method) for method in methods},
         "output": str(resolve_config_path(cfg, cfg["experiment"].get("output_directory", "outputs/duet_md"))),
         "missing_assets": missing_assets(cfg),

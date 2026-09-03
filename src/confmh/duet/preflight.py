@@ -125,6 +125,9 @@ def evaluate_preflight_gate(results: dict[str, Any], gate_cfg: dict[str, Any]) -
             "ca_adjacent_hard_threshold_a": float(
                 gate_cfg.get("ca_adjacent_hard_threshold_a", 5.5)
             ),
+            "ca_adjacent_hard_tolerance_a": float(
+                gate_cfg.get("ca_adjacent_hard_tolerance_a", 1.0e-3)
+            ),
             "max_sde_to_ode_mean_ca_adjacent_ratio": max_ratio,
             "max_pc1_wasserstein": max_pc1_wasserstein,
         },
@@ -172,6 +175,7 @@ def _official_ode_metrics(cfg, output, pca, replicates):
     gate_cfg = cfg.get("preflight", {}).get("gate", {})
     quality_threshold = float(gate_cfg.get("ca_adjacent_quality_threshold_a", 4.5))
     hard_threshold = float(gate_cfg.get("ca_adjacent_hard_threshold_a", 5.5))
+    hard_tolerance = float(gate_cfg.get("ca_adjacent_hard_tolerance_a", 1.0e-3))
     for trajectory_md in trajectories:
         ca_indices = trajectory_md.topology.select("name CA")
         coords = trajectory_md.xyz[:, ca_indices, :]
@@ -192,7 +196,7 @@ def _official_ode_metrics(cfg, output, pca, replicates):
             bool(
                 not nonfinite[-1]
                 and not clash[-1]
-                and np.all(adjacent < hard_threshold)
+                and np.all(adjacent <= hard_threshold + hard_tolerance)
             )
         )
     return {

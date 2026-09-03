@@ -35,3 +35,15 @@ def test_same_frame_cannot_complete_both_unless_enabled():
     assert strict.update(ProgressState(), {"x": 2.0}, 1).stage == 1
     assert permissive.update(ProgressState(), {"x": 2.0}, 1).stage == 2
 
+
+def test_terminal_window_hit_is_absorbing_success_for_path_program():
+    program = TemporalProgram(
+        "windowed",
+        (Event("middle", "x", (1, 1), (2, 3)),),
+        terminal_event=Event("end", "x", (3, 4), (4, 6)),
+    )
+    state = program.update(ProgressState(), {"x": 1.0}, 2)
+    state = program.update(state, {"x": 3.5}, 4)
+    state = program.update(state, {"x": 0.0}, 6)
+    assert state.stage == 2
+    assert program.successful(state, {"x": 0.0}, 6)

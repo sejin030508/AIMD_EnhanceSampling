@@ -26,6 +26,7 @@ class PotentialCoefficients:
     deadline_weight: float = 1.0
     failure_penalty: float = 25.0
     terminal_failure_penalty: float = 25.0
+    failure_guidance_weight: float = 0.0
     distance_scale: float = 1.0
     potential_floor: float = 1e-30
 
@@ -67,7 +68,19 @@ class PrefixPotential:
         self.evaluations += 1
         c = self.coefficients
         if state.failed:
-            return c.failure_penalty
+            if c.failure_guidance_weight <= 0.0:
+                return c.failure_penalty
+            event = self.program.terminal_event or self.program.final_event
+            if event is None:
+                return c.failure_penalty
+            if values is None:
+                values = self.values(history[-1])
+            distance = distance_to_interval(values[event.observable], event.target)
+            scale = max(c.distance_scale, np.finfo(float).tiny)
+            return float(
+                c.failure_penalty
+                + c.failure_guidance_weight * (distance / scale) ** 2
+            )
         event = self.program.next_event(state)
         if event is None:
             return 0.0
@@ -95,7 +108,15 @@ class PrefixPotential:
         if values is None:
             values = self.values(history[-1])
         if state.failed:
-            return c.failure_penalty
+            event = self.program.terminal_event or self.program.final_event
+            if event is None or c.failure_guidance_weight <= 0.0:
+                return c.failure_penalty
+            distance = distance_to_interval(values[event.observable], event.target)
+            scale = max(c.distance_scale, np.finfo(float).tiny)
+            return float(
+                c.failure_penalty
+                + c.failure_guidance_weight * (distance / scale) ** 2
+            )
         if self.program.successful(state, values, t):
             return 0.0
         event = self.program.next_event(state) or self.program.final_event
@@ -130,4 +151,3 @@ class PrefixPotential:
         state, values = self.advance(parent_state, frame, t)
         history = list(parent_history) + [frame]
         return self.log_psi(history, state, t, values), state, values
-

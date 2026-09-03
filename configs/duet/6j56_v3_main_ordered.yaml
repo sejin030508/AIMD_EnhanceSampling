@@ -1,0 +1,62 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  cache_dir: ${DUET_ASSET_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 256
+  reverse_steps: 200
+  kv_cache_type: offloaded
+  device: cuda:0
+  dtype: float32
+
+trajectory:
+  case_id: 6j56_A
+  seqres: ARQREIEMNRQQRFFRIPFIRPADQYKDPQSKKKGWWYAHFDGPWIARQMELHPDKPPILLVAGKDDMEMCELNLEETGLTRKRGAEILPRQFEEIWERCGGIQYLQNAIESRQARPTYATAMLQSLLK
+  horizon: 24
+  initial_structure: ${DUET_ASSET_ROOT}/external/ConfRover/examples/6j56_A_start.pdb
+  initial_history: null
+
+particles:
+  outer_k: 8
+  inner_m: 4
+  inner_checkpoint_progress: 0.90
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.25
+  inner_resampling: systematic
+
+program:
+  type: ordered
+  catalog: data/duet/6j56_A_v3/duet_programs_fixed.yaml
+  lambda_program: 0.5
+  distance_weight: 1.0
+  remaining_event_weight: 0.05
+  deadline_weight: 0.5
+  failure_penalty: 4.0
+  terminal_failure_penalty: 4.0
+  failure_guidance_weight: 1.0
+  distance_scale: 0.5
+  potential_floor: 1.0e-30
+
+reference:
+  topology: ${DUET_ASSET_ROOT}/data/atlas/6j56_A/6j56_A.pdb
+  pca_model: data/duet/6j56_A_v3/design_pca_r1_r2/pca_cv.npz
+  held_out_trajectory: ${DUET_ASSET_ROOT}/data/atlas/6j56_A/6j56_A_prod_R3_fit.xtc
+
+experiment:
+  methods: [frozen, outer_only, inner_only, complete_nested, duet]
+  method_settings:
+    frozen: {outer_k: 32, inner_m: 1}
+    outer_only: {outer_k: 32, inner_m: 1}
+    inner_only: {outer_k: 1, inner_m: 32}
+    complete_nested: {outer_k: 8, inner_m: 4}
+    duet: {outer_k: 8, inner_m: 4}
+  tasks: [ordered]
+  task_count: 1
+  seeds: [20260913]
+  decoder_population_budget: 32
+  cost_budget: {decoder_population_per_step: 32, reverse_steps: 200, horizon: 24}
+  output_directory: outputs/duet_md/protocol_v3/main_ordered
+  reference_split: R1_R2_design_R3_held_out

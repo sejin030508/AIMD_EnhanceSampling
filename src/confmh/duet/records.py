@@ -75,6 +75,7 @@ def asset_metadata(cfg: dict[str, Any]) -> list[dict[str, Any]]:
         ("trajectory", ("initial_structure", "initial_history")),
         ("program", ("catalog",)),
         ("reference", ("topology", "pca_model", "reference_cv", "held_out_trajectory", "case_manifest")),
+        ("case_study", ("benchmark_spec",)),
     ):
         values = cfg.get(section, {})
         for key in keys:

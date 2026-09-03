@@ -8,7 +8,7 @@ import numpy as np
 
 from confmh.adapters.base_iterative_frame import IterativeFrameAdapter
 from confmh.duet.baselines import complete_frame_nested_step
-from confmh.duet.inner_fkc import one_checkpoint_inner_step
+from confmh.duet.inner_fkc import multi_checkpoint_inner_step
 from confmh.duet.potentials import PrefixPotential
 from confmh.duet.programs import ProgressState
 from confmh.duet.resampling import effective_sample_size, normalize_log_weights, systematic_resample
@@ -47,6 +47,9 @@ class StepRecord:
     inner_ess_1: float | None
     inner_ess_2: float | None
     inner_checkpoint_ancestors: list[int] | None
+    inner_checkpoint_progresses: list[float] | None
+    inner_checkpoint_ess: list[float] | None
+    inner_checkpoint_ancestors_history: list[list[int]] | None
     inner_selected_index: int | None
     telescoping_max_abs_log_error: float | None
     progress_stage: int
@@ -61,6 +64,7 @@ class DuETRunResult:
     records: list[StepRecord]
     outer_ess: list[float]
     ancestor_indices: list[list[int]]
+    outer_resampled: list[bool]
     log_normalizer_estimate: float
     log_normalizer_increments: list[float]
 
@@ -79,8 +83,9 @@ class OuterSMC:
         method: str,
         outer_k: int,
         inner_m: int,
-        checkpoint_progress: float,
+        checkpoint_progress: float | Sequence[float],
         seed: int,
+        outer_resampling_ess_fraction: float = 1.0,
     ) -> None:
         if method not in METHODS:
             raise ValueError(f"Unsupported method: {method}")
@@ -93,7 +98,23 @@ class OuterSMC:
         self.method = method
         self.outer_k = int(outer_k)
         self.inner_m = int(inner_m)
-        self.checkpoint_progress = float(checkpoint_progress)
+        if isinstance(checkpoint_progress, Sequence) and not isinstance(
+            checkpoint_progress, (str, bytes)
+        ):
+            progresses = tuple(float(item) for item in checkpoint_progress)
+        else:
+            progresses = (float(checkpoint_progress),)
+        if not progresses:
+            raise ValueError("At least one inner checkpoint is required")
+        if any(not 0.0 < item < 1.0 for item in progresses):
+            raise ValueError("Inner checkpoint progresses must lie in (0, 1)")
+        if any(right <= left for left, right in zip(progresses, progresses[1:])):
+            raise ValueError("Inner checkpoint progresses must be strictly increasing")
+        self.checkpoint_progresses = progresses
+        self.checkpoint_progress = progresses[-1]
+        self.outer_resampling_ess_fraction = float(outer_resampling_ess_fraction)
+        if not 0.0 < self.outer_resampling_ess_fraction <= 1.0:
+            raise ValueError("outer_resampling_ess_fraction must be in (0, 1]")
         self.seed = int(seed)
         self.rng = np.random.default_rng(seed)
 
@@ -115,6 +136,7 @@ class OuterSMC:
         records: list[StepRecord] = []
         outer_ess: list[float] = []
         ancestry: list[list[int]] = []
+        outer_resampled: list[bool] = []
         log_normalizer = float(initial_log_psi)
         log_normalizer_increments: list[float] = []
 
@@ -135,21 +157,35 @@ class OuterSMC:
                 continuation_seeds = _seed_family(
                     self.seed, t, parent_index, self.inner_m, stream=29
                 )
+                continuation_seed_families = [continuation_seeds]
                 log_z_hat: float | None = None
                 inner_ess_1: float | None = None
                 inner_ess_2: float | None = None
                 inner_checkpoint_ancestors: list[int] | None = None
+                inner_checkpoint_progresses: list[float] | None = None
+                inner_checkpoint_ess: list[float] | None = None
+                inner_checkpoint_ancestors_history: list[list[int]] | None = None
                 inner_selected_index: int | None = None
                 telescoping_error: float | None = None
 
                 if self.method in {"duet", "naive_dual", "inner_only"}:
-                    result = one_checkpoint_inner_step(
+                    continuation_seed_families = [
+                        _seed_family(
+                            self.seed,
+                            t,
+                            parent_index,
+                            self.inner_m,
+                            stream=29 + 18 * checkpoint_index,
+                        )
+                        for checkpoint_index in range(len(self.checkpoint_progresses))
+                    ]
+                    result = multi_checkpoint_inner_step(
                         adapter=self.adapter,
                         history_state=history_state,
                         count=self.inner_m,
                         seeds=proposal_seeds,
-                        continuation_seeds=continuation_seeds,
-                        checkpoint_progress=self.checkpoint_progress,
+                        continuation_seed_families=continuation_seed_families,
+                        checkpoint_progresses=self.checkpoint_progresses,
                         candidate_potential=candidate,
                         rng=self.rng,
                     )
@@ -158,6 +194,14 @@ class OuterSMC:
                     inner_ess_1 = result.diagnostics.first_stage_ess
                     inner_ess_2 = result.diagnostics.second_stage_ess
                     inner_checkpoint_ancestors = result.diagnostics.checkpoint_ancestors.tolist()
+                    inner_checkpoint_progresses = list(
+                        result.diagnostics.checkpoint_progresses
+                    )
+                    inner_checkpoint_ess = list(result.diagnostics.checkpoint_ess)
+                    inner_checkpoint_ancestors_history = [
+                        item.tolist()
+                        for item in result.diagnostics.checkpoint_ancestors_history
+                    ]
                     inner_selected_index = result.diagnostics.selected_index
                     telescoping_error = result.diagnostics.telescoping_max_abs_log_error
                 elif self.method == "complete_nested":
@@ -196,7 +240,17 @@ class OuterSMC:
                     log_weight=float(parent.log_weight + increment),
                     lineage=parent.lineage + [parent_index],
                     seed_metadata=parent.seed_metadata
-                    + [{"t": t, "proposal": proposal_seeds, "continuation": continuation_seeds}],
+                    + [
+                        {
+                            "t": t,
+                            "proposal": proposal_seeds,
+                            "continuation": continuation_seeds,
+                            "continuation_families": continuation_seed_families,
+                            "checkpoint_progresses": list(
+                                self.checkpoint_progresses
+                            ),
+                        }
+                    ],
                     last_log_psi=float(log_psi),
                 )
                 children.append(child)
@@ -213,6 +267,11 @@ class OuterSMC:
                         inner_ess_1=inner_ess_1,
                         inner_ess_2=inner_ess_2,
                         inner_checkpoint_ancestors=inner_checkpoint_ancestors,
+                        inner_checkpoint_progresses=inner_checkpoint_progresses,
+                        inner_checkpoint_ess=inner_checkpoint_ess,
+                        inner_checkpoint_ancestors_history=(
+                            inner_checkpoint_ancestors_history
+                        ),
                         inner_selected_index=inner_selected_index,
                         telescoping_max_abs_log_error=telescoping_error,
                         progress_stage=progress.stage,
@@ -227,12 +286,24 @@ class OuterSMC:
                 )
                 log_normalizer += float(log_weight_sum)
                 log_normalizer_increments.append(float(log_weight_sum))
-                outer_ess.append(effective_sample_size(weights))
-                parent_indices = systematic_resample(weights, self.rng, n=self.outer_k)
-                ancestry.append(parent_indices.tolist())
-                particles = [copy.deepcopy(children[int(index)]) for index in parent_indices]
-                for particle in particles:
-                    particle.log_weight = -np.log(self.outer_k)
+                ess = effective_sample_size(weights)
+                outer_ess.append(ess)
+                should_resample = (
+                    ess <= self.outer_resampling_ess_fraction * self.outer_k
+                    or t == int(horizon)
+                )
+                if should_resample:
+                    parent_indices = systematic_resample(weights, self.rng, n=self.outer_k)
+                    ancestry.append(parent_indices.tolist())
+                    particles = [copy.deepcopy(children[int(index)]) for index in parent_indices]
+                    for particle in particles:
+                        particle.log_weight = -np.log(self.outer_k)
+                else:
+                    ancestry.append(list(range(self.outer_k)))
+                    particles = children
+                    for particle in particles:
+                        particle.log_weight -= float(log_weight_sum)
+                outer_resampled.append(should_resample)
             else:
                 if self.method not in {"frozen", "inner_only"}:
                     _, log_weight_sum = normalize_log_weights(
@@ -244,6 +315,7 @@ class OuterSMC:
                         particle.log_weight -= float(log_weight_sum)
                 outer_ess.append(float(self.outer_k))
                 ancestry.append(list(range(self.outer_k)))
+                outer_resampled.append(False)
                 particles = children
 
         return DuETRunResult(
@@ -252,6 +324,7 @@ class OuterSMC:
             records=records,
             outer_ess=outer_ess,
             ancestor_indices=ancestry,
+            outer_resampled=outer_resampled,
             log_normalizer_estimate=log_normalizer,
             log_normalizer_increments=log_normalizer_increments,
         )

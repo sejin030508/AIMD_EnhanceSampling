@@ -1,0 +1,81 @@
+schema_version: 1
+case_id: abl1_dfg_flip
+scientific_claim: mechanism-blind path recovery under a frozen surrogate prior
+source:
+  paper: https://arxiv.org/abs/2405.14968
+  data: https://doi.org/10.5281/zenodo.11194787
+  starting_structure: PDB 6XR6; prepared WE topology is used for sequence compatibility
+  topology: data/duet/case_studies/abl1_dfg_flip/reference_raw/GMdSilva-abl1_dfgflip_westpa_rawdata-8ae0b5d/selected_trajs/abl1_wild_type_top.pdb
+  trajectories:
+  - data/duet/case_studies/abl1_dfg_flip/reference_raw/GMdSilva-abl1_dfgflip_westpa_rawdata-8ae0b5d/selected_trajs/wt_concerted_flip.trr
+  - data/duet/case_studies/abl1_dfg_flip/reference_raw/GMdSilva-abl1_dfgflip_westpa_rawdata-8ae0b5d/selected_trajs/wt_staggered_flip.trr
+mapping:
+  chain: 0
+  sequence_length: 287
+  seqres: GMSPNYDKWEMERTDITMKHKLGGGQYGEVYEGVWKKYSLTVAVKTLKEDTMEVEEFLKEAAVMKEIKHPNLVQLLGVCTREPPFYIITEFMTYGNLLDYLRECNRQEVNAVVLLYMATQISSAMEYLEKKNFIHRDLAARNCLVGENHLVKVADFGLSRLMTGDTYTAHAGAKFPIKWTAPESLAYNKFSIKSDVWAFGVLLWEIATYGMSPYPGIDLSQVYELLEKDYRMERPEGCPEKVYELMRACWQWNPSDRPSFAEIHQAFETMFQESSISDEVEKELGKQ
+  canonical_residue_numbers: WE topology resSeq is canonical ABL1 numbering
+  generated_residue_indices:
+    Tyr253: 26
+    Lys271: 44
+    Glu286: 59
+    Val299: 72
+    Thr315: 88
+    Ala380: 153
+    Asp381: 154
+    Phe382: 155
+  pdb_6xr6_offset: canonical = PDB chain A residue number - 19
+endpoint_definition:
+  name: dfg_out_endpoint_distance
+  source_subset: final 10 frames of each of the two selected WT transition paths
+  asp_center_degrees: 265.02935791015625
+  phe_center_degrees: 33.49248123168945
+  asp_scale_degrees: 31.039392089843755
+  phe_scale_degrees: 18.434476470947267
+  success_distance_threshold: 0.8538755506277085
+  threshold_rule: 95th percentile of endpoint-tail composite distance; generated data
+    unseen
+hidden_event_definitions:
+  asp_completion_tolerance_degrees: 31.039392089843755
+  phe_completion_tolerance_degrees: 18.434476470947267
+  asp_val_contact_cutoff_a: 4.0
+  salt_bridge_reference_scale_a: 4.0
+  route_classifier: nearest DTW to concerted/staggered reference hidden-CV traces
+feature_firewall:
+  reward_features:
+  - dfg_out_endpoint_distance
+  hidden_evaluation_features:
+  - dfg_inter_contact
+  - asp_phe_completion_order
+  - route_family
+  - lys271_glu286_distance
+  selection_rule: hidden features are evaluation-only and never loaded by PrefixPotential
+reference_split:
+  endpoint_design: endpoint-only tails from both selected WT paths
+  mechanism_evaluation: two public selected paths, unweighted descriptive
+  limitation: The public archive contains one WT WESTPA HDF5 run and two selected
+    paths, not independent WT replicate files; no route-population or kinetic claim
+    is permitted.
+production:
+  horizon: 24
+  methods:
+  - frozen
+  - complete_nested
+  - duet
+  frozen_population: 64
+  outer_k: 16
+  inner_m: 4
+  duet_checkpoints:
+  - 0.85
+  - 0.95
+  complete_nested_checkpoint: 0.95
+  seeds:
+  - 20261001
+  - 20261002
+  - 20261003
+  - 20261004
+  - 20261005
+  reverse_steps: 200
+  sampler: sde
+reference_features_npz: data/duet/case_studies/abl1_dfg_flip/prepared/reference_features.npz
+claim_boundary: No kinetics, MFPT, free energy, or unbiased-dynamics claim.
+config_hash_sha256: 8a740d309020f2eac37b9cda36701211eedda1577ac3f77a185240dea985ed9a

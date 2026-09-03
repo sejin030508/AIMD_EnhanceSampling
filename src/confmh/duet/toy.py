@@ -106,9 +106,19 @@ class FiniteStateAdapter(IterativeFrameAdapter):
     ) -> FiniteInnerState:
         return gather_state(particle_state, np.asarray(ancestor_indices, dtype=int))
 
+    def reseed_particle_state(
+        self,
+        particle_state: FiniteInnerState,
+        independent_seeds: Sequence[int],
+    ) -> FiniteInnerState:
+        if len(independent_seeds) != len(particle_state.checkpoint_latent):
+            raise ValueError("Expected one independent continuation seed per particle")
+        return particle_state
+
     def denoise_to_end(
         self, particle_state: FiniteInnerState, independent_seeds: Sequence[int]
     ) -> FiniteInnerState:
+        self.reseed_particle_state(particle_state, independent_seeds)
         endpoint = []
         for latent, seed in zip(particle_state.checkpoint_latent, independent_seeds):
             probabilities = self._endpoint_probs(

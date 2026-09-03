@@ -1,0 +1,16 @@
+case,method,seed,gpu,status,output_directory
+abl1_dfg_flip,frozen,20261001,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/frozen/seed_20261001
+abl1_dfg_flip,complete_nested,20261001,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/complete_nested/seed_20261001
+abl1_dfg_flip,duet,20261001,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/duet/seed_20261001
+abl1_dfg_flip,frozen,20261002,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/frozen/seed_20261002
+abl1_dfg_flip,complete_nested,20261002,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/complete_nested/seed_20261002
+abl1_dfg_flip,duet,20261002,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/duet/seed_20261002
+abl1_dfg_flip,frozen,20261003,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/frozen/seed_20261003
+abl1_dfg_flip,complete_nested,20261003,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/complete_nested/seed_20261003
+abl1_dfg_flip,duet,20261003,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/duet/seed_20261003
+abl1_dfg_flip,frozen,20261004,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/frozen/seed_20261004
+abl1_dfg_flip,complete_nested,20261004,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/complete_nested/seed_20261004
+abl1_dfg_flip,duet,20261004,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/duet/seed_20261004
+abl1_dfg_flip,frozen,20261005,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/frozen/seed_20261005
+abl1_dfg_flip,complete_nested,20261005,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/complete_nested/seed_20261005
+abl1_dfg_flip,duet,20261005,assigned_at_launch,planned,outputs/duet_md/case_studies/abl1_dfg_flip/endpoint/duet/seed_20261005

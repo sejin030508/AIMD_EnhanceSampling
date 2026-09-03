@@ -124,17 +124,22 @@ class TemporalProgram:
                     if following.satisfied(values[following.observable], t):
                         stage += 1
                         completed = completed + (t,)
+        if (
+            self.terminal_event is not None
+            and stage == len(events)
+            and self.terminal_event.satisfied(values[self.terminal_event.observable], t)
+        ):
+            stage += 1
+            completed = completed + (t,)
         return ProgressState(stage, False, completed)
 
     def successful(self, state: ProgressState, values: Mapping[str, float], t: int) -> bool:
         if state.failed:
             return False
-        required = 1 if self.kind in {"terminal", "windowed"} else len(self.events)
-        if state.stage < required:
-            return False
-        if self.terminal_event is None:
-            return True
-        return self.terminal_event.satisfied(values[self.terminal_event.observable], t)
+        if self.kind == "terminal":
+            return state.stage >= 1
+        required = len(self.events) + int(self.terminal_event is not None)
+        return state.stage >= required
 
     def next_event(self, state: ProgressState) -> Event | None:
         if state.failed:
@@ -143,11 +148,10 @@ class TemporalProgram:
             return None if state.stage >= 1 else self.events[0]
         if state.stage < len(self.events):
             return self.events[state.stage]
-        return self.terminal_event
+        return self.terminal_event if state.stage == len(self.events) else None
 
     def all_observables(self) -> tuple[str, ...]:
         names = [event.observable for event in self.events]
         if self.terminal_event is not None:
             names.append(self.terminal_event.observable)
         return tuple(dict.fromkeys(names))
-

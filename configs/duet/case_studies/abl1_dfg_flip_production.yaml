@@ -1,0 +1,86 @@
+project_root: ${DUET_PROJECT_ROOT}
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  cache_dir: ${DUET_PROJECT_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 256
+  reverse_steps: 200
+  kv_cache_type: offloaded
+  decoder_microbatch_size: 2
+  device: cuda:0
+  dtype: float32
+trajectory:
+  case_id: abl1_dfg_flip
+  seqres: GMSPNYDKWEMERTDITMKHKLGGGQYGEVYEGVWKKYSLTVAVKTLKEDTMEVEEFLKEAAVMKEIKHPNLVQLLGVCTREPPFYIITEFMTYGNLLDYLRECNRQEVNAVVLLYMATQISSAMEYLEKKNFIHRDLAARNCLVGENHLVKVADFGLSRLMTGDTYTAHAGAKFPIKWTAPESLAYNKFSIKSDVWAFGVLLWEIATYGMSPYPGIDLSQVYELLEKDYRMERPEGCPEKVYELMRACWQWNPSDRPSFAEIHQAFETMFQESSISDEVEKELGKQ
+  horizon: 24
+  initial_structure: data/duet/case_studies/abl1_dfg_flip/prepared/abl1_wt_dfg_in_start.pdb
+  initial_history: null
+particles:
+  outer_k: 16
+  inner_m: 4
+  inner_checkpoint_progresses:
+  - 0.85
+  - 0.95
+  inner_checkpoint_progress: 0.95
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.5
+  inner_resampling: systematic
+program:
+  type: terminal
+  catalog: data/duet/case_studies/abl1_dfg_flip/prepared/endpoint_program.yaml
+  lambda_program: 0.5
+  distance_weight: 1.0
+  remaining_event_weight: 0.0
+  deadline_weight: 0.0
+  failure_penalty: 4.0
+  terminal_failure_penalty: 4.0
+  failure_guidance_weight: 1.0
+  distance_scale: 1.0
+  potential_floor: 1.0e-30
+case_study:
+  benchmark_spec: data/duet/case_studies/abl1_dfg_flip/benchmark_spec.yaml
+preflight:
+  gate:
+    ca_adjacent_quality_threshold_a: 4.5
+    ca_adjacent_hard_threshold_a: 5.5
+experiment:
+  methods:
+  - frozen
+  - complete_nested
+  - duet
+  method_settings:
+    frozen:
+      outer_k: 64
+      inner_m: 1
+    complete_nested:
+      outer_k: 16
+      inner_m: 4
+    duet:
+      outer_k: 16
+      inner_m: 4
+  tasks:
+  - endpoint
+  task_count: 1
+  seeds:
+  - 20261001
+  - 20261002
+  - 20261003
+  - 20261004
+  - 20261005
+  decoder_population_budget: 64
+  cost_budget:
+    decoder_population_per_step: 64
+    reverse_steps: 200
+    horizon: 24
+  output_directory: outputs/duet_md/case_studies/abl1_dfg_flip
+  reference_split: endpoint tails for definition; two selected paths descriptive
+  evaluation_features:
+  - valid_endpoint_success
+  - dfg_inter
+  - event_order
+  - route_family
+  - genealogy
+  - diversity
+  - continuity

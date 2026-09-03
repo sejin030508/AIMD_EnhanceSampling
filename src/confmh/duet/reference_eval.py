@@ -118,7 +118,7 @@ class HeldOutReferenceEvaluator:
         )
         excluded = set()
         for observable in catalog.get("observables", {}).values():
-            if observable.get("kind") == "contact":
+            if observable.get("kind") in {"contact", "residue_distance"}:
                 i, j = sorted((int(observable["residue_i"]), int(observable["residue_j"])))
                 excluded.add((i, j))
         return cls(pca, reference_ca, reference_pc, windows, excluded)

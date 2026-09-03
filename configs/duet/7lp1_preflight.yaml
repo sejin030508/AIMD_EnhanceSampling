@@ -1,0 +1,84 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  cache_dir: ${DUET_ASSET_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 256
+  reverse_steps: 200
+  kv_cache_type: offloaded
+  device: cuda:0
+  dtype: float32
+
+trajectory:
+  case_id: 7lp1_A
+  seqres: VTQSFLPPGWEMRIAPNGRPFFIDHNTKTTTWEDPRLKF
+  horizon: 8
+  total_frames: 9
+  initial_structure: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_R2F5000_start.pdb
+  initial_history: null
+
+particles:
+  outer_k: 16
+  inner_m: 1
+  inner_checkpoint_progress: 0.75
+  outer_resampling: systematic
+  inner_resampling: systematic
+
+program:
+  type: terminal
+  potential_floor: 1.0e-30
+  lambda_program: 0.0
+  distance_weight: 0.0
+  remaining_event_weight: 0.0
+  deadline_weight: 0.0
+  failure_penalty: 0.0
+  terminal_failure_penalty: 0.0
+  distance_scale: 1.0
+  observables:
+    constant: {kind: residue_distance, residue_i: 0, residue_j: 1}
+  events:
+    - name: constant
+      observable: constant
+      target_interval: [-1.0e9, 1.0e9]
+      physical_window: [8, 8]
+
+reference:
+  topology: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A.pdb
+  pca_model: data/duet/7lp1_A/design_pca_r1_r2/pca_cv.npz
+
+preflight:
+  replicates: 16
+  gate:
+    ca_adjacent_quality_threshold_a: 4.5
+    ca_adjacent_hard_threshold_a: 5.5
+    max_sde_to_ode_mean_ca_adjacent_ratio: 1.10
+    max_pc1_wasserstein: 0.5
+  variants:
+    official_ode: {sampler_mode: ode, inner_m: 1, checkpoint_hook: false}
+    unconditioned_sde: {sampler_mode: sde, inner_m: 1, checkpoint_hook: false}
+    sde_checkpoint_no_resampling: {sampler_mode: sde, inner_m: 1, checkpoint_hook: true}
+    sde_constant_resampling: {sampler_mode: sde, inner_m: 16, checkpoint_hook: true}
+  metrics:
+    - nonfinite_rate
+    - backbone_geometry
+    - clash_rate
+    - ca_displacement
+    - pc_distribution
+    - temporal_displacement
+    - endpoint_support
+    - wall_clock
+    - peak_memory
+
+experiment:
+  methods: [frozen]
+  tasks: [inline]
+  task_count: 1
+  seeds: [20260831]
+  cost_budget: {replicates: 16}
+  output_directory: outputs/duet_md/extra_proteins/7lp1_A/preflight
+  reference_split: R1_R2_design_R3_held_out
+  evaluation_features: [pc1, geometry, displacement]
+  maximum_wall_clock: null

@@ -55,6 +55,16 @@ def resolve_config_path(cfg: dict[str, Any], value: str | Path) -> Path:
     return path.resolve() if path.is_absolute() else (project_root(cfg) / path).resolve()
 
 
+def inner_checkpoint_progresses(cfg: dict[str, Any]) -> tuple[float, ...]:
+    particles = cfg["particles"]
+    raw_progresses = particles.get("inner_checkpoint_progresses")
+    if raw_progresses is None:
+        return (float(particles.get("inner_checkpoint_progress", 0.75)),)
+    if not isinstance(raw_progresses, list) or not raw_progresses:
+        raise ValueError("particles.inner_checkpoint_progresses must be a non-empty list")
+    return tuple(float(item) for item in raw_progresses)
+
+
 def validate_duet_config(cfg: dict[str, Any]) -> None:
     missing = [section for section in REQUIRED_SECTIONS if section not in cfg]
     if missing:
@@ -68,16 +78,23 @@ def validate_duet_config(cfg: dict[str, Any]) -> None:
         raise ValueError("model.sampler_mode must be ode, sde, or exact")
     if int(model.get("reverse_steps", 1)) < 1:
         raise ValueError("model.reverse_steps must be positive")
+    if int(model.get("decoder_microbatch_size", 1)) < 1:
+        raise ValueError("model.decoder_microbatch_size must be positive")
     if int(trajectory.get("horizon", 0)) < 1:
         raise ValueError("trajectory.horizon must be positive")
     for key in ("outer_k", "inner_m"):
         if int(particles.get(key, 0)) < 1:
             raise ValueError(f"particles.{key} must be positive")
-    progress = float(particles.get("inner_checkpoint_progress", 0.75))
-    if not 0.0 < progress < 1.0:
-        raise ValueError("particles.inner_checkpoint_progress must be in (0, 1)")
+    progresses = inner_checkpoint_progresses(cfg)
+    if any(not 0.0 < progress < 1.0 for progress in progresses):
+        raise ValueError("Every inner checkpoint progress must be in (0, 1)")
+    if any(right <= left for left, right in zip(progresses, progresses[1:])):
+        raise ValueError("Inner checkpoint progresses must be strictly increasing")
     if particles.get("outer_resampling", "systematic") != "systematic":
         raise ValueError("The correctness protocol requires systematic outer resampling")
+    ess_fraction = float(particles.get("outer_resampling_ess_fraction", 1.0))
+    if not 0.0 < ess_fraction <= 1.0:
+        raise ValueError("particles.outer_resampling_ess_fraction must be in (0, 1]")
     if program.get("type") not in {"terminal", "windowed", "ordered"}:
         raise ValueError("program.type must be terminal, windowed, or ordered")
     if float(program.get("potential_floor", 0.0)) <= 0.0:
@@ -149,6 +166,9 @@ def missing_assets(cfg: dict[str, Any]) -> list[str]:
             values.append((f"reference.{key}[{index}]", item))
     if program.get("catalog"):
         values.append(("program.catalog", program["catalog"]))
+    case_study = cfg.get("case_study", {})
+    if case_study.get("benchmark_spec"):
+        values.append(("case_study.benchmark_spec", case_study["benchmark_spec"]))
     missing = []
     for label, value in values:
         if not resolve_config_path(cfg, value).exists():

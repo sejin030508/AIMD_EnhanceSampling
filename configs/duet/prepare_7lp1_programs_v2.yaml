@@ -1,0 +1,66 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  cache_dir: ${DUET_ASSET_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 256
+  reverse_steps: 200
+  device: cuda:0
+  dtype: float32
+
+trajectory:
+  case_id: 7lp1_A
+  seqres: VTQSFLPPGWEMRIAPNGRPFFIDHNTKTTTWEDPRLKF
+  horizon: 24
+  initial_structure: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_R2F5000_start.pdb
+  initial_history: null
+
+particles:
+  outer_k: 4
+  inner_m: 4
+  inner_checkpoint_progress: 0.90
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.25
+  inner_resampling: systematic
+
+program:
+  type: ordered
+  failure_guidance_weight: 1.0
+  potential_floor: 1.0e-30
+
+reference:
+  topology: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A.pdb
+  design_trajectories:
+    - ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_prod_R1_fit.xtc
+    - ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_prod_R2_fit.xtc
+  held_out_trajectories:
+    - ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_prod_R3_fit.xtc
+  initial_structure: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_R2F5000_start.pdb
+  protein_selection: protein and chainid 0
+  stride: 10
+  max_frames_per_trajectory: 2000
+  n_components: 3
+  basin_half_width: 0.25
+  target_basin_half_width: 0.50
+
+trajectory_horizon: 24
+contact_selection:
+  min_sequence_separation: 5
+  min_change_nm: 0.15
+  min_initial_margin_nm: 0.15
+  min_event_separation: 6
+  stable_fraction: 1.0
+
+output:
+  directory: ${DUET_PROJECT_ROOT}/data/duet/7lp1_A_v2
+
+experiment:
+  methods: [duet]
+  tasks: [endpoint, windowed, ordered]
+  task_count: 3
+  seeds: [20260915]
+  output_directory: outputs/duet_md/extra_proteins/7lp1_A/protocol_v2/program_setup
+  reference_split: R1_R2_design_R3_held_out

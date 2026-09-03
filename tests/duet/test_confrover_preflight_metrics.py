@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from confmh.adapters.confrover_duet import seeded_numpy
+from confmh.adapters.confrover_duet import ConfRoverDuETAdapter, ConfRoverFrame, seeded_numpy
 from confmh.duet.preflight import _trace_metrics, evaluate_preflight_gate
 
 
@@ -109,3 +109,25 @@ def test_preflight_gate_reads_legacy_nested_validity_maxima():
 
     gate = evaluate_preflight_gate(results, {})
     assert gate["passed"]
+
+
+def test_hard_geometry_gate_has_only_sub_milliangstrom_numeric_tolerance(tmp_path):
+    adapter = ConfRoverDuETAdapter(
+        repository_path=tmp_path,
+        checkpoint=tmp_path / "model.pt",
+        initial_structure=tmp_path / "start.pdb",
+        case_id="numeric_tolerance",
+        seqres="AA",
+        cache_dir=tmp_path,
+        ca_adjacent_hard_threshold_a=5.5,
+        ca_adjacent_hard_tolerance_a=1.0e-3,
+    )
+    coords = np.zeros((2, 37, 3), dtype=float)
+    mask = np.ones((2, 37), dtype=bool)
+    coords[1, 1, 0] = 5.5007
+    inside = ConfRoverFrame(coords.copy(), mask, np.zeros(2, dtype=int))
+    coords[1, 1, 0] = 5.5011
+    outside = ConfRoverFrame(coords, mask, np.zeros(2, dtype=int))
+
+    assert adapter.validate_frames([inside])[0]["valid"]
+    assert not adapter.validate_frames([outside])[0]["valid"]

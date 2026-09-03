@@ -63,7 +63,12 @@ class MockIterativeFrameAdapter(IterativeFrameAdapter):
     def denoise_to_checkpoint(
         self, particle_state: MockSE3ParticleState, checkpoint_progress: float
     ) -> MockSE3ParticleState:
-        steps = int(round(self.reverse_steps * float(checkpoint_progress)))
+        target = int(round(self.reverse_steps * float(checkpoint_progress)))
+        completed = self.reverse_steps - particle_state.time_index
+        steps_per_particle = np.maximum(target - completed, 0)
+        if not np.all(steps_per_particle == steps_per_particle[0]):
+            raise RuntimeError("Mock particles must remain synchronized in diffusion time")
+        steps = int(steps_per_particle[0])
         particle_state.translations *= 1.0 - 0.03 * steps
         particle_state.time_index -= steps
         self.accounting.reverse_decoder_evaluations += len(particle_state.time_index) * steps
@@ -78,9 +83,19 @@ class MockIterativeFrameAdapter(IterativeFrameAdapter):
     ) -> MockSE3ParticleState:
         return gather_state(particle_state, np.asarray(ancestor_indices, dtype=int))
 
+    def reseed_particle_state(
+        self,
+        particle_state: MockSE3ParticleState,
+        independent_seeds: Sequence[int],
+    ) -> MockSE3ParticleState:
+        if len(independent_seeds) != len(particle_state.time_index):
+            raise ValueError("Expected one independent continuation seed per particle")
+        return particle_state
+
     def denoise_to_end(
         self, particle_state: MockSE3ParticleState, independent_seeds: Sequence[int]
     ) -> MockSE3ParticleState:
+        self.reseed_particle_state(particle_state, independent_seeds)
         remaining = particle_state.time_index.copy()
         endpoint = []
         for coords, steps, seed in zip(

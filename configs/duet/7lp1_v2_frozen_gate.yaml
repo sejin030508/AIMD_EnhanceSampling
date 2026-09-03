@@ -1,0 +1,59 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  cache_dir: ${DUET_ASSET_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 256
+  reverse_steps: 200
+  kv_cache_type: offloaded
+  device: cuda:0
+  dtype: float32
+
+trajectory:
+  case_id: 7lp1_A
+  seqres: VTQSFLPPGWEMRIAPNGRPFFIDHNTKTTTWEDPRLKF
+  horizon: 24
+  initial_structure: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_R2F5000_start.pdb
+  initial_history: null
+
+particles:
+  outer_k: 48
+  inner_m: 1
+  inner_checkpoint_progress: 0.90
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.50
+  inner_resampling: systematic
+
+program:
+  type: ordered
+  catalog: data/duet/7lp1_A_v2/duet_programs.yaml
+  lambda_program: 0.5
+  distance_weight: 1.0
+  remaining_event_weight: 0.05
+  deadline_weight: 0.5
+  failure_penalty: 4.0
+  terminal_failure_penalty: 4.0
+  failure_guidance_weight: 1.0
+  distance_scale: 0.5
+  potential_floor: 1.0e-30
+
+reference:
+  topology: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A.pdb
+  pca_model: data/duet/7lp1_A_v2/design_pca_r1_r2/pca_cv.npz
+  held_out_trajectory: ${DUET_ASSET_ROOT}/data/atlas/7lp1_A/7lp1_A_prod_R3_fit.xtc
+
+experiment:
+  methods: [frozen]
+  method_settings:
+    frozen: {outer_k: 48, inner_m: 1}
+  tasks: [ordered]
+  task_count: 1
+  seeds: [20260916]
+  decoder_population_budget: 48
+  cost_budget: {decoder_population_per_step: 48, reverse_steps: 200, horizon: 24}
+  output_directory: outputs/duet_md/extra_proteins/7lp1_A/protocol_v2/frozen_gate
+  reference_split: R1_R2_design_R3_held_out
+  evaluation_features: [event_order, held_out_path, contacts, genealogy, diversity]

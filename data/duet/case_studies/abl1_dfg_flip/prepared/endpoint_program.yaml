@@ -1,0 +1,38 @@
+observables:
+  dfg_out_endpoint_distance:
+    kind: composite_dihedral_distance
+    components:
+    - atoms:
+      - - 153
+        - CB
+      - - 153
+        - CA
+      - - 154
+        - CA
+      - - 154
+        - CG
+      center_degrees: 265.02935791015625
+      scale_degrees: 31.039392089843755
+    - atoms:
+      - - 153
+        - CB
+      - - 153
+        - CA
+      - - 155
+        - CA
+      - - 155
+        - CG
+      center_degrees: 33.49248123168945
+      scale_degrees: 18.434476470947267
+tasks:
+  endpoint:
+    type: terminal
+    events:
+    - name: dfg_out
+      observable: dfg_out_endpoint_distance
+      target_interval:
+      - 0.0
+      - 0.8538755506277085
+      physical_window:
+      - 24
+      - 24

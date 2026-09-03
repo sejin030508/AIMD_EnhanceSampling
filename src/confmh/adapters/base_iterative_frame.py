@@ -43,6 +43,13 @@ class IterativeFrameAdapter(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def reseed_particle_state(
+        self, particle_state: Any, independent_seeds: Sequence[int]
+    ) -> Any:
+        """Assign independent noise streams after an intermediate resampling."""
+        raise NotImplementedError
+
+    @abstractmethod
     def denoise_to_end(self, particle_state: Any, independent_seeds: Sequence[int]) -> Any:
         raise NotImplementedError
 
@@ -68,4 +75,3 @@ class IterativeFrameAdapter(ABC):
         state = self.denoise_to_checkpoint(state, checkpoint_progress)
         state = self.denoise_to_end(state, seeds)
         return self.finalize_frames(state)
-

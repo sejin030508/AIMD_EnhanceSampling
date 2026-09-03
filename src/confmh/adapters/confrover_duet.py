@@ -101,9 +101,11 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
         reverse_steps: int = 200,
         sampler_mode: str = "sde",
         kv_cache_type: str = "offloaded",
+        decoder_microbatch_size: int | None = None,
         tmin: float = 0.01,
         ca_adjacent_quality_threshold_a: float = 4.5,
         ca_adjacent_hard_threshold_a: float = 5.5,
+        ca_adjacent_hard_tolerance_a: float = 1.0e-3,
     ) -> None:
         super().__init__()
         if sampler_mode not in {"ode", "sde"}:
@@ -120,11 +122,22 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
         self.reverse_steps = int(reverse_steps)
         self.sampler_mode = str(sampler_mode)
         self.kv_cache_type = str(kv_cache_type)
+        self.decoder_microbatch_size = (
+            None
+            if decoder_microbatch_size is None
+            else int(decoder_microbatch_size)
+        )
+        if (
+            self.decoder_microbatch_size is not None
+            and self.decoder_microbatch_size < 1
+        ):
+            raise ValueError("decoder_microbatch_size must be positive")
         self.tmin = float(tmin)
         self.ca_adjacent_quality_threshold_a = float(
             ca_adjacent_quality_threshold_a
         )
         self.ca_adjacent_hard_threshold_a = float(ca_adjacent_hard_threshold_a)
+        self.ca_adjacent_hard_tolerance_a = float(ca_adjacent_hard_tolerance_a)
         self.model: Any = None
         self.dataset: Any = None
         self.static_batch: dict[str, Any] | None = None
@@ -346,32 +359,57 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
         from openfold.utils import rigid_utils as ru
 
         batch = state.aatype.shape[0]
-        t = torch.full(
-            (batch,), state.time_value, device=state.aatype.device, dtype=state.s.dtype
-        )
-        rigids_t = ru.Rigid.from_tensor_7(state.rigids_t7)
-        output = self.model.decoder.model_nn(
-            t=t,
-            s=state.s,
-            z=state.z,
-            rigids_t=rigids_t,
-            aatype=state.aatype,
-            padding_mask=state.padding_mask,
-            rigids_mask=state.rigids_mask,
-            pretrained_single=state.pretrained_single,
-            pretrained_pair=state.pretrained_pair,
-        )
-        pred_rigids = output["pred_rigids_0"]
-        rot_score = self.model.decoder.diffuser.calc_rot_score(
-            rigids_t.get_rots(), pred_rigids.get_rots(), t, use_cached_score=True
-        ) * state.rigids_mask[..., None]
-        trans_score = self.model.decoder.diffuser.calc_trans_score(
-            rigids_t.get_trans(), pred_rigids.get_trans(), t[:, None, None], use_torch=True
-        ) * state.rigids_mask[..., None]
-        state.cached_rot_score = rot_score
-        state.cached_trans_score = trans_score
-        state.cached_pred_atom14 = output["pred_atom14"]
-        state.cached_pred_rigids_0_7 = pred_rigids.to_tensor_7()
+        chunk_size = min(self.decoder_microbatch_size or batch, batch)
+        rot_scores = []
+        trans_scores = []
+        pred_atom14 = []
+        pred_rigids_0_7 = []
+        for start in range(0, batch, chunk_size):
+            stop = min(start + chunk_size, batch)
+            t = torch.full(
+                (stop - start,),
+                state.time_value,
+                device=state.aatype.device,
+                dtype=state.s.dtype,
+            )
+            rigids_t = ru.Rigid.from_tensor_7(state.rigids_t7[start:stop])
+            output = self.model.decoder.model_nn(
+                t=t,
+                s=state.s[start:stop],
+                z=state.z[start:stop],
+                rigids_t=rigids_t,
+                aatype=state.aatype[start:stop],
+                padding_mask=state.padding_mask[start:stop],
+                rigids_mask=state.rigids_mask[start:stop],
+                pretrained_single=state.pretrained_single[start:stop],
+                pretrained_pair=state.pretrained_pair[start:stop],
+            )
+            chunk_pred_rigids = output["pred_rigids_0"]
+            chunk_mask = state.rigids_mask[start:stop]
+            rot_scores.append(
+                self.model.decoder.diffuser.calc_rot_score(
+                    rigids_t.get_rots(),
+                    chunk_pred_rigids.get_rots(),
+                    t,
+                    use_cached_score=True,
+                )
+                * chunk_mask[..., None]
+            )
+            trans_scores.append(
+                self.model.decoder.diffuser.calc_trans_score(
+                    rigids_t.get_trans(),
+                    chunk_pred_rigids.get_trans(),
+                    t[:, None, None],
+                    use_torch=True,
+                )
+                * chunk_mask[..., None]
+            )
+            pred_atom14.append(output["pred_atom14"])
+            pred_rigids_0_7.append(chunk_pred_rigids.to_tensor_7())
+        state.cached_rot_score = torch.cat(rot_scores, dim=0)
+        state.cached_trans_score = torch.cat(trans_scores, dim=0)
+        state.cached_pred_atom14 = torch.cat(pred_atom14, dim=0)
+        state.cached_pred_rigids_0_7 = torch.cat(pred_rigids_0_7, dim=0)
         self.accounting.reverse_decoder_evaluations += batch
 
     def _reverse_cached(self, state: ConfRoverParticleState) -> None:
@@ -456,12 +494,22 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
     ) -> ConfRoverParticleState:
         return gather_state(particle_state, np.asarray(ancestor_indices, dtype=int))
 
+    def reseed_particle_state(
+        self,
+        particle_state: ConfRoverParticleState,
+        independent_seeds: Sequence[int],
+    ) -> ConfRoverParticleState:
+        if len(independent_seeds) != particle_state.aatype.shape[0]:
+            raise ValueError("Expected one independent continuation seed per particle")
+        particle_state.noise_seeds = np.asarray(independent_seeds, dtype=np.int64)
+        return particle_state
+
     def denoise_to_end(
         self, particle_state: ConfRoverParticleState, independent_seeds: Sequence[int]
     ) -> ConfRoverParticleState:
-        if len(independent_seeds) != particle_state.aatype.shape[0]:
-            raise ValueError("Expected one independent continuation seed per resampled particle")
-        particle_state.noise_seeds = np.asarray(independent_seeds, dtype=np.int64)
+        particle_state = self.reseed_particle_state(
+            particle_state, independent_seeds
+        )
         return self._advance(particle_state, self.reverse_steps)
 
     def finalize_frames(self, particle_state: ConfRoverParticleState) -> list[Any]:
@@ -488,16 +536,19 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
             adjacent = np.linalg.norm(np.diff(ca_a, axis=0), axis=-1)
             quality_violations = adjacent >= self.ca_adjacent_quality_threshold_a
             nonfinite = int(np.size(frame.atom37_a) - np.isfinite(frame.atom37_a).sum())
-            clash_count = 0
-            for left in range(len(ca_a)):
-                for right in range(left + 2, len(ca_a)):
-                    clash_count += int(np.linalg.norm(ca_a[left] - ca_a[right]) < 1.0)
+            pairwise = np.linalg.norm(ca_a[:, None, :] - ca_a[None, :, :], axis=-1)
+            nonneighbor_pairs = np.triu(np.ones(pairwise.shape, dtype=bool), k=2)
+            clash_count = int(np.sum((pairwise < 1.0) & nonneighbor_pairs))
             results.append(
                 {
                     "valid": bool(
                         nonfinite == 0
                         and clash_count == 0
-                        and np.all(adjacent < self.ca_adjacent_hard_threshold_a)
+                        and np.all(
+                            adjacent
+                            <= self.ca_adjacent_hard_threshold_a
+                            + self.ca_adjacent_hard_tolerance_a
+                        )
                     ),
                     "nonfinite_coordinate_count": nonfinite,
                     "ca_adjacent_max_a": float(np.max(adjacent)) if len(adjacent) else 0.0,
@@ -507,6 +558,7 @@ class ConfRoverDuETAdapter(IterativeFrameAdapter):
                     ),
                     "ca_adjacent_quality_threshold_a": self.ca_adjacent_quality_threshold_a,
                     "ca_adjacent_hard_threshold_a": self.ca_adjacent_hard_threshold_a,
+                    "ca_adjacent_hard_tolerance_a": self.ca_adjacent_hard_tolerance_a,
                     "ca_clash_count_lt_1a": int(clash_count),
                 }
             )
