@@ -37,37 +37,108 @@ def build_featurizer(folded_pdb: Path):
     return featurizer
 
 
+AA3_TO_1 = {
+    "ALA": "A", "ARG": "R", "ASN": "N", "ASP": "D", "CYS": "C",
+    "GLN": "Q", "GLU": "E", "GLY": "G", "HIS": "H", "ILE": "I",
+    "LEU": "L", "LYS": "K", "MET": "M", "PHE": "F", "PRO": "P",
+    "SER": "S", "THR": "T", "TRP": "W", "TYR": "Y", "VAL": "V",
+    "HID": "H", "HIE": "H", "HIP": "H", "HSD": "H", "HSE": "H", "HSP": "H",
+    "CYX": "C", "ASH": "D", "GLH": "E", "LYN": "K",
+}
+
+
+def one_letter(topology) -> str:
+    return "".join(AA3_TO_1.get(residue.name.upper(), "X") for residue in topology.residues)
+
+
+def align_reference_residues(reference_topology, folded_topology) -> list[int]:
+    """Return the reference residue indices matching ``folded.pdb``.
+
+    The benchmark structure is the canonical definition: it fixes the reward
+    reference, the ConfRover input and the featurizer the evaluation code
+    already uses for the original three proteins, so it is never modified.
+    The reference simulation is what gets cut down to match it.  Matching is
+    done on sequence rather than residue numbering, because the two sources
+    disagree about numbering offsets and terminal caps far more often than
+    they disagree about chemistry.
+    """
+    reference_sequence = one_letter(reference_topology)
+    folded_sequence = one_letter(folded_topology)
+    start = reference_sequence.find(folded_sequence)
+    if start < 0:
+        raise SystemExit(
+            "cannot locate the benchmark sequence inside the reference topology.\n"
+            f"  benchmark  ({len(folded_sequence)} residues): {folded_sequence}\n"
+            f"  reference  ({len(reference_sequence)} residues): {reference_sequence}\n"
+            "Restrict both featurizers to the common residues instead, and report "
+            "that the extended proteins use a reduced feature set."
+        )
+    if reference_sequence.count(folded_sequence) > 1:
+        raise SystemExit(
+            "the benchmark sequence occurs more than once in the reference "
+            "topology; resolve the ambiguity explicitly before fitting."
+        )
+    return list(range(start, start + len(folded_sequence)))
+
+
 def load_features(
     folded_pdb: Path,
     topology: Path,
     trajectories: list[Path],
     stride: int,
-) -> list[np.ndarray]:
+) -> tuple[list[np.ndarray], dict]:
     """Featurise reference trajectories on the ``folded.pdb`` feature layout.
 
-    The reference simulations carry their own topology, which need not be
-    atom-for-atom identical to the benchmark's ``folded.pdb``.  Backbone
-    torsions only need N/CA/C, so the two agree as long as the residue count
-    does; that is asserted rather than assumed.
+    Equal feature dimension is necessary but not sufficient: two different
+    residue sets of the same length would pass a dimension check and produce a
+    TICA model on a silently different coordinate.  The per-feature labels are
+    therefore compared one by one.
     """
     import mdtraj as md
     from pyemma import coordinates as coor
 
-    reference = build_featurizer(folded_pdb)
-    expected = reference.dimension()
-    working = coor.featurizer(str(topology))
+    benchmark = build_featurizer(folded_pdb)
+    folded_topology = md.load(str(folded_pdb)).topology
+    reference_topology = md.load(str(topology)).topology
+
+    residues = align_reference_residues(reference_topology, folded_topology)
+    atom_indices = reference_topology.select(
+        "resid " + " ".join(str(index) for index in residues)
+    )
+    sliced_topology = reference_topology.subset(atom_indices)
+
+    working = coor.featurizer(sliced_topology)
     working.add_backbone_torsions(cossin=True)
-    if working.dimension() != expected:
-        raise SystemExit(
-            f"feature dimension mismatch: reference topology gives "
-            f"{working.dimension()} but {folded_pdb.name} gives {expected}. "
-            "Align the residue selection before fitting."
+
+    benchmark_labels = [label.split()[0] for label in benchmark.describe()]
+    working_labels = [label.split()[0] for label in working.describe()]
+    if benchmark_labels != working_labels:
+        mismatch = next(
+            index
+            for index, (left, right) in enumerate(zip(benchmark_labels, working_labels))
+            if left != right
         )
+        raise SystemExit(
+            "feature layout differs after alignment "
+            f"({len(benchmark_labels)} vs {len(working_labels)} features; first "
+            f"mismatch at {mismatch}: {benchmark.describe()[mismatch]!r} vs "
+            f"{working.describe()[mismatch]!r})."
+        )
+
     features = []
     for path in trajectories:
-        trajectory = md.load(str(path), top=str(topology), stride=stride)
+        trajectory = md.load(
+            str(path), top=str(topology), stride=stride, atom_indices=atom_indices
+        )
         features.append(np.asarray(working.transform(trajectory), dtype=np.float64))
-    return features
+    alignment = {
+        "reference_residue_count": int(reference_topology.n_residues),
+        "benchmark_residue_count": int(folded_topology.n_residues),
+        "reference_offset": int(residues[0]),
+        "atoms_kept": int(len(atom_indices)),
+        "feature_labels_verified": len(benchmark_labels),
+    }
+    return features, alignment
 
 
 def fit(features: list[np.ndarray], lag: int, dim: int = 2):
@@ -167,12 +238,13 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    features = load_features(
+    features, alignment = load_features(
         args.folded_pdb, args.topology, args.trajectories, args.stride
     )
     report: dict = {
         "folded_pdb": str(args.folded_pdb),
         "topology": str(args.topology),
+        "alignment": alignment,
         "trajectory_count": len(features),
         "frames_per_trajectory": [int(len(item)) for item in features],
         "feature_dimension": int(features[0].shape[1]),
