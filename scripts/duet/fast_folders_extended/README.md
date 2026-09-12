@@ -133,6 +133,20 @@ python small_protein_pilot/verify_small_protein_setup.py \
 Protein B and Homeodomain follow the same two commands once their bundles exist,
 with `--official-root` pointing at the extended asset root instead.
 
+## Running a cell
+
+`run_small_protein_cell.sh` reads its config directory from
+`SMALL_PROTEIN_CONFIG_SUBDIR`, so the original pilot's `configs/` stays
+byte-identical while the extended proteins use `configs_extended/`:
+
+```bash
+export SMALL_PROTEIN_CONFIG_SUBDIR=configs_extended
+small_protein_pilot/run_small_protein_cell.sh bbl 16 frozen 199 preflight
+small_protein_pilot/run_small_protein_cell.sh bbl 128 duet 211
+```
+
+Accepted seeds are unchanged: 199 for preflight, 211 and 223 for production.
+
 ## Standing caveat
 
 The Bundle A audit found gross peptide C-N violations in every generated frame,

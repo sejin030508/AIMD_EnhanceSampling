@@ -57,12 +57,37 @@ VERIFY_EDITS = [
     ),
 ]
 
-SENTINEL = "args.molecules"
+CELL_EDITS = [
+    (
+        'case "$molecule" in chignolin|trpcage|bba) ;; *) exit 64 ;; esac',
+        'case "$molecule" in chignolin|trpcage|bba|bbl|protein_b|homeodomain) ;;'
+        " *) exit 64 ;; esac",
+    ),
+    (
+        '    config="$SMALL_PROTEIN_CODE_ROOT/configs/${molecule}_preflight_stride16_t1.yaml"',
+        '    config="$SMALL_PROTEIN_CODE_ROOT/${config_subdir}/'
+        '${molecule}_preflight_stride16_t1.yaml"',
+    ),
+    (
+        '    config="$SMALL_PROTEIN_CODE_ROOT/configs/${molecule}_stride${stride}_t32.yaml"',
+        '    config="$SMALL_PROTEIN_CODE_ROOT/${config_subdir}/'
+        '${molecule}_stride${stride}_t32.yaml"',
+    ),
+    (
+        'mode="${5:-production}"',
+        'mode="${5:-production}"\n'
+        "# Extended proteins keep their configs in a sibling directory so the\n"
+        "# original pilot's configs/ stays byte-identical.\n"
+        'config_subdir="${SMALL_PROTEIN_CONFIG_SUBDIR:-configs}"',
+    ),
+]
+
+SENTINELS = ("args.molecules", "SMALL_PROTEIN_CONFIG_SUBDIR")
 
 
 def apply(path: Path, edits: list[tuple[str, str]]) -> str:
     source = path.read_text(encoding="utf-8")
-    if SENTINEL in source:
+    if any(sentinel in source for sentinel in SENTINELS):
         return f"already patched: {path.name}"
     backup = path.with_name(path.name + ".orig")
     if not backup.exists():
@@ -83,6 +108,7 @@ def main() -> int:
     for name, edits in (
         ("prepare_small_protein_inputs.py", PREPARE_EDITS),
         ("verify_small_protein_setup.py", VERIFY_EDITS),
+        ("run_small_protein_cell.sh", CELL_EDITS),
     ):
         path = args.pilot_root / name
         if not path.exists():
