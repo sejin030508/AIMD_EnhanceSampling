@@ -74,6 +74,48 @@ def build_confrover_adapter(cfg: dict[str, Any]) -> ConfRoverDuETAdapter:
     )
 
 
+def build_pvb_adapter(cfg: dict[str, Any]):
+    from confmh.adapters.pvb_duet import PVBDuETAdapter
+
+    model, trajectory = cfg["model"], cfg["trajectory"]
+    geometry_gate = cfg.get("preflight", {}).get("gate", {})
+    return PVBDuETAdapter(
+        repository_path=resolve_config_path(cfg, model["repository_path"]),
+        checkpoint=resolve_config_path(cfg, model["checkpoint"]),
+        initial_structure=resolve_config_path(cfg, trajectory["initial_structure"]),
+        device=str(model.get("device", "cuda:0")),
+        # 20 puts 0.25/0.50/0.75/0.90 on exact bridge-step boundaries; at the
+        # published 10 the 0.90 checkpoint lands on the final, deterministic
+        # step, so resampled particles cannot diverge at all.
+        sde_step=int(model.get("sde_step", 20)),
+        ca_adjacent_quality_threshold_a=float(
+            geometry_gate.get("ca_adjacent_quality_threshold_a", 4.5)
+        ),
+        ca_adjacent_hard_threshold_a=float(
+            geometry_gate.get("ca_adjacent_hard_threshold_a", 5.5)
+        ),
+        ca_adjacent_hard_tolerance_a=float(
+            geometry_gate.get("ca_adjacent_hard_tolerance_a", 1.0e-3)
+        ),
+        enforce_peptide_bond=bool(
+            geometry_gate.get("enforce_peptide_bond", True)
+        ),
+    )
+
+
+BACKENDS = {"confrover": build_confrover_adapter, "pvb": build_pvb_adapter}
+
+
+def build_adapter(cfg: dict[str, Any]):
+    """Select the emulator backend named by ``model.backend``."""
+    backend = str(cfg["model"].get("backend", "confrover"))
+    if backend not in BACKENDS:
+        raise ValueError(
+            f"Unknown model.backend {backend!r}; expected one of {sorted(BACKENDS)}"
+        )
+    return BACKENDS[backend](cfg)
+
+
 def _save_particles(output: Path, particles) -> None:
     histories = []
     for particle in particles:
@@ -153,7 +195,7 @@ def run_experiment_config(
                     overwrite=overwrite,
                     resume=resume,
                 )
-                adapter = build_confrover_adapter(cfg)
+                adapter = build_adapter(cfg)
                 adapter.load_model()
                 initial_history = adapter.initial_history()
                 potential = PrefixPotential(

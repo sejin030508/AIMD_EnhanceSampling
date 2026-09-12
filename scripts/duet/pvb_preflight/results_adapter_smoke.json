@@ -1,0 +1,255 @@
+{
+  "checkpoint_timings": [
+    0.25,
+    0.5,
+    0.75,
+    0.9
+  ],
+  "arms": {
+    "candidate": {
+      "sde_step": 20,
+      "schedule": [
+        {
+          "requested_progress": 0.25,
+          "step": 5,
+          "realised_progress": 0.25,
+          "exact": true
+        },
+        {
+          "requested_progress": 0.5,
+          "step": 10,
+          "realised_progress": 0.5,
+          "exact": true
+        },
+        {
+          "requested_progress": 0.75,
+          "step": 15,
+          "realised_progress": 0.75,
+          "exact": true
+        },
+        {
+          "requested_progress": 0.9,
+          "step": 18,
+          "realised_progress": 0.9,
+          "exact": true
+        }
+      ],
+      "all_timings_exact": true,
+      "residues": 39,
+      "unmapped_atom_names": [],
+      "checkpoints": [
+        {
+          "requested": 0.25,
+          "step": 5,
+          "realised": 0.25,
+          "predicted_clean_geometry": {
+            "ca_adjacent_min_a": 3.554082690085718,
+            "ca_adjacent_max_a": 4.1560108066031995,
+            "peptide_cn_min_a": 1.126159074378887,
+            "peptide_cn_max_a": 1.5622555552843962,
+            "peptide_cn_violations": 0
+          }
+        },
+        {
+          "requested": 0.5,
+          "step": 10,
+          "realised": 0.5,
+          "predicted_clean_geometry": {
+            "ca_adjacent_min_a": 3.558393029119598,
+            "ca_adjacent_max_a": 4.199978710423832,
+            "peptide_cn_min_a": 1.189713763585183,
+            "peptide_cn_max_a": 1.5760750642154284,
+            "peptide_cn_violations": 0
+          }
+        },
+        {
+          "requested": 0.75,
+          "step": 15,
+          "realised": 0.75,
+          "predicted_clean_geometry": {
+            "ca_adjacent_min_a": 3.5409250275754482,
+            "ca_adjacent_max_a": 4.141456758116172,
+            "peptide_cn_min_a": 1.2659993120210407,
+            "peptide_cn_max_a": 1.4855561392952483,
+            "peptide_cn_violations": 0
+          }
+        },
+        {
+          "requested": 0.9,
+          "step": 18,
+          "realised": 0.9,
+          "predicted_clean_geometry": {
+            "ca_adjacent_min_a": 3.576166233103921,
+            "ca_adjacent_max_a": 4.052915017985645,
+            "peptide_cn_min_a": 1.287086518180912,
+            "peptide_cn_max_a": 1.4241224963146437,
+            "peptide_cn_violations": 0
+          }
+        }
+      ],
+      "final_geometry": {
+        "ca_adjacent_min_a": 3.588590802397973,
+        "ca_adjacent_max_a": 4.018005099689838,
+        "peptide_cn_min_a": 1.2551531785613887,
+        "peptide_cn_max_a": 1.4007450612423595,
+        "peptide_cn_violations": 0
+      },
+      "validity": {
+        "valid": true,
+        "nonfinite_coordinate_count": 0,
+        "ca_adjacent_max_a": 4.018005099689838,
+        "ca_adjacent_count_ge_4_5a": 0,
+        "ca_adjacent_fraction_ge_4_5a": 0.0,
+        "ca_adjacent_quality_threshold_a": 4.5,
+        "ca_adjacent_hard_threshold_a": 5.5,
+        "ca_adjacent_hard_tolerance_a": 0.001,
+        "ca_clash_count_lt_1a": 0,
+        "peptide_cn_min_a": 1.2551531785613887,
+        "peptide_cn_max_a": 1.4007450612423595,
+        "peptide_cn_violation_count": 0,
+        "peptide_cn_enforced": true
+      },
+      "all_valid": true,
+      "branch_rmsd_to_particle_0_a": [
+        0.03535442054271698,
+        0.037247058004140854,
+        0.03763750568032265
+      ],
+      "branches_diverge": true,
+      "nfe": {
+        "reverse_decoder_evaluations": 80,
+        "predicted_clean_evaluations": 16,
+        "temporal_encoder_evaluations": 0,
+        "reward_evaluations": 0,
+        "generated_complete_frames": 4
+      }
+    },
+    "published_baseline": {
+      "sde_step": 10,
+      "schedule": [
+        {
+          "requested_progress": 0.25,
+          "step": 2,
+          "realised_progress": 0.2,
+          "exact": false
+        },
+        {
+          "requested_progress": 0.5,
+          "step": 5,
+          "realised_progress": 0.5,
+          "exact": true
+        },
+        {
+          "requested_progress": 0.75,
+          "step": 8,
+          "realised_progress": 0.8,
+          "exact": false
+        },
+        {
+          "requested_progress": 0.9,
+          "step": 9,
+          "realised_progress": 0.9,
+          "exact": true
+        }
+      ],
+      "all_timings_exact": false,
+      "residues": 39,
+      "unmapped_atom_names": [],
+      "checkpoints": [
+        {
+          "requested": 0.25,
+          "step": 2,
+          "realised": 0.2,
+          "predicted_clean_geometry": {
+            "ca_adjacent_min_a": 3.5306598576334958,
+            "ca_adjacent_max_a": 4.132775422545299,
+            "peptide_cn_min_a": 1.0595960757743221,
+            "peptide_cn_max_a": 1.4889675364689012,
+            "peptide_cn_violations": 0
+          }
+        },
+        {
+          "requested": 0.5,
+          "step": 5,
+          "realised": 0.5,
+          "predicted_clean_geometry": {
+            "ca_adjacent_min_a": 3.644026554097619,
+            "ca_adjacent_max_a": 3.960055147437697,
+            "peptide_cn_min_a": 1.1612535263909431,
+            "peptide_cn_max_a": 1.420087247257634,
+            "peptide_cn_violations": 0
+          }
+        },
+        {
+          "requested": 0.75,
+          "step": 8,
+          "realised": 0.8,
+          "predicted_clean_geometry": {
+            "ca_adjacent_min_a": 3.688330563135286,
+            "ca_adjacent_max_a": 3.960236913001887,
+            "peptide_cn_min_a": 1.2696495861442085,
+            "peptide_cn_max_a": 1.3992482484398563,
+            "peptide_cn_violations": 0
+          }
+        },
+        {
+          "requested": 0.9,
+          "step": 9,
+          "realised": 0.9,
+          "predicted_clean_geometry": {
+            "ca_adjacent_min_a": 3.6557526417139043,
+            "ca_adjacent_max_a": 3.966019103162145,
+            "peptide_cn_min_a": 1.2935496620690694,
+            "peptide_cn_max_a": 1.38944582040608,
+            "peptide_cn_violations": 0
+          }
+        }
+      ],
+      "final_geometry": {
+        "ca_adjacent_min_a": 3.6557526417139043,
+        "ca_adjacent_max_a": 3.966019103162145,
+        "peptide_cn_min_a": 1.2935496620690694,
+        "peptide_cn_max_a": 1.38944582040608,
+        "peptide_cn_violations": 0
+      },
+      "validity": {
+        "valid": true,
+        "nonfinite_coordinate_count": 0,
+        "ca_adjacent_max_a": 3.966019103162145,
+        "ca_adjacent_count_ge_4_5a": 0,
+        "ca_adjacent_fraction_ge_4_5a": 0.0,
+        "ca_adjacent_quality_threshold_a": 4.5,
+        "ca_adjacent_hard_threshold_a": 5.5,
+        "ca_adjacent_hard_tolerance_a": 0.001,
+        "ca_clash_count_lt_1a": 0,
+        "peptide_cn_min_a": 1.2935496620690694,
+        "peptide_cn_max_a": 1.38944582040608,
+        "peptide_cn_violation_count": 0,
+        "peptide_cn_enforced": true
+      },
+      "all_valid": true,
+      "branch_rmsd_to_particle_0_a": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "branches_diverge": false,
+      "nfe": {
+        "reverse_decoder_evaluations": 40,
+        "predicted_clean_evaluations": 16,
+        "temporal_encoder_evaluations": 0,
+        "reward_evaluations": 0,
+        "generated_complete_frames": 4
+      }
+    }
+  },
+  "verdict": {
+    "timings_exact": true,
+    "geometry_valid": true,
+    "branches_diverge": true,
+    "baseline_geometry_valid": true,
+    "peptide_cn_candidate": 0,
+    "peptide_cn_baseline": 0,
+    "candidate_accepted": true
+  }
+}

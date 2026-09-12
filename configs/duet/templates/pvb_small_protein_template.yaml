@@ -1,0 +1,79 @@
+# PVB backend for the small-protein transition experiment.
+#
+# Mirrors the ConfRover small-protein configs so the only axis that changes is
+# the emulator.  Substitute {MOLECULE}, {SEQRES} and {RESIDUES} per protein.
+#
+# Horizon matching: PVB carries its own 100 ps ATLAS lag per transition, which
+# is not ConfRover's 1.28 ns.  The two are therefore matched on the number of
+# autoregressive transitions (T=32), not on nominal physical time, and any
+# reported horizon must name the model it belongs to.
+
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: pvb
+  repository_path: /workspace/sejin/pvb_assets/PVB
+  checkpoint: /workspace/sejin/pvb_assets/ckpt/pvb_atlas.ckpt
+  device: cuda:0
+  # 20, not the published 10: at 10 the 0.90 checkpoint falls on the final,
+  # deterministic bridge step, so resampled particles cannot diverge at all
+  # (measured spread exactly 0.0).  At 20 all four timings are exact and
+  # branches separate normally.  Every method in a comparison must share it.
+  sde_step: 20
+
+trajectory:
+  case_id: pvb_small_protein_{MOLECULE}
+  seqres: {SEQRES}
+  horizon: 32
+  initial_structure: ${SMALL_PROTEIN_DATA_ROOT}/prepared/{MOLECULE}/unfolded_minimized_allatom.pdb
+
+particles:
+  outer_k: 4
+  inner_m: 4
+  inner_checkpoint_progresses:
+  - 0.75
+  - 0.90
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.5
+  inner_resampling: systematic
+
+program:
+  type: terminal
+  reward_coefficient: 16.0
+  reward_log_floor: null
+  potential_floor: 1.0e-300
+
+pocket:
+  manifest: ${SMALL_PROTEIN_DATA_ROOT}/prepared/{MOLECULE}/manifest.json
+  reference_npz: ${SMALL_PROTEIN_DATA_ROOT}/prepared/{MOLECULE}/whole_backbone_reference_atom37.npz
+
+preflight:
+  gate:
+    ca_adjacent_quality_threshold_a: 4.5
+    ca_adjacent_hard_threshold_a: 5.5
+    # PVB produces intact peptide bonds, so the gate Bundle A showed ConfRover
+    # could not pass is enforced here rather than reported alongside.
+    enforce_peptide_bond: true
+
+experiment:
+  stage: pvb_sde20_t32
+  methods:
+  - frozen
+  - duet
+  method_settings:
+    frozen:
+      outer_k: 16
+      inner_m: 1
+    duet:
+      outer_k: 4
+      inner_m: 4
+  seeds:
+  - 211
+  - 223
+  analysis_transitions:
+  - 8
+  - 16
+  - 32
+  task_count: 4
+  decoder_population_budget: 16
+  output_directory: ${SMALL_PROTEIN_OUTPUT_ROOT}
