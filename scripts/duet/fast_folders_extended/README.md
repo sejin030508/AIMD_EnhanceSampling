@@ -76,9 +76,12 @@ simply copy one.  `fit_tica_model.py --scan-lags` reports implied timescales
 across candidate lags so the choice can be made on convergence rather than by
 eye.
 
-### Validate before trusting a refit
+### Reproducing BBA is a diagnostic, not a gate
 
-Run the refit on **BBA first**, where a published model exists:
+`--validate-against` refits a protein that already has a published model and
+reports the absolute correlation of each projected component.  Run it on BBA for
+information, but do **not** gate on it: the two fits come from different
+reference data and are not required to agree numerically.
 
 ```bash
 python fit_tica_model.py \
@@ -89,18 +92,36 @@ python fit_tica_model.py \
   --validate-against external/tps-dps/data/bba/tica_model.pkl
 ```
 
-The report gives the absolute correlation of each projected component against
-the published model.  A refit that cannot reproduce BBA is not on the same
-scale as the existing results, and a THP computed from it would not be
-comparable to the pilot's numbers.
+### What must be verified instead
 
-### The 0.75 hit threshold does not transfer
+Compatibility is judged **within a protein**, between its own `folded.pdb` and
+its own reference trajectories — not against another protein's published model.
+Equal feature dimension is far too weak a test: BBA yields 108 features from
+both a 28-residue benchmark structure and a 32-residue reference topology.
+Check, in one pass:
 
-`weighted_valid_thp` counts a path when the first two TICA coordinates of its
-final frame land within `0.75` of the folded reference.  That radius is tied to
-the scale of the published models.  For a refitted protein, express it as the
-quantile of the folded-basin distribution that `0.75` corresponds to in BBA,
-then apply the same quantile — do not reuse the number.
+- sequence and construct identity
+- the four atoms backing every torsion, by residue and atom name
+- feature ordering, label by label
+- the TICA lag against the trajectory lengths
+- trajectory boundaries: a lagged pair must never span two trajectories
+
+The last two matter because the reference data is adaptive sampling, not long
+trajectories.  For BBA it is **7,297 trajectories of 500 frames each**, so a lag
+of 100 frames leaves 400 usable pairs per trajectory (~2.9M overall) and is
+comfortably feasible.  Pass the trajectories to PyEMMA as a *list* of arrays so
+it never forms a pair across a boundary.
+
+> The `time` field in these XTCs reports 100000 ps per frame, which is not
+> credible for adaptive sampling and must not be used to convert a lag in frames
+> into physical time.
+
+### Fixing the hit threshold
+
+The published `0.75` radius is tied to the scale of the published models and does
+not transfer to a refit.  For Protein B and Homeodomain, determine the target
+range from that protein's own reference data, fix it before any method is run,
+and apply the identical range to every method for that protein.
 
 `pmf.npy` / `xs.npy` / `ys.npy` are a 50x50 grid used only for the PMF overlay
 plot; they do not enter the hit decision.
