@@ -1,0 +1,1006 @@
+transition_mode: last_exit_route_geometry
+protocol_parameters:
+  version: route_v3_1
+  transition_mode: last_exit_route_geometry
+  route_discovery_role: D1
+  route_discovery_trajectory_index: 0
+  route_discovery_original_start_frame: 3000
+  route_discovery_original_end_frame: 4024
+  route_discovery_start_time_ps: 30000.0
+  route_discovery_end_time_ps: 40240.0
+  reference_route_analysis_frames: 25
+  reference_start_dwell_ps: 200.0
+  reference_target_dwell_ps: 200.0
+  max_start_ca_rmsd_nm: 0.3
+  lag_selection_mode: reference_first_passage_target_compression
+  target_nominal_compression: 2.0
+  model_lag_bounds_in_10ps:
+  - 20
+  - 210
+  nominal_compression_factor:
+  - 1.0
+  - 10.0
+  event_timing_mode: ordered_by_common_deadline
+  generated_event_persistence_frames: 2
+  generated_target_persistence_frames: 2
+  allow_same_frame_stage_completion: false
+  terminal_mode: first_stable_hit_by_deadline
+  record_time_to_success: true
+  held_out_role: optional_secondary_fidelity
+  nominal_time_only: true
+  physical_kinetics_claim: false
+trajectory_horizon: 24
+model_step_ps: 200.0
+nominal_challenge:
+  lag_selection_mode: reference_first_passage_target_compression
+  selected_physical_lag_in_10ps: 20
+  model_step_ps: 200.0
+  model_duration_ps: 4800.0
+  reference_first_passage_ps: 9500.0
+  reference_transition_path_ps: 7200.0
+  nominal_compression: 1.9791666666666667
+  allowed_nominal_compression:
+  - 1.0
+  - 10.0
+  physical_kinetics_claim: false
+replicate_roles:
+  D1: R3
+  D2: R1
+  H: R2
+start_pc1: -2.0663114917374856
+target_pc1: 2.0577202639751238
+route_endpoint_structure: /Users/sejin/Desktop/AIBL/projects/confrover_mh_steering/data/atlas/7bwf_B/7bwf_B_R3F4024_end.pdb
+start_interval:
+- -2.3163114917374856
+- -1.8163114917374856
+transition_target_interval:
+- 1.5577202639751238
+- 2.5577202639751238
+target_interval:
+- 1.5577202639751238
+- 2.5577202639751238
+intermediate_interval:
+- -0.25429561388118094
+- 0.24570438611881906
+transition_segment_count: 1
+design_trajectory_count: 2
+transition_segment_source_indices:
+- 0
+transition_paths:
+- start_run:
+  - 320
+  - 323
+  target_run:
+  - 395
+  - 407
+  start_dwell_required_frames: 3
+  target_dwell_required_frames: 3
+  initial_index: 300
+  initial_time_ps: 30000.0
+  start_exit_index: 323
+  target_entry_index: 395
+  start_exit_time_ps: 32300.0
+  target_entry_time_ps: 39500.0
+  reference_first_passage_ps: 9500.0
+  reference_transition_path_ps: 7200.0
+  saved_frame_step_ps: 100.0
+  native_path_frame_count: 73
+  analysis_frame_count: 25
+  sampled_indices:
+  - 323
+  - 326
+  - 329
+  - 332
+  - 335
+  - 338
+  - 341
+  - 344
+  - 347
+  - 350
+  - 353
+  - 356
+  - 359
+  - 362
+  - 365
+  - 368
+  - 371
+  - 374
+  - 377
+  - 380
+  - 383
+  - 386
+  - 389
+  - 392
+  - 395
+  sampled_times_ps:
+  - 32300.0
+  - 32600.0
+  - 32900.0
+  - 33200.0
+  - 33500.0
+  - 33800.0
+  - 34100.0
+  - 34400.0
+  - 34700.0
+  - 35000.0
+  - 35300.0
+  - 35600.0
+  - 35900.0
+  - 36200.0
+  - 36500.0
+  - 36800.0
+  - 37100.0
+  - 37400.0
+  - 37700.0
+  - 38000.0
+  - 38300.0
+  - 38600.0
+  - 38900.0
+  - 39200.0
+  - 39500.0
+  coordinate_interpolation: false
+  source_trajectory_index: 0
+  source_trajectory: /Users/sejin/Desktop/AIBL/projects/confrover_mh_steering/data/atlas/7bwf_B/7bwf_B_prod_R3_fit.xtc
+  source_role: D1
+  start_ca_rmsd_nm: 0.24185342325359607
+route_discovery_segment_index: 0
+route_discovery_source_trajectory_index: 0
+route_support_denominator: 1
+held_out_diagnostic:
+  status: unavailable
+  reason: H contains no comparable stable start-to-target transition
+  transition_count: 0
+  transition_paths: []
+  eligibility_gate: false
+ordered_events:
+- name: distance_A
+  observable: distance_A
+  target_interval:
+  - 0.0
+  - 3.7936007976531982
+  physical_window:
+  - 1
+  - 24
+  persistence_frames: 2
+- name: distance_B
+  observable: distance_B
+  target_interval:
+  - 0.0
+  - 3.809341073036194
+  physical_window:
+  - 1
+  - 24
+  persistence_frames: 2
+terminal_event:
+  name: terminal_basin
+  observable: pc1
+  target_interval:
+  - 1.5577202639751238
+  - 2.5577202639751238
+  physical_window:
+  - 1
+  - 24
+  persistence_frames: 2
+selected_contacts:
+- &id002
+  residue_i: 41
+  residue_j: 80
+  threshold_nm: 3.7936007976531982
+  target_contact: 1
+  change_nm: -2.9745917320251465
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 4.943680742065433
+  initial_progress_margin_nm: 1.1500799444122345
+- &id001
+  residue_i: 41
+  residue_j: 82
+  threshold_nm: 3.809341073036194
+  target_contact: 1
+  change_nm: -3.025348424911499
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.920910679148679
+  initial_progress_margin_nm: 1.111569606112485
+candidate_count: 1231
+top_candidates:
+- *id001
+- *id002
+- residue_i: 42
+  residue_j: 82
+  threshold_nm: 3.602378726005554
+  target_contact: 1
+  change_nm: -2.9513304233551025
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.809659348396912
+  initial_progress_margin_nm: 1.207280622391358
+- residue_i: 0
+  residue_j: 82
+  threshold_nm: 2.8078638911247253
+  target_contact: 1
+  change_nm: -2.900889039039612
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.757357571222309
+  initial_progress_margin_nm: 0.9494936800975835
+- residue_i: 41
+  residue_j: 81
+  threshold_nm: 3.9790173768997192
+  target_contact: 1
+  change_nm: -2.894810438156128
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 5.038875550363009
+  initial_progress_margin_nm: 1.0598581734632901
+- residue_i: 0
+  residue_j: 84
+  threshold_nm: 2.408346027135849
+  target_contact: 1
+  change_nm: -2.8765676617622375
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.251263336467684
+  initial_progress_margin_nm: 0.8429173093318352
+- residue_i: 0
+  residue_j: 79
+  threshold_nm: 2.3955399692058563
+  target_contact: 1
+  change_nm: -2.8750138878822327
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.396532607938642
+  initial_progress_margin_nm: 1.0009926387327859
+- residue_i: 40
+  residue_j: 82
+  threshold_nm: 4.068768382072449
+  target_contact: 1
+  change_nm: -2.8723433017730713
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 5.029098747317321
+  initial_progress_margin_nm: 0.9603303652448725
+- residue_i: 0
+  residue_j: 83
+  threshold_nm: 2.6424484848976135
+  target_contact: 1
+  change_nm: -2.8552197217941284
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.5684873181415755
+  initial_progress_margin_nm: 0.926038833243962
+- residue_i: 42
+  residue_j: 80
+  threshold_nm: 3.584965944290161
+  target_contact: 1
+  change_nm: -2.8435683250427246
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 4.798986572188893
+  initial_progress_margin_nm: 1.2140206278987318
+- residue_i: 0
+  residue_j: 80
+  threshold_nm: 2.669920861721039
+  target_contact: 1
+  change_nm: -2.831546902656555
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 11.0
+  crossings:
+  - 11
+  crossings_by_segment:
+  - 11
+  initial_distance_nm: 3.712063070623342
+  initial_progress_margin_nm: 1.0421422089023031
+- residue_i: 0
+  residue_j: 85
+  threshold_nm: 2.448917329311371
+  target_contact: 1
+  change_nm: -2.8129979372024536
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 3.244948812600299
+  initial_progress_margin_nm: 0.7960314832889281
+- residue_i: 0
+  residue_j: 81
+  threshold_nm: 2.864639699459076
+  target_contact: 1
+  change_nm: -2.8020764589309692
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.8611453890166074
+  initial_progress_margin_nm: 0.9965056895575315
+- residue_i: 42
+  residue_j: 81
+  threshold_nm: 3.7757740020751953
+  target_contact: 1
+  change_nm: -2.7732601165771484
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 4.921799581295246
+  initial_progress_margin_nm: 1.1460255792200504
+- residue_i: 40
+  residue_j: 80
+  threshold_nm: 4.049149990081787
+  target_contact: 1
+  change_nm: -2.772078514099121
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 5.071699557598761
+  initial_progress_margin_nm: 1.0225495675169736
+- residue_i: 0
+  residue_j: 76
+  threshold_nm: 2.1223986446857452
+  target_contact: 1
+  change_nm: -2.7381157279014587
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.130230978250515
+  initial_progress_margin_nm: 1.0078323335647696
+- residue_i: 40
+  residue_j: 81
+  threshold_nm: 4.2436363697052
+  target_contact: 1
+  change_nm: -2.7181620597839355
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 5.171841352752148
+  initial_progress_margin_nm: 0.9282049830469479
+- residue_i: 0
+  residue_j: 86
+  threshold_nm: 2.51716548204422
+  target_contact: 1
+  change_nm: -2.6818636655807495
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 12.0
+  crossings:
+  - 12
+  crossings_by_segment:
+  - 12
+  initial_distance_nm: 3.326532733269367
+  initial_progress_margin_nm: 0.8093672512251469
+- residue_i: 0
+  residue_j: 78
+  threshold_nm: 2.423928201198578
+  target_contact: 1
+  change_nm: -2.6780606508255005
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.3681344811351406
+  initial_progress_margin_nm: 0.9442062799365627
+- residue_i: 43
+  residue_j: 82
+  threshold_nm: 3.472596526145935
+  target_contact: 1
+  change_nm: -2.672522783279419
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.42471704382351
+  initial_progress_margin_nm: 0.9521205176775753
+- residue_i: 43
+  residue_j: 80
+  threshold_nm: 3.420932412147522
+  target_contact: 1
+  change_nm: -2.652433156967163
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 4.419534601255664
+  initial_progress_margin_nm: 0.9986021891081425
+- residue_i: 0
+  residue_j: 75
+  threshold_nm: 1.9301597774028778
+  target_contact: 1
+  change_nm: -2.6413779854774475
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 2.890793359628565
+  initial_progress_margin_nm: 0.9606335822256873
+- residue_i: 0
+  residue_j: 77
+  threshold_nm: 2.39611953496933
+  target_contact: 1
+  change_nm: -2.6374670267105103
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.397908460591389
+  initial_progress_margin_nm: 1.0017889256220593
+- residue_i: 39
+  residue_j: 82
+  threshold_nm: 3.944359540939331
+  target_contact: 1
+  change_nm: -2.6246705055236816
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.706763084523877
+  initial_progress_margin_nm: 0.7624035435845462
+- residue_i: 41
+  residue_j: 79
+  threshold_nm: 3.6479238271713257
+  target_contact: 1
+  change_nm: -2.6246159076690674
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 4.611293728318832
+  initial_progress_margin_nm: 0.9633699011475061
+- residue_i: 41
+  residue_j: 83
+  threshold_nm: 3.828598976135254
+  target_contact: 1
+  change_nm: -2.56781005859375
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.68094621372595
+  initial_progress_margin_nm: 0.8523472375906964
+- residue_i: 42
+  residue_j: 79
+  threshold_nm: 3.4173760414123535
+  target_contact: 1
+  change_nm: -2.563015937805176
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 4.47476591951334
+  initial_progress_margin_nm: 1.0573898781009863
+- residue_i: 39
+  residue_j: 80
+  threshold_nm: 3.908607840538025
+  target_contact: 1
+  change_nm: -2.5609676837921143
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 4.7438816795769485
+  initial_progress_margin_nm: 0.8352738390389236
+- residue_i: 43
+  residue_j: 81
+  threshold_nm: 3.637229800224304
+  target_contact: 1
+  change_nm: -2.5420916080474854
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 4.540742310273386
+  initial_progress_margin_nm: 0.9035125100490822
+- residue_i: 42
+  residue_j: 83
+  threshold_nm: 3.6029040813446045
+  target_contact: 1
+  change_nm: -2.5413403511047363
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.591882750339716
+  initial_progress_margin_nm: 0.9889786689951112
+- residue_i: 39
+  residue_j: 81
+  threshold_nm: 4.122554183006287
+  target_contact: 1
+  change_nm: -2.4855892658233643
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 4.855876970022862
+  initial_progress_margin_nm: 0.7333227870165757
+- residue_i: 44
+  residue_j: 82
+  threshold_nm: 3.4166786670684814
+  target_contact: 1
+  change_nm: -2.466639995574951
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.308546313234077
+  initial_progress_margin_nm: 0.8918676461655952
+- residue_i: 40
+  residue_j: 79
+  threshold_nm: 3.8957313299179077
+  target_contact: 1
+  change_nm: -2.4540140628814697
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 4.72880163015999
+  initial_progress_margin_nm: 0.8330703002420821
+- residue_i: 40
+  residue_j: 83
+  threshold_nm: 4.088036417961121
+  target_contact: 1
+  change_nm: -2.453200578689575
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.801358766025111
+  initial_progress_margin_nm: 0.7133223480639908
+- residue_i: 38
+  residue_j: 82
+  threshold_nm: 3.7900770902633667
+  target_contact: 1
+  change_nm: -2.432940721511841
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.67852277242722
+  initial_progress_margin_nm: 0.8884456821638533
+- residue_i: 42
+  residue_j: 86
+  threshold_nm: 3.357430338859558
+  target_contact: 1
+  change_nm: -2.411508798599243
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 18.0
+  crossings:
+  - 18
+  crossings_by_segment:
+  - 18
+  initial_distance_nm: 4.392852004097146
+  initial_progress_margin_nm: 1.035421665237588
+- residue_i: 44
+  residue_j: 80
+  threshold_nm: 3.3490233421325684
+  target_contact: 1
+  change_nm: -2.4051074981689453
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 4.289180515868831
+  initial_progress_margin_nm: 0.9401571737362628
+- residue_i: 42
+  residue_j: 84
+  threshold_nm: 3.391240358352661
+  target_contact: 1
+  change_nm: -2.4028334617614746
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.282477751109399
+  initial_progress_margin_nm: 0.8912373927567376
+- residue_i: 1
+  residue_j: 80
+  threshold_nm: 2.5328569412231445
+  target_contact: 1
+  change_nm: -2.3916168212890625
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 9.0
+  crossings:
+  - 9
+  crossings_by_segment:
+  - 9
+  initial_distance_nm: 3.401308094530752
+  initial_progress_margin_nm: 0.8684511533076074
+- residue_i: 41
+  residue_j: 84
+  threshold_nm: 3.6337863206863403
+  target_contact: 1
+  change_nm: -2.371816396713257
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 17.0
+  crossings:
+  - 17
+  crossings_by_segment:
+  - 17
+  initial_distance_nm: 4.381941036020299
+  initial_progress_margin_nm: 0.7481547153339587
+- residue_i: 1
+  residue_j: 82
+  threshold_nm: 2.70465487241745
+  target_contact: 1
+  change_nm: -2.3694015741348267
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.4828559663100376
+  initial_progress_margin_nm: 0.7782010938925876
+- residue_i: 43
+  residue_j: 79
+  threshold_nm: 3.2488198280334473
+  target_contact: 1
+  change_nm: -2.3647422790527344
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 4.092322064769135
+  initial_progress_margin_nm: 0.8435022367356879
+- residue_i: 0
+  residue_j: 87
+  threshold_nm: 2.402884840965271
+  target_contact: 1
+  change_nm: -2.360771417617798
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 12.0
+  crossings:
+  - 12
+  crossings_by_segment:
+  - 12
+  initial_distance_nm: 3.1015814479859007
+  initial_progress_margin_nm: 0.6986966070206297
+- residue_i: 1
+  residue_j: 79
+  threshold_nm: 2.2926533818244934
+  target_contact: 1
+  change_nm: -2.3477033376693726
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.099426468320691
+  initial_progress_margin_nm: 0.8067730864961975
+- residue_i: 38
+  residue_j: 80
+  threshold_nm: 3.7473433017730713
+  target_contact: 1
+  change_nm: -2.3295884132385254
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 4.684330072456695
+  initial_progress_margin_nm: 0.9369867706836237
+- residue_i: 41
+  residue_j: 86
+  threshold_nm: 3.627027988433838
+  target_contact: 1
+  change_nm: -2.316615104675293
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 18.0
+  crossings:
+  - 18
+  crossings_by_segment:
+  - 18
+  initial_distance_nm: 4.53527424187526
+  initial_progress_margin_nm: 0.9082462534414217
+- residue_i: 44
+  residue_j: 81
+  threshold_nm: 3.5800939798355103
+  target_contact: 1
+  change_nm: -2.31238055229187
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 15.0
+  crossings:
+  - 15
+  crossings_by_segment:
+  - 15
+  initial_distance_nm: 4.435568798061177
+  initial_progress_margin_nm: 0.8554748182256668
+- residue_i: 1
+  residue_j: 76
+  threshold_nm: 1.987026870250702
+  target_contact: 1
+  change_nm: -2.30174458026886
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 13.0
+  crossings:
+  - 13
+  crossings_by_segment:
+  - 13
+  initial_distance_nm: 2.8088335015074195
+  initial_progress_margin_nm: 0.8218066312567176
+- residue_i: 0
+  residue_j: 74
+  threshold_nm: 2.0919589698314667
+  target_contact: 1
+  change_nm: -2.296497881412506
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 2.986531349316497
+  initial_progress_margin_nm: 0.8945723794850302
+- residue_i: 1
+  residue_j: 81
+  threshold_nm: 2.763029158115387
+  target_contact: 1
+  change_nm: -2.2895973920822144
+  stability: 1.0
+  support_count: 1
+  support_segment_indices:
+  - 0
+  median_crossing: 14.0
+  crossings:
+  - 14
+  crossings_by_segment:
+  - 14
+  initial_distance_nm: 3.572003143261245
+  initial_progress_margin_nm: 0.8089739851458582
+selected_pair_diagnostics:
+  paired_segment_coverage: 1.0
+  pair_order_stability: 1.0
+  pair_order_support_count: 1
+  paired_segment_indices:
+  - 0
+  ordered_segment_indices:
+  - 0
+  ordered_gaps:
+  - 2
+  minimum_required_gap: 2
+  route_status: single_reference_route
+route_definition_segment_index: 0
+route_support_count: 1
+route_support_fraction: 1.0
+route_status: single_reference_route

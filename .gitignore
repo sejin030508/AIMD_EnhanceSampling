@@ -8,6 +8,15 @@ build/
 dist/
 .DS_Store
 tmp/
+external/
+checkpoints/
+data/confrover_cache/
+*.ckpt
+*.pth
+*.xtc
+*.trr
+*.dcd
+*.h5
 
 outputs/duet_md/**
 !outputs/duet_md/.gitkeep

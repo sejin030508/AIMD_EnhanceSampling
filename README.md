@@ -10,6 +10,28 @@ The output is described as:
 It is not exact dynamics under a new potential, does not estimate kinetics,
 and cannot recover transitions outside the support of the frozen emulator.
 
+## Current status
+
+The repository contains the core DuET-MD implementation, preregistered
+experiment configurations, frozen execution payloads, and compact result
+summaries. Large model checkpoints, downloaded reference trajectories, and
+full generated trajectories are intentionally not versioned.
+
+The current evidence should be read as method development, not a final
+biophysical claim:
+
+- exact finite-state tests validate the cross-clock weighting arithmetic;
+- ATLAS and cryptic-pocket studies are exploratory surrogate-sampling studies;
+- the small-protein TPS pilot shows reward-directed endpoint approach, but a
+  later all-atom audit found that the raw generated paths are not yet
+  atomistically valid transition paths.
+
+See [the project layout](docs/PROJECT_LAYOUT.md),
+[experiment snapshots](experiments/README.md),
+[result summaries](results/README.md), and
+[experiment reports](docs/reports/README.md) for the shortest route through
+the repository.
+
 ## Repository relationship
 
 This is a clean implementation repository. It reuses the existing Level-1
@@ -23,12 +45,17 @@ project and server assets without changing them:
 No files under the previous `outputs/` tree are modified. New results are
 written only below `outputs/duet_md/`.
 
+The later recovery pilots were run in an isolated server namespace. Their
+portable launch payloads and compact reports have been copied into this
+repository without merging experimental snapshots into the canonical
+`src/` package.
+
 ## Implemented scope
 
 - terminal, windowed-intermediate, and ordered two-event programs;
 - PC1, C-alpha RMSD, C-alpha residue-pair distance, and binary contact observables;
 - full-history outer SMC;
-- one-checkpoint reverse-diffusion Feynman–Kac sampler;
+- one- and multi-checkpoint reverse-diffusion Feynman–Kac samplers;
 - coupled predictive-normalizer weighting;
 - frozen, best-of-budget, outer-only, inner-only, naive-dual,
   complete-frame nested, and DuET-MD baselines;
@@ -72,6 +99,13 @@ bash scripts/duet/generate_reports.sh
 
 See [DUET.md](docs/DUET.md), [the formulation](docs/DUET_FORMULATION.md),
 [the integration map](docs/DUET_INTEGRATION_MAP.md), and
-[the experiment protocol](docs/DUET_EXPERIMENT_PROTOCOL.md). The concrete
-pre-experiment verification status is recorded in
+[the experiment protocol](docs/DUET_EXPERIMENT_PROTOCOL.md). The reusable
+cross-protein route benchmark is specified separately in
+[DUET_PROTEIN_BENCHMARK_PROTOCOL_V3.md](docs/DUET_PROTEIN_BENCHMARK_PROTOCOL_V3.md),
+with its preregistered protein order in
+[DUET_ATLAS_CONFIRMATORY_COHORT_SCREEN_V1.md](docs/DUET_ATLAS_CONFIRMATORY_COHORT_SCREEN_V1.md).
+The frozen 10-protein cohort, attrition, event definitions, and launch matrix
+are summarized in
+[DUET_ATLAS_COHORT_PREPARATION_2026-09-05.md](docs/DUET_ATLAS_COHORT_PREPARATION_2026-09-05.md).
+The concrete pre-experiment verification status is recorded in
 [STAGE1_READINESS.md](docs/STAGE1_READINESS.md).

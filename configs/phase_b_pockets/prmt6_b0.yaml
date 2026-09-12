@@ -1,0 +1,40 @@
+project_root: ${DUET_PROJECT_ROOT}
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  cache_dir: ${DUET_ASSET_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 256
+  reverse_steps: 200
+  kv_cache_type: offloaded
+  decoder_microbatch_size: 2
+  device: cuda:0
+  dtype: float32
+trajectory:
+  case_id: phase_b_prmt6
+  seqres: DVSVHEEMIADRVRTDAYRLGILRNWAALRGKTVLDVGAGTGILSIFCAQAGARRVYAVEASAIWQQAREVVRFNGLEDRVHVLPGPVETVELPEQVDAIVSEWMGYGLLHESMLSSVLHARTKWLKEGGLLLPASAELFIAPISDQMLEWRLGFWSQVKQHYGVDMSCLEGFATRCLMGHSEIVVQGLSGEDVLARPQRFAQLELSRAGLEQELEAGVGGRFRCSCYGSAPMHGFAIWFQVTFPGGESEKPLVLSTSPFHPATHWKQALLYLNEPVQVEQDTDVSGEITLLPSRDNPRRLRVLLRYKVGDQEEKTKDFAMED
+  horizon: 4
+  initial_structure: ${PHASE_B_DATA_ROOT}/prepared/prmt6/prmt6_start_model_numbering.pdb
+particles:
+  outer_k: 4
+  inner_m: 1
+  inner_checkpoint_progresses: [0.75]
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.5
+  inner_resampling: systematic
+program:
+  type: terminal
+  potential_floor: 9.357622968840175e-14
+pocket:
+  manifest: ${PHASE_B_DATA_ROOT}/prepared/prmt6/manifest.json
+  reference_npz: ${PHASE_B_DATA_ROOT}/prepared/prmt6/pocket_references_atom37.npz
+experiment:
+  stage: b0
+  methods: [frozen]
+  method_settings:
+    frozen: {outer_k: 4, inner_m: 1}
+  seeds: [17]
+  task_count: 1
+  decoder_population_budget: 4
+  output_directory: ${PHASE_B_OUTPUT_ROOT}

@@ -1,0 +1,72 @@
+{
+  "phase": "B",
+  "b1_started": false,
+  "all_ready_for_b1": false,
+  "proteins": [
+    {
+      "protein": "prmt5",
+      "ready_for_b1": true,
+      "checks": {
+        "manifest_ready": true,
+        "d0_a": 6.143322282303271,
+        "memory_gate_k1_m4_t1_complete": true,
+        "memory_gate_k1_m4_t1_has_valid_path": true,
+        "memory_gate_k4_m4_t2_complete": true,
+        "memory_gate_k4_m4_t2_has_valid_path": true,
+        "b0_complete": true,
+        "b0_has_valid_path": true,
+        "b0_no_nonfinite": true,
+        "b0_no_ca_clashes": true,
+        "b0_no_invalid_frames": true
+      },
+      "runs": {
+        "memory_gate_k1_m4_t1": {
+          "path": "/mnt/ssd0/sejin/phase_b_pockets/outputs/prmt5/memory_gate_k1_m4_t1/duet/seed_17/metrics.json",
+          "status": "complete",
+          "decoder_nfe": 796,
+          "peak_gpu_memory_bytes": 5529746944,
+          "valid_path_fraction": 1.0,
+          "potential_clipping_fraction": 0.0
+        },
+        "memory_gate_k4_m4_t2": {
+          "path": "/mnt/ssd0/sejin/phase_b_pockets/outputs/prmt5/memory_gate_k4_m4_t2/duet/seed_17/metrics.json",
+          "status": "complete",
+          "decoder_nfe": 6368,
+          "peak_gpu_memory_bytes": 8402875904,
+          "valid_path_fraction": 1.0,
+          "potential_clipping_fraction": 0.0
+        },
+        "b0": {
+          "path": "/mnt/ssd0/sejin/phase_b_pockets/outputs/prmt5/b0/frozen/seed_17/metrics.json",
+          "status": "complete",
+          "decoder_nfe": 3184,
+          "peak_gpu_memory_bytes": 13908715520,
+          "valid_path_fraction": 1.0,
+          "potential_clipping_fraction": 0.0
+        }
+      }
+    },
+    {
+      "protein": "prmt6",
+      "ready_for_b1": false,
+      "checks": {
+        "manifest_ready": true,
+        "d0_a": 4.668807908538588,
+        "memory_gate_k1_m4_t1_complete": false,
+        "memory_gate_k1_m4_t1_has_valid_path": false,
+        "memory_gate_k4_m4_t2_complete": false,
+        "memory_gate_k4_m4_t2_has_valid_path": false,
+        "b0_complete": false,
+        "b0_has_valid_path": false,
+        "b0_no_nonfinite": false,
+        "b0_no_ca_clashes": false,
+        "b0_no_invalid_frames": false
+      },
+      "runs": {
+        "memory_gate_k1_m4_t1": null,
+        "memory_gate_k4_m4_t2": null,
+        "b0": null
+      }
+    }
+  ]
+}

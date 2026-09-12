@@ -1,0 +1,47 @@
+# HOLD: 8TSB chain A lacks residues 943-950 within the requested 931-957
+# reward segment. This file records the intended run but cannot pass preflight
+# unless the scientific protocol explicitly selects another reference or mask.
+project_root: ${DUET_PROJECT_ROOT}
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  cache_dir: ${DUET_ASSET_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 256
+  reverse_steps: 200
+  kv_cache_type: offloaded
+  decoder_microbatch_size: 1
+  pairformer_chunk_size: 32
+  device: cuda:0
+  dtype: float32
+trajectory:
+  case_id: phase_b_pi3ka_p42336_765_1051
+  seqres: RLEECRIMSSAKRPLWLNWENPDIMSELLFQNNEIIFKNGDDLRQDMLTLQIIRIMENIWQNQGLDLRMLPYGCLSIGDCVGLIEVVRNSHTIMQIQCKGGLKGALQFNSHTLHQWLKDKNKGEIYDAAIDLFTRSCAGYCVATFILGIGDRHNSNIMVKDDGQLFHIDFGHFLDHKKKKFGYKRERVPFVLTQDFLIVISKGAQECTKTREFERFQEMCYKAYLAIRQHANLFINLFSMMLGSGMPELQSFDDIAYIRKTLALDKTEQEALEYFMKQMNDAHHGGW
+  horizon: 24
+  initial_structure: ${PHASE_B_DATA_ROOT}/prepared/pi3ka/pi3ka_start_model_numbering.pdb
+particles:
+  outer_k: 4
+  inner_m: 4
+  inner_checkpoint_progresses: [0.75, 0.90]
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.5
+  inner_resampling: systematic
+program:
+  type: terminal
+  reward_coefficient: 16.0
+  reward_log_floor: null
+  potential_floor: 1.0e-300
+pocket:
+  manifest: ${PHASE_B_DATA_ROOT}/prepared/pi3ka/manifest.json
+  reference_npz: ${PHASE_B_DATA_ROOT}/prepared/pi3ka/pocket_references_atom37.npz
+experiment:
+  stage: HOLD_b4_duet_a16_t24_nofloor_cp075_090
+  methods: [duet]
+  method_settings:
+    duet: {outer_k: 4, inner_m: 4}
+  seeds: [103]
+  analysis_transitions: [16, 24]
+  task_count: 1
+  decoder_population_budget: 16
+  output_directory: ${PHASE_B_OUTPUT_ROOT}/B4_pocket_search

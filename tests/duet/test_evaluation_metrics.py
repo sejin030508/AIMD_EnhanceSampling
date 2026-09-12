@@ -3,13 +3,14 @@ import numpy as np
 from confmh.duet.evaluation_metrics import summarize_pre_resampling_population
 
 
-def _record(t, particle, increment, stage, failed=False):
+def _record(t, particle, increment, stage, failed=False, completed=()):
     return {
         "t": t,
         "particle": particle,
         "log_increment": increment,
         "progress_stage": stage,
         "progress_failed": failed,
+        "progress_completed_frames": list(completed),
     }
 
 
@@ -17,7 +18,7 @@ def test_pre_resampling_success_mass_does_not_count_output_duplicates():
     records = [
         _record(1, 0, 0.0, 0),
         _record(1, 1, 0.0, 0),
-        _record(2, 0, np.log(9.0), 3),
+        _record(2, 0, np.log(9.0), 3, completed=(1, 1, 2)),
         _record(2, 1, 0.0, 0, failed=True),
     ]
     summary = summarize_pre_resampling_population(
@@ -33,4 +34,12 @@ def test_pre_resampling_success_mass_does_not_count_output_duplicates():
     assert summary["pre_resampling_unique_success_rate"] == 0.5
     assert np.isclose(summary["pre_resampling_success_weight_mass"], 0.9)
     assert np.isclose(summary["expected_success_copies_after_final_resampling"], 1.8)
+    assert summary["pre_resampling_time_to_success_frames"] == [2, None]
+    assert np.isclose(
+        summary["pre_resampling_weighted_restricted_mean_time_to_success_frames"],
+        2.0,
+    )
+    assert summary["event_progress_curves"][-1][
+        "cumulative_success_weight_mass"
+    ] == summary["pre_resampling_success_weight_mass"]
     assert summary["preterminal_outer_resampling_count"] == 0

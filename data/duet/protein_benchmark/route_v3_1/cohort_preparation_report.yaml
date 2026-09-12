@@ -1,0 +1,978 @@
+cohort: atlas_confirmatory_v1
+protocol_version: route_v3_1
+model_outcomes_inspected: false
+method_runs_started: false
+target_frozen_count: 10
+task_frozen_count: 10
+unresolved_count: 3
+unevaluated_reserves:
+- 6qj0_A
+- 7p41_D
+- 6p5x_B
+cases:
+- priority: 1
+  official_case: 6JV8-A-R3F1000S256
+  pdb_chain: 6jv8_A
+  status: task_frozen
+  residues: 76
+  seqres: LQLLHQKVEEQAAKYKHRVPKKCCYDGARENKYETCEQRVARVTIGPHCIRAFNECCTIADKIRKESHHKGMLLGR
+  replicate_roles:
+    D1: R3
+    D2: R1
+    H: R2
+  D1: R3
+  D2: R1
+  H: R2
+  start_frame: 1000
+  endpoint_frame: 3048
+  reference_first_passage_ps: 20400.0
+  reference_transition_path_ps: 20100.0
+  physical_lag_in_10ps: 42
+  model_duration_ps: 10080.0
+  nominal_compression: 2.0238095238095237
+  route_status: independently_supported_route
+  route_support_count: 2
+  event_A:
+    residue_i: 0
+    residue_j: 67
+    threshold_nm: 1.4965169429779053
+    target_contact: 1
+    change_nm: -0.46539974212646484
+    stability: 1.0
+    support_count: 2
+    support_segment_indices:
+    - 0
+    - 1
+    median_crossing: 3.0
+    crossings:
+    - 5
+    - 1
+    crossings_by_segment:
+    - 5
+    - 1
+    initial_distance_nm: 1.7270239925689956
+    initial_progress_margin_nm: 0.23050704959109036
+  event_B:
+    residue_i: 25
+    residue_j: 74
+    threshold_nm: 3.5192514657974243
+    target_contact: 0
+    change_nm: 2.0848653316497803
+    stability: 1.0
+    support_count: 2
+    support_segment_indices:
+    - 0
+    - 1
+    median_crossing: 12.0
+    crossings:
+    - 14
+    - 10
+    crossings_by_segment:
+    - 14
+    - 10
+    initial_distance_nm: 2.2773644958542403
+    initial_progress_margin_nm: 1.241886969943184
+  H_diagnostic:
+    status: unavailable
+    reason: H contains no comparable stable start-to-target transition
+    transition_count: 0
+    transition_paths: []
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6jv8_A_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6jv8_A_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6jv8_A/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6jv8_A/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/6jv8_A/6JV8-A-R3F1000S256_manifest.json
+  screening_group: primary
+  reserve_order: null
+- priority: 2
+  official_case: 6IN7-A-R3F5000S128
+  pdb_chain: 6in7_A
+  status: unresolved
+  reason: 'RuntimeError: Selected nominal compression 0.958 is outside [1.000, 10.000]'
+  screening_group: primary
+  reserve_order: null
+- priority: 3
+  official_case: 7BWF-B-R3F3000S128
+  pdb_chain: 7bwf_B
+  status: task_frozen
+  residues: 92
+  seqres: SGLVPRGSHMIIKNYSYARQNLKALMTKVNDDSDMVTVTSTDDKNVVIMSESDYNSMMETLYLQQNPNNAEHLAQSIADLERGKTITKDIDV
+  replicate_roles:
+    D1: R3
+    D2: R1
+    H: R2
+  D1: R3
+  D2: R1
+  H: R2
+  start_frame: 3000
+  endpoint_frame: 4024
+  reference_first_passage_ps: 9500.0
+  reference_transition_path_ps: 7200.0
+  physical_lag_in_10ps: 20
+  model_duration_ps: 4800.0
+  nominal_compression: 1.9791666666666667
+  route_status: single_reference_route
+  route_support_count: 1
+  event_A:
+    residue_i: 41
+    residue_j: 80
+    threshold_nm: 3.7936007976531982
+    target_contact: 1
+    change_nm: -2.9745917320251465
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 15.0
+    crossings:
+    - 15
+    crossings_by_segment:
+    - 15
+    initial_distance_nm: 4.943680742065433
+    initial_progress_margin_nm: 1.1500799444122345
+  event_B:
+    residue_i: 41
+    residue_j: 82
+    threshold_nm: 3.809341073036194
+    target_contact: 1
+    change_nm: -3.025348424911499
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 17.0
+    crossings:
+    - 17
+    crossings_by_segment:
+    - 17
+    initial_distance_nm: 4.920910679148679
+    initial_progress_margin_nm: 1.111569606112485
+  H_diagnostic:
+    status: unavailable
+    reason: H contains no comparable stable start-to-target transition
+    transition_count: 0
+    transition_paths: []
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7bwf_B_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7bwf_B_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7bwf_B/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7bwf_B/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/7bwf_B/7BWF-B-R3F3000S128_manifest.json
+  screening_group: primary
+  reserve_order: null
+- priority: 4
+  official_case: 6TLY-A-R2F1000S256
+  pdb_chain: 6tly_A
+  status: task_frozen
+  residues: 99
+  seqres: GSSAAPGAIQCMNRHKMERHGKMPAGYKGFDCNVCDQPMLKITEKAYMYRCEKCDYDVCNQCAESRKFKEVHFLCAKCGKKFPSQTKLQYHSRGCRGPS
+  replicate_roles:
+    D1: R2
+    D2: R1
+    H: R3
+  D1: R2
+  D2: R1
+  H: R3
+  start_frame: 1000
+  endpoint_frame: 3048
+  reference_first_passage_ps: 17800.0
+  reference_transition_path_ps: 17700.0
+  physical_lag_in_10ps: 37
+  model_duration_ps: 8880.0
+  nominal_compression: 2.0045045045045047
+  route_status: independently_supported_route
+  route_support_count: 2
+  event_A:
+    residue_i: 1
+    residue_j: 97
+    threshold_nm: 4.020670175552368
+    target_contact: 0
+    change_nm: 1.7985587120056152
+    stability: 1.0
+    support_count: 2
+    support_segment_indices:
+    - 0
+    - 1
+    median_crossing: 2.0
+    crossings:
+    - 2
+    - 2
+    crossings_by_segment:
+    - 2
+    - 2
+    initial_distance_nm: 2.636432829694204
+    initial_progress_margin_nm: 1.384237345858164
+  event_B:
+    residue_i: 0
+    residue_j: 78
+    threshold_nm: 3.120464324951172
+    target_contact: 0
+    change_nm: 1.4162230491638184
+    stability: 1.0
+    support_count: 2
+    support_segment_indices:
+    - 0
+    - 1
+    median_crossing: 8.0
+    crossings:
+    - 11
+    - 5
+    crossings_by_segment:
+    - 11
+    - 5
+    initial_distance_nm: 2.1043366971455746
+    initial_progress_margin_nm: 1.0161276278055973
+  H_diagnostic:
+    status: available
+    reason: null
+    transition_count: 1
+    transition_paths:
+    - start_run:
+      - 51
+      - 53
+      target_run:
+      - 375
+      - 379
+      start_dwell_required_frames: 3
+      target_dwell_required_frames: 3
+      initial_index: 0
+      initial_time_ps: 0.0
+      start_exit_index: 53
+      target_entry_index: 375
+      start_exit_time_ps: 5300.0
+      target_entry_time_ps: 37500.0
+      reference_first_passage_ps: 37500.0
+      reference_transition_path_ps: 32200.0
+      saved_frame_step_ps: 100.0
+      native_path_frame_count: 323
+      analysis_frame_count: 25
+      sampled_indices:
+      - 53
+      - 66
+      - 80
+      - 93
+      - 107
+      - 120
+      - 133
+      - 147
+      - 160
+      - 174
+      - 187
+      - 201
+      - 214
+      - 227
+      - 241
+      - 254
+      - 268
+      - 281
+      - 295
+      - 308
+      - 321
+      - 335
+      - 348
+      - 362
+      - 375
+      sampled_times_ps:
+      - 5300.0
+      - 6600.0
+      - 8000.0
+      - 9300.0
+      - 10700.0
+      - 12000.0
+      - 13300.0
+      - 14700.0
+      - 16000.0
+      - 17400.0
+      - 18700.0
+      - 20100.0
+      - 21400.0
+      - 22700.0
+      - 24100.0
+      - 25400.0
+      - 26800.0
+      - 28100.0
+      - 29500.0
+      - 30800.0
+      - 32100.0
+      - 33500.0
+      - 34800.0
+      - 36200.0
+      - 37500.0
+      coordinate_interpolation: false
+      source_trajectory: ${DUET_ASSET_ROOT}/data/atlas/6tly_A/6tly_A_prod_R3_fit.xtc
+      source_role: H
+      start_ca_rmsd_nm: 0.24681696081169732
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6tly_A_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6tly_A_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6tly_A/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6tly_A/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/6tly_A/6TLY-A-R2F1000S256_manifest.json
+  screening_group: primary
+  reserve_order: null
+- priority: 5
+  official_case: 7S86-A-R3F5000S256
+  pdb_chain: 7s86_A
+  status: task_frozen
+  residues: 99
+  seqres: TAVPRDVNGGTPPKSCSSGPVYCCNKTEDSKHLDKGTTALLGLLNIKIGDLKDLVGLNCSPLSVIGVGGNSCSAQTVCCTNTYQHGLVNVGCTPINIGL
+  replicate_roles:
+    D1: R3
+    D2: R1
+    H: R2
+  D1: R3
+  D2: R1
+  H: R2
+  start_frame: 5000
+  endpoint_frame: 7048
+  reference_first_passage_ps: 11700.0
+  reference_transition_path_ps: 6900.0
+  physical_lag_in_10ps: 24
+  model_duration_ps: 5760.0
+  nominal_compression: 2.03125
+  route_status: single_reference_route
+  route_support_count: 1
+  event_A:
+    residue_i: 5
+    residue_j: 52
+    threshold_nm: 3.2246131896972656
+    target_contact: 0
+    change_nm: 1.2811970710754395
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 7.0
+    crossings:
+    - 7
+    crossings_by_segment:
+    - 7
+    initial_distance_nm: 2.513056489502367
+    initial_progress_margin_nm: 0.7115567001948988
+  event_B:
+    residue_i: 0
+    residue_j: 52
+    threshold_nm: 4.000426173210144
+    target_contact: 0
+    change_nm: 1.4924004077911377
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 18.0
+    crossings:
+    - 18
+    crossings_by_segment:
+    - 18
+    initial_distance_nm: 3.5000415100783258
+    initial_progress_margin_nm: 0.5003846631318183
+  H_diagnostic:
+    status: available
+    reason: null
+    transition_count: 1
+    transition_paths:
+    - start_run:
+      - 884
+      - 889
+      target_run:
+      - 932
+      - 937
+      start_dwell_required_frames: 3
+      target_dwell_required_frames: 3
+      initial_index: 0
+      initial_time_ps: 0.0
+      start_exit_index: 889
+      target_entry_index: 932
+      start_exit_time_ps: 88900.0
+      target_entry_time_ps: 93200.0
+      reference_first_passage_ps: 93200.0
+      reference_transition_path_ps: 4300.0
+      saved_frame_step_ps: 100.0
+      native_path_frame_count: 44
+      analysis_frame_count: 25
+      sampled_indices:
+      - 889
+      - 891
+      - 893
+      - 894
+      - 896
+      - 898
+      - 900
+      - 902
+      - 903
+      - 905
+      - 907
+      - 909
+      - 911
+      - 912
+      - 914
+      - 916
+      - 918
+      - 919
+      - 921
+      - 923
+      - 925
+      - 927
+      - 928
+      - 930
+      - 932
+      sampled_times_ps:
+      - 88900.0
+      - 89100.0
+      - 89300.0
+      - 89400.0
+      - 89600.0
+      - 89800.0
+      - 90000.0
+      - 90200.0
+      - 90300.0
+      - 90500.0
+      - 90700.0
+      - 90900.0
+      - 91100.0
+      - 91200.0
+      - 91400.0
+      - 91600.0
+      - 91800.0
+      - 91900.0
+      - 92100.0
+      - 92300.0
+      - 92500.0
+      - 92700.0
+      - 92800.0
+      - 93000.0
+      - 93200.0
+      coordinate_interpolation: false
+      source_trajectory: ${DUET_ASSET_ROOT}/data/atlas/7s86_A/7s86_A_prod_R2_fit.xtc
+      source_role: H
+      start_ca_rmsd_nm: 0.27888512857125886
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7s86_A_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7s86_A_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7s86_A/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7s86_A/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/7s86_A/7S86-A-R3F5000S256_manifest.json
+  screening_group: primary
+  reserve_order: null
+- priority: 6
+  official_case: 6RRV-A-R1F1000S256
+  pdb_chain: 6rrv_A
+  status: task_frozen
+  residues: 127
+  seqres: GPKPKNTKENLSKSSWRQEWLANLKLISVSLVDEFPSELSDSDRQIINEKMQLLKDIFANNLKSAISNNFRESDIIILKGEIEDYPMSSEIKIYYNELQNKPDAKKARFWSFMKTQRFVSNMGFDIQ
+  replicate_roles:
+    D1: R1
+    D2: R2
+    H: R3
+  D1: R1
+  D2: R2
+  H: R3
+  start_frame: 1000
+  endpoint_frame: 3048
+  reference_first_passage_ps: 20300.0
+  reference_transition_path_ps: 5700.0
+  physical_lag_in_10ps: 42
+  model_duration_ps: 10080.0
+  nominal_compression: 2.013888888888889
+  route_status: single_reference_route
+  route_support_count: 1
+  event_A:
+    residue_i: 0
+    residue_j: 48
+    threshold_nm: 3.8105735778808594
+    target_contact: 0
+    change_nm: 3.528935432434082
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 13.0
+    crossings:
+    - 13
+    crossings_by_segment:
+    - 13
+    initial_distance_nm: 2.2828839611420495
+    initial_progress_margin_nm: 1.5276896167388099
+  event_B:
+    residue_i: 1
+    residue_j: 41
+    threshold_nm: 4.273632049560547
+    target_contact: 0
+    change_nm: 3.545590400695801
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 19.0
+    crossings:
+    - 19
+    crossings_by_segment:
+    - 19
+    initial_distance_nm: 2.3352154350965884
+    initial_progress_margin_nm: 1.9384166144639585
+  H_diagnostic:
+    status: unavailable
+    reason: H contains no comparable stable start-to-target transition
+    transition_count: 0
+    transition_paths: []
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6rrv_A_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6rrv_A_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6rrv_A/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6rrv_A/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/6rrv_A/6RRV-A-R1F1000S256_manifest.json
+  screening_group: primary
+  reserve_order: null
+- priority: 7
+  official_case: 6LUS-A-R2F3000S128
+  pdb_chain: 6lus_A
+  status: unresolved
+  reason: 'RuntimeError: The predeclared D1 route has no stable last-exit transition
+    to the official endpoint basin'
+  screening_group: primary
+  reserve_order: null
+- priority: 8
+  official_case: 6GUS-A-R2F7000S256
+  pdb_chain: 6gus_A
+  status: task_frozen
+  residues: 155
+  seqres: QIQKAEQNDVKLAPPTDVRSGYIRLVKNVNYYIDSESIWVDNQEPQIVHFDAVVNLDKGLYVYPEPKRYARSVRQYKILNCANYHLTQVRTDFYDEFWGQGLRAAPKKQKKHTLSLTPDTTLYNAAQIICANYGEAFSVDKKKLAAALEHHHHHH
+  replicate_roles:
+    D1: R2
+    D2: R1
+    H: R3
+  D1: R2
+  D2: R1
+  H: R3
+  start_frame: 7000
+  endpoint_frame: 9048
+  reference_first_passage_ps: 15100.0
+  reference_transition_path_ps: 12800.0
+  physical_lag_in_10ps: 31
+  model_duration_ps: 7440.0
+  nominal_compression: 2.0295698924731185
+  route_status: independently_supported_route
+  route_support_count: 2
+  event_A:
+    residue_i: 0
+    residue_j: 64
+    threshold_nm: 2.0207126140594482
+    target_contact: 1
+    change_nm: -2.0353875160217285
+    stability: 1.0
+    support_count: 2
+    support_segment_indices:
+    - 0
+    - 1
+    median_crossing: 6.0
+    crossings:
+    - 9
+    - 3
+    crossings_by_segment:
+    - 9
+    - 3
+    initial_distance_nm: 2.804585078117057
+    initial_progress_margin_nm: 0.7838724640576089
+  event_B:
+    residue_i: 0
+    residue_j: 63
+    threshold_nm: 1.916823148727417
+    target_contact: 1
+    change_nm: -2.319333076477051
+    stability: 1.0
+    support_count: 2
+    support_segment_indices:
+    - 0
+    - 1
+    median_crossing: 10.5
+    crossings:
+    - 12
+    - 9
+    crossings_by_segment:
+    - 12
+    - 9
+    initial_distance_nm: 2.8507281885945432
+    initial_progress_margin_nm: 0.9339050398671263
+  H_diagnostic:
+    status: available
+    reason: null
+    transition_count: 1
+    transition_paths:
+    - start_run:
+      - 55
+      - 57
+      target_run:
+      - 87
+      - 90
+      start_dwell_required_frames: 3
+      target_dwell_required_frames: 3
+      initial_index: 0
+      initial_time_ps: 0.0
+      start_exit_index: 57
+      target_entry_index: 87
+      start_exit_time_ps: 5700.0
+      target_entry_time_ps: 8700.0
+      reference_first_passage_ps: 8700.0
+      reference_transition_path_ps: 3000.0
+      saved_frame_step_ps: 100.0
+      native_path_frame_count: 31
+      analysis_frame_count: 25
+      sampled_indices:
+      - 57
+      - 58
+      - 59
+      - 61
+      - 62
+      - 63
+      - 65
+      - 66
+      - 67
+      - 68
+      - 69
+      - 71
+      - 72
+      - 73
+      - 75
+      - 76
+      - 77
+      - 78
+      - 79
+      - 81
+      - 82
+      - 83
+      - 85
+      - 86
+      - 87
+      sampled_times_ps:
+      - 5700.0
+      - 5800.0
+      - 5900.0
+      - 6100.0
+      - 6200.0
+      - 6300.0
+      - 6500.0
+      - 6600.0
+      - 6700.0
+      - 6800.0
+      - 6900.0
+      - 7100.0
+      - 7200.0
+      - 7300.0
+      - 7500.0
+      - 7600.0
+      - 7700.0
+      - 7800.0
+      - 7900.0
+      - 8100.0
+      - 8200.0
+      - 8300.0
+      - 8500.0
+      - 8600.0
+      - 8700.0
+      coordinate_interpolation: false
+      source_trajectory: ${DUET_ASSET_ROOT}/data/atlas/6gus_A/6gus_A_prod_R3_fit.xtc
+      source_role: H
+      start_ca_rmsd_nm: 0.2315013029984914
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6gus_A_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6gus_A_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6gus_A/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6gus_A/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/6gus_A/6GUS-A-R2F7000S256_manifest.json
+  screening_group: primary
+  reserve_order: null
+- priority: 9
+  official_case: 6Q9C-A-R3F3000S256
+  pdb_chain: 6q9c_A
+  status: task_frozen
+  residues: 155
+  seqres: FEFPEELKTKLQEHINYFPKKRQAILLCLHEIQNYYGYIPPESLKPLADMLELPLNHVEGVVAFYDMFDREDKAKYRIRVCVSIVCHLMGTNKLLKALENILGIKPGEVTPDGKFKIVPVQCLGACSEAPVFMVNDDEYKFESEVQLNEILSRYT
+  replicate_roles:
+    D1: R3
+    D2: R1
+    H: R2
+  D1: R3
+  D2: R1
+  H: R2
+  start_frame: 3000
+  endpoint_frame: 5048
+  reference_first_passage_ps: 8900.0
+  reference_transition_path_ps: 6700.0
+  physical_lag_in_10ps: 20
+  model_duration_ps: 4800.0
+  nominal_compression: 1.8541666666666667
+  route_status: single_reference_route
+  route_support_count: 1
+  event_A:
+    residue_i: 17
+    residue_j: 125
+    threshold_nm: 4.286140561103821
+    target_contact: 0
+    change_nm: 2.8368823528289795
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 6.0
+    crossings:
+    - 6
+    crossings_by_segment:
+    - 6
+    initial_distance_nm: 3.2073606105811594
+    initial_progress_margin_nm: 1.0787799505226614
+  event_B:
+    residue_i: 18
+    residue_j: 84
+    threshold_nm: 4.667618751525879
+    target_contact: 0
+    change_nm: 2.8280410766601562
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 8.0
+    crossings:
+    - 8
+    crossings_by_segment:
+    - 8
+    initial_distance_nm: 3.7621677260564277
+    initial_progress_margin_nm: 0.9054510254694512
+  H_diagnostic:
+    status: unavailable
+    reason: H contains no comparable stable start-to-target transition
+    transition_count: 0
+    transition_paths: []
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6q9c_A_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/6q9c_A_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6q9c_A/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/6q9c_A/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/6q9c_A/6Q9C-A-R3F3000S256_manifest.json
+  screening_group: primary
+  reserve_order: null
+- priority: 10
+  official_case: 6OVK-R-R2F7000S128
+  pdb_chain: 6ovk_R
+  status: unresolved
+  reason: 'RuntimeError: The predeclared D1 route has no stable last-exit transition
+    to the official endpoint basin'
+  screening_group: primary
+  reserve_order: null
+- priority: 11
+  screening_group: reserve
+  reserve_order: 1
+  official_case: 7RM7-A-R3F3000S128
+  pdb_chain: 7rm7_A
+  status: task_frozen
+  residues: 228
+  seqres: MGSSHHHHHHSSGLVPRGSHMISKINGKLFADMIIQGAQNLSNNADLVDSLNVYPVPDGDTGTNMNLTMTSGREEVENNLSKNIGELGKTFSKGLLMGARGNSGVILSQLFRGFCKNIESESEINSKLLAESFQAGVETAYKAVMKPVEGTILTVAKDAAQAAIEKANNTEDCIELMEYIIVKANESLENTPNLLAVLKEVGVVDSGGKGLLCVYEGFLKALKGEKVE
+  replicate_roles:
+    D1: R3
+    D2: R1
+    H: R2
+  D1: R3
+  D2: R1
+  H: R2
+  start_frame: 3000
+  endpoint_frame: 4024
+  reference_first_passage_ps: 5700.0
+  reference_transition_path_ps: 4100.0
+  physical_lag_in_10ps: 20
+  model_duration_ps: 4800.0
+  nominal_compression: 1.1875
+  route_status: single_reference_route
+  route_support_count: 1
+  event_A:
+    residue_i: 4
+    residue_j: 116
+    threshold_nm: 4.2879637479782104
+    target_contact: 1
+    change_nm: -2.435734987258911
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 18.0
+    crossings:
+    - 18
+    crossings_by_segment:
+    - 18
+    initial_distance_nm: 6.0056478416424754
+    initial_progress_margin_nm: 1.717684093664265
+  event_B:
+    residue_i: 0
+    residue_j: 146
+    threshold_nm: 7.607475519180298
+    target_contact: 1
+    change_nm: -2.53047513961792
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 20.0
+    crossings:
+    - 20
+    crossings_by_segment:
+    - 20
+    initial_distance_nm: 9.01343208561784
+    initial_progress_margin_nm: 1.405956566437542
+  H_diagnostic:
+    status: unavailable
+    reason: H contains no comparable stable start-to-target transition
+    transition_count: 0
+    transition_paths: []
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7rm7_A_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7rm7_A_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7rm7_A/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7rm7_A/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/7rm7_A/7RM7-A-R3F3000S128_manifest.json
+- priority: 12
+  screening_group: reserve
+  reserve_order: 2
+  official_case: 7AEX-A-R3F5000S256
+  pdb_chain: 7aex_A
+  status: task_frozen
+  residues: 275
+  seqres: MHHHHHHSEINPAEFEQVNMVLQGFVETSVLPVLELSADESHIEFREHSRNAHTVVWKIISTSYQDELTVSLHITTGKLQIQGRPLSCYRVFTFNLAALLDLQGLEKVLIRQEDGKANIVQQEVARTYLQTVMADAYPHLHVTAEKLLVSGLCVKLAAPDLPDYCMLLYPELRTIEGVLKSKMSGLGMPVQQPAGFGTYFDKPAAHYILKPQFAATLRPEQINIISTAYTFFNVERHSLFHMETVVDASRMISDMARLMGKATRAWGIIKDLYIV
+  replicate_roles:
+    D1: R3
+    D2: R1
+    H: R2
+  D1: R3
+  D2: R1
+  H: R2
+  start_frame: 5000
+  endpoint_frame: 7048
+  reference_first_passage_ps: 6400.0
+  reference_transition_path_ps: 3500.0
+  physical_lag_in_10ps: 20
+  model_duration_ps: 4800.0
+  nominal_compression: 1.3333333333333333
+  route_status: single_reference_route
+  route_support_count: 1
+  event_A:
+    residue_i: 108
+    residue_j: 157
+    threshold_nm: 1.1705838441848755
+    target_contact: 0
+    change_nm: 0.4861419200897217
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 18.0
+    crossings:
+    - 18
+    crossings_by_segment:
+    - 18
+    initial_distance_nm: 0.9200966860196624
+    initial_progress_margin_nm: 0.25048715816521305
+  event_B:
+    residue_i: 74
+    residue_j: 157
+    threshold_nm: 3.609910011291504
+    target_contact: 0
+    change_nm: 0.5133280754089355
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 22.0
+    crossings:
+    - 22
+    crossings_by_segment:
+    - 22
+    initial_distance_nm: 3.4226729474307396
+    initial_progress_margin_nm: 0.18723706386076433
+  H_diagnostic:
+    status: unavailable
+    reason: H contains no comparable stable start-to-target transition
+    transition_count: 0
+    transition_paths: []
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7aex_A_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7aex_A_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7aex_A/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7aex_A/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/7aex_A/7AEX-A-R3F5000S256_manifest.json
+- priority: 13
+  screening_group: reserve
+  reserve_order: 3
+  official_case: 7P46-A-R3F5000S256
+  pdb_chain: 7p46_A
+  status: task_frozen
+  residues: 282
+  seqres: KNLRDLEPGIHTDLEGRLTYGGYLRLDQLLSAQQPLSEPAHHDEMLFIIQSQTSELWLKLLAHELRAAIVHLQRDEVWQCRKVLARSKQVLRQLTEQWSVLETLTPSEYMGFRDVLGPSSGFQSLQYRYIEFLLGNKNPQMLQVFAYDPAGQARLREVLEAPSLYEEFLRYLARFGHAIPQQYQARDWTAAHVADDTLRPVFERIYENTDRYWREYSLCEDLVDVETQFQLWRFRHMRTVMRVIGFKRGTGGSSGVGFLQQALALTFFPELFDVRTSVGVDN
+  replicate_roles:
+    D1: R3
+    D2: R1
+    H: R2
+  D1: R3
+  D2: R1
+  H: R2
+  start_frame: 5000
+  endpoint_frame: 7048
+  reference_first_passage_ps: 15800.0
+  reference_transition_path_ps: 12400.0
+  physical_lag_in_10ps: 32
+  model_duration_ps: 7680.0
+  nominal_compression: 2.0572916666666665
+  route_status: single_reference_route
+  route_support_count: 1
+  event_A:
+    residue_i: 2
+    residue_j: 102
+    threshold_nm: 2.34017014503479
+    target_contact: 0
+    change_nm: 3.11669921875
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 9.0
+    crossings:
+    - 9
+    crossings_by_segment:
+    - 9
+    initial_distance_nm: 0.6387863312940067
+    initial_progress_margin_nm: 1.7013838137407833
+  event_B:
+    residue_i: 0
+    residue_j: 102
+    threshold_nm: 2.7209810614585876
+    target_contact: 0
+    change_nm: 3.234038472175598
+    stability: 1.0
+    support_count: 1
+    support_segment_indices:
+    - 0
+    median_crossing: 14.0
+    crossings:
+    - 14
+    crossings_by_segment:
+    - 14
+    initial_distance_nm: 1.1349153260209985
+    initial_progress_margin_nm: 1.586065735437589
+  H_diagnostic:
+    status: unavailable
+    reason: H contains no comparable stable start-to-target transition
+    transition_count: 0
+    transition_paths: []
+    eligibility_gate: false
+  confrover_representation_cached: false
+  prepare_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7p46_A_prepare.yaml
+  main_config: ${DUET_PROJECT_ROOT}/configs/duet/protein_benchmark/route_v3_1/7p46_A_main.yaml
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7p46_A/duet_programs.yaml
+  selection_report: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7p46_A/selection_report.yaml
+  case_manifest: ${DUET_ASSET_ROOT}/data/atlas/7p46_A/7P46-A-R3F5000S256_manifest.json

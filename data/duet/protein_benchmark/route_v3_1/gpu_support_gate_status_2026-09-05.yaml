@@ -1,0 +1,177 @@
+protocol: route_v3_1
+date: 2026-09-05
+remote_project_root: /workspace/sejin/AI_MD_NSMC_v31_stage
+remote_asset_root: /workspace/sejin/confrover_mh_steering
+main_method_runs_started: true
+representations:
+  status: pass
+  ready: 10
+  total: 10
+config_resolution:
+  status: pass
+  missing_assets: 0
+  total_configs: 10
+whole_path_k1_smoke:
+  seed: 20260990
+  method: frozen
+  outer_k: 1
+  inner_m: 1
+  horizon: 24
+  interpretation: execution_and_geometry_smoke_only_not_reachability_estimate
+  endpoint_valid_paths: 10
+  strict_whole_path_valid_paths: 8
+  total_paths: 10
+  full_ordered_success_paths: 0
+  results:
+    6gus_A: {path_valid: true, endpoint_valid: true, wall_clock_s: 124.39805818814784, peak_gpu_memory_bytes: 8698165760}
+    6jv8_A: {path_valid: true, endpoint_valid: true, wall_clock_s: 103.63711765408516, peak_gpu_memory_bytes: 1772145664}
+    6q9c_A: {path_valid: true, endpoint_valid: true, wall_clock_s: 146.1887886626646, peak_gpu_memory_bytes: 8698165760}
+    6rrv_A: {path_valid: false, endpoint_valid: true, wall_clock_s: 110.9505686853081, peak_gpu_memory_bytes: 5339925504}
+    6tly_A: {path_valid: true, endpoint_valid: true, wall_clock_s: 125.10890683624893, peak_gpu_memory_bytes: 2962706432}
+    7aex_A: {path_valid: true, endpoint_valid: true, wall_clock_s: 260.85341353248805, peak_gpu_memory_bytes: 37978209792}
+    7bwf_B: {path_valid: false, endpoint_valid: true, wall_clock_s: 104.0157347517088, peak_gpu_memory_bytes: 2542885888}
+    7p46_A: {path_valid: true, endpoint_valid: true, wall_clock_s: 244.60611339565367, peak_gpu_memory_bytes: 40594441216}
+    7rm7_A: {path_valid: true, endpoint_valid: true, wall_clock_s: 183.26561888866127, peak_gpu_memory_bytes: 23218387456}
+    7s86_A: {path_valid: true, endpoint_valid: true, wall_clock_s: 124.56082785502076, peak_gpu_memory_bytes: 2962706432}
+checkpoint_p95:
+  status: pass
+  seed: 20260991
+  checkpoint_count: 8
+  continuations_per_checkpoint: 4
+  checkpoint_progress: 0.95
+  selection_rule: positive_log_gain_and_spearman_at_least_0.5
+  interpretation: one_step_ranking_diagnostic_not_method_comparison
+  results:
+    6gus_A: {parent_step: 5, spearman: 0.9761904761904763, selection_log_gain: 0.14321518597477412}
+    6jv8_A: {parent_step: 2, spearman: 0.880952380952381, selection_log_gain: 0.00031081048644621134}
+    6q9c_A: {parent_step: 5, spearman: 0.9523809523809524, selection_log_gain: 0.03153450734934293}
+    6rrv_A: {parent_step: 12, spearman: 1.0, selection_log_gain: 0.4794212972571701}
+    6tly_A: {parent_step: 1, spearman: 0.9523809523809524, selection_log_gain: 0.20052742140792068}
+    7aex_A: {parent_step: 17, spearman: 0.8333333333333335, selection_log_gain: 0.0004991902336390908}
+    7bwf_B: {parent_step: 14, spearman: 0.9761904761904763, selection_log_gain: 0.27913364884646175}
+    7p46_A: {parent_step: 8, spearman: 0.9761904761904763, selection_log_gain: 0.2722557005636761}
+    7rm7_A: {parent_step: 17, spearman: 1.0, selection_log_gain: 0.21465548351957864}
+    7s86_A: {parent_step: 6, spearman: 1.0, selection_log_gain: 0.011578750880707034}
+frozen_k8_pilot:
+  status: resumed_after_client_connection_loss
+  seed: 20260992
+  method: frozen
+  outer_k: 8
+  inner_m: 1
+  interpretation: escalation_pilot_not_final_reachability_gate
+  completed_results:
+    6jv8_A: {a_reached: 3, a_then_b: 0, full_success: 0, strict_whole_path_valid: 7, total: 8}
+    6gus_A: {a_reached: 3, a_then_b: 0, full_success: 0, strict_whole_path_valid: 8, total: 8}
+    6q9c_A: {a_reached: 1, a_then_b: 1, full_success: 0, strict_whole_path_valid: 7, total: 8}
+    6rrv_A: {a_reached: 2, a_then_b: 0, full_success: 0, strict_whole_path_valid: 7, total: 8}
+    6tly_A: {a_reached: 1, a_then_b: 0, full_success: 0, strict_whole_path_valid: 2, total: 8}
+    7aex_A: {a_reached: 0, a_then_b: 0, full_success: 0, strict_whole_path_valid: 7, total: 8}
+    7bwf_B: {a_reached: 0, a_then_b: 0, full_success: 0, strict_whole_path_valid: 7, total: 8}
+    7rm7_A: {a_reached: 0, a_then_b: 0, full_success: 0, strict_whole_path_valid: 8, total: 8}
+    7s86_A: {a_reached: 0, a_then_b: 0, full_success: 0, strict_whole_path_valid: 7, total: 8}
+  pending:
+    - 7p46_A
+  resume:
+    date: 2026-09-06
+    remote_pid: 1494595
+    log: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1_support_gate/_launcher/7p46_A_k8.log
+remaining_before_main_launch:
+  - complete_and_review_frozen_k8_pilot
+  - complete_and_review_frozen_k48_final_gate
+  - resolve_predeclared_whole_path_validity_acceptance_rule
+  - run_main_shape_memory_smoke_for_longest_proteins
+frozen_k48_final_gate:
+  status: cancelled_before_first_completed_run
+  launch_date: 2026-09-06
+  task: ordered
+  outer_k: 48
+  inner_m: 1
+  seeds: [20260993, 20260994]
+  reverse_decoder_evaluations_per_protein_seed: 229248
+  total_planned_protein_seed_runs: 20
+  total_planned_reverse_decoder_evaluations: 4584960
+  output_root: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1_support_gate/frozen_k48_final
+  gpu1:
+    pod: sejin-h100-1-work-001-zhr2l
+    launcher_pid: 3740371
+    order: [6tly_A, 6jv8_A, 7bwf_B, 7s86_A, 6rrv_A]
+    log: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1_support_gate/_launcher/frozen_k48_gpu1.log
+    active_at_verification: {protein: 6tly_A, seed: 20260993}
+  gpu2:
+    pod: sejin-h100-1-work-004-96566
+    waiter_pid: 1494826
+    waits_for_k8_pid: 1494404
+    order: [6q9c_A, 6gus_A, 7rm7_A, 7aex_A, 7p46_A]
+    log: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1_support_gate/_launcher/frozen_k48_gpu2.log
+    active_at_verification: waiting_for_7p46_A_k8_completion
+  resume_policy: skip_existing_nonempty_metrics_json_then_continue
+  cancellation_reason: full_frozen_nonzero_success_is_not_required_for_a_rare_event_benchmark
+  main_method_runs_started: true
+main_b64_queue:
+  status: cancelled_for_single_seed_design
+  launch_date: 2026-09-06
+  scheduling: protein_first_shared_seed_blocks
+  protein_order: [6jv8_A, 7bwf_B, 6tly_A, 7s86_A, 6rrv_A, 6gus_A, 6q9c_A, 7rm7_A, 7aex_A, 7p46_A]
+  task_order: [ordered, endpoint]
+  seed_order: [20261001, 20261002, 20261003, 20261004, 20261005]
+  method_order: [frozen, complete_nested, duet, outer_only, inner_only]
+  method_settings:
+    frozen: {outer_k: 64, inner_m: 1}
+    outer_only: {outer_k: 64, inner_m: 1}
+    inner_only: {outer_k: 1, inner_m: 64}
+    complete_nested: {outer_k: 16, inner_m: 4}
+    duet: {outer_k: 16, inner_m: 4}
+  worker_coordination: atomic_seed_block_locks
+  seed_block_definition: all_five_methods_for_one_protein_task_seed
+  worker_1:
+    pod: sejin-h100-1-work-001-zhr2l
+    launcher_pid: 3740725
+    initial_block: {protein: 6jv8_A, task: ordered, seed: 20261001, method: frozen}
+  worker_2:
+    pod: sejin-h100-1-work-004-96566
+    launcher_pid: 1495137
+    initial_block: {protein: 6jv8_A, task: ordered, seed: 20261002, method: frozen}
+  logs:
+    worker_1: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1/_main_b64_queue/logs/h100_1.log
+    worker_2: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1/_main_b64_queue/logs/h100_2.log
+  output_root: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1
+main_b64_seed1_lanes:
+  status: cancelled_to_remove_barrier_waits
+  launch_date: 2026-09-06
+  seed: 20261001
+  total_planned_runs: 100
+  factorization: 5_methods_x_10_proteins_x_2_tasks_x_1_seed
+  protein_order: [6jv8_A, 7bwf_B, 6tly_A, 7s86_A, 6rrv_A, 6gus_A, 6q9c_A, 7rm7_A, 7aex_A, 7p46_A]
+  task_order: [ordered, endpoint]
+  lane1:
+    pod: sejin-h100-1-work-001-zhr2l
+    launcher_pid: 3741026
+    methods: [frozen, outer_only, inner_only]
+    initial_run: {protein: 6jv8_A, task: ordered, method: frozen}
+  lane2:
+    pod: sejin-h100-1-work-004-96566
+    launcher_pid: 1495391
+    methods: [complete_nested, duet]
+    initial_run: {protein: 6jv8_A, task: ordered, method: complete_nested}
+  barrier: both_method_lanes_complete_each_protein_task_before_advancing
+  output_root: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1
+  logs:
+    lane1: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1/_main_b64_seed1_lanes/logs/lane1.log
+    lane2: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1/_main_b64_seed1_lanes/logs/lane2.log
+main_b64_seed1_nowait:
+  status: running
+  launch_date: 2026-09-06
+  seed: 20261001
+  total_planned_runs: 100
+  completed_runs_at_launch: 14
+  scheduling: shared_atomic_method_work_queue_without_barriers
+  priority: protein_then_task_then_method
+  protein_order: [6jv8_A, 7bwf_B, 6tly_A, 7s86_A, 6rrv_A, 6gus_A, 6q9c_A, 7rm7_A, 7aex_A, 7p46_A]
+  task_order: [ordered, endpoint]
+  method_order: [frozen, complete_nested, duet, outer_only, inner_only]
+  worker_1: {pod: sejin-h100-1-work-001-zhr2l, launcher_pid: 3746187}
+  worker_2: {pod: sejin-h100-1-work-004-96566, launcher_pid: 1497800}
+  initial_active_runs:
+    worker_1: {protein: 7bwf_B, task: endpoint, method: frozen}
+    worker_2: {protein: 7bwf_B, task: ordered, method: inner_only}
+  output_root: /workspace/sejin/AI_MD_NSMC_v31_stage/outputs/duet_md/protein_benchmark/route_v3_1

@@ -1,0 +1,7 @@
+*.csv text eol=lf
+*.tsv text eol=lf
+*.pdb whitespace=-trailing-space
+*.cif whitespace=-trailing-space
+docs/reports/** whitespace=-trailing-space,-blank-at-eof
+docs/DUET_MD_CHATGPT_EXPERIMENT_CONTEXT_2026-09-06.md whitespace=-trailing-space,-blank-at-eof
+results/summaries/**/*.md whitespace=-trailing-space,-blank-at-eof

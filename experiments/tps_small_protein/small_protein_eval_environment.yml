@@ -1,0 +1,13 @@
+name: tps-dps-eval
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy=1.26.4
+  - openmmtools
+  - mdtraj
+  - joblib
+  - pyemma
+  - deeptime=0.4.4
+  - scipy
+  - pyyaml

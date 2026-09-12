@@ -7,6 +7,11 @@ from typing import Any, Sequence
 import numpy as np
 
 from confmh.duet.analysis import jensen_shannon_divergence
+from confmh.duet.atlas_programs import (
+    _ca_rmsd_to_reference,
+    _transition_path_geometry_segment,
+    _transition_path_segment,
+)
 from confmh.duet.config import resolve_config_path
 from confmh.pca_cv import PCACV, _kabsch_align
 
@@ -59,6 +64,68 @@ def _transition_windows(
     return windows
 
 
+def _route_v3_transition_windows(
+    pc1: np.ndarray,
+    times_ps: np.ndarray,
+    reference_ca_nm: np.ndarray,
+    initial_ca_nm: np.ndarray,
+    selection: dict[str, Any],
+) -> list[np.ndarray]:
+    """Extract a held-out window with the same fixed-lag rule used for task design."""
+    protocol = selection.get("protocol_parameters", {})
+    max_start_rmsd = protocol.get("max_start_ca_rmsd_nm")
+    start_match = None
+    if max_start_rmsd is not None:
+        rmsd = _ca_rmsd_to_reference(reference_ca_nm, initial_ca_nm)
+        start_match = rmsd <= float(max_start_rmsd)
+    ratio = protocol.get("duration_ratio", [0.80, 1.10])
+    target_interval = selection.get("transition_target_interval")
+    if target_interval is None:
+        target_interval = selection["target_interval"]
+    result = _transition_path_segment(
+        np.asarray(pc1, dtype=float),
+        np.asarray(times_ps, dtype=float),
+        tuple(selection["start_interval"]),
+        tuple(target_interval),
+        frames=int(selection["trajectory_horizon"]) + 1,
+        model_step_ps=float(selection["model_step_ps"]),
+        start_dwell_steps=float(protocol.get("start_dwell_model_steps", 0.5)),
+        target_dwell_steps=float(protocol.get("target_dwell_model_steps", 0.5)),
+        duration_ratio=(float(ratio[0]), float(ratio[1])),
+        max_time_error_steps=float(protocol.get("max_sampling_time_error_steps", 0.1)),
+        start_match_mask=start_match,
+    )
+    return [] if result is None else [result[0]]
+
+
+def _route_v3_1_transition_windows(
+    pc1: np.ndarray,
+    times_ps: np.ndarray,
+    reference_ca_nm: np.ndarray,
+    initial_ca_nm: np.ndarray,
+    selection: dict[str, Any],
+) -> list[np.ndarray]:
+    """Extract an optional H route without imposing generated-time matching."""
+    protocol = selection.get("protocol_parameters", {})
+    rmsd = _ca_rmsd_to_reference(reference_ca_nm, initial_ca_nm)
+    target_interval = selection.get("transition_target_interval")
+    if target_interval is None:
+        target_interval = selection["target_interval"]
+    result = _transition_path_geometry_segment(
+        np.asarray(pc1, dtype=float),
+        np.asarray(times_ps, dtype=float),
+        tuple(selection["start_interval"]),
+        tuple(target_interval),
+        analysis_frames=int(selection["trajectory_horizon"]) + 1,
+        start_dwell_ps=float(protocol.get("reference_start_dwell_ps", 200.0)),
+        target_dwell_ps=float(protocol.get("reference_target_dwell_ps", 200.0)),
+        start_match_mask=(
+            rmsd <= float(protocol.get("max_start_ca_rmsd_nm", 0.30))
+        ),
+    )
+    return [] if result is None else [result[0]]
+
+
 def _contact_map(ca_nm: np.ndarray, excluded: set[tuple[int, int]], threshold_nm: float) -> np.ndarray:
     pairs = []
     for i in range(len(ca_nm)):
@@ -81,6 +148,7 @@ class HeldOutReferenceEvaluator:
     windows: list[np.ndarray]
     excluded_contacts: set[tuple[int, int]]
     contact_threshold_nm: float = 0.8
+    window_mode: str = "legacy_normalized"
 
     @classmethod
     def from_config(cls, cfg: dict[str, Any], catalog: dict[str, Any]) -> "HeldOutReferenceEvaluator":
@@ -113,22 +181,59 @@ class HeldOutReferenceEvaluator:
             width = float(reference.get("basin_half_width", 0.25))
             start_interval = [start_score - width, start_score + width]
             target_interval = endpoint["target_interval"]
-        windows = _transition_windows(
-            reference_pc[:, 0], start_interval, target_interval, int(cfg["trajectory"]["horizon"])
-        )
+        window_mode = str(selection.get("transition_mode", "legacy_normalized"))
+        if window_mode in {"last_exit_fixed_lag", "last_exit_route_geometry"}:
+            initial = md.load(str(resolve_config_path(cfg, cfg["trajectory"]["initial_structure"])))
+            initial_protein = initial.topology.select(
+                str(reference.get("protein_selection", "protein and chainid 0"))
+            )
+            initial = initial.atom_slice(initial_protein)
+            initial_ca_indices = initial.topology.select("name CA")
+            initial_ca = np.asarray(initial.xyz[0, initial_ca_indices, :], dtype=float)
+            if window_mode == "last_exit_route_geometry":
+                windows = _route_v3_1_transition_windows(
+                    reference_pc[:, 0],
+                    np.asarray(trajectory.time, dtype=float),
+                    reference_ca,
+                    initial_ca,
+                    selection,
+                )
+            else:
+                windows = _route_v3_transition_windows(
+                    reference_pc[:, 0],
+                    np.asarray(trajectory.time, dtype=float),
+                    reference_ca,
+                    initial_ca,
+                    selection,
+                )
+        else:
+            windows = _transition_windows(
+                reference_pc[:, 0],
+                start_interval,
+                target_interval,
+                int(cfg["trajectory"]["horizon"]),
+            )
         excluded = set()
         for observable in catalog.get("observables", {}).values():
             if observable.get("kind") in {"contact", "residue_distance"}:
                 i, j = sorted((int(observable["residue_i"]), int(observable["residue_j"])))
                 excluded.add((i, j))
-        return cls(pca, reference_ca, reference_pc, windows, excluded)
+        return cls(
+            pca,
+            reference_ca,
+            reference_pc,
+            windows,
+            excluded,
+            window_mode=window_mode,
+        )
 
     def evaluate(self, paths: Sequence[Sequence[Any]]) -> dict[str, Any]:
         if not self.windows:
             return {
                 "status": "suppressed",
-                "reason": "no held-out R3 start-to-target transition windows",
+                "reason": f"no optional held-out {self.window_mode} transition windows",
                 "reference_transition_window_count": 0,
+                "reference_window_mode": self.window_mode,
             }
         generated_ca = [np.stack([frame.ca_nm for frame in path]) for path in paths]
         generated_pc = [self.pca.project_ca(path) for path in generated_ca]
@@ -201,6 +306,7 @@ class HeldOutReferenceEvaluator:
         return {
             "status": "ok",
             "reference_transition_window_count": len(self.windows),
+            "reference_window_mode": self.window_mode,
             "coverage_radius_pca": coverage_radius,
             **aggregate,
             "route_jsd": route_jsd,

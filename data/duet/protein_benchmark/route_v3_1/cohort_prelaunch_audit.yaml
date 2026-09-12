@@ -1,0 +1,74 @@
+protocol_version: route_v3_1
+audit_scope: static_prelaunch_no_model_run
+model_outcomes_inspected: false
+method_runs_started: false
+target_frozen_count: 10
+audited_frozen_count: 10
+static_audit_passed: true
+global_errors: []
+cases:
+- pdb_chain: 6jv8_A
+  status: pass
+  errors: []
+  nominal_compression: 2.0238095238095237
+  route_status: independently_supported_route
+  held_out_status: unavailable
+- pdb_chain: 7bwf_B
+  status: pass
+  errors: []
+  nominal_compression: 1.9791666666666667
+  route_status: single_reference_route
+  held_out_status: unavailable
+- pdb_chain: 6tly_A
+  status: pass
+  errors: []
+  nominal_compression: 2.0045045045045047
+  route_status: independently_supported_route
+  held_out_status: available
+- pdb_chain: 7s86_A
+  status: pass
+  errors: []
+  nominal_compression: 2.03125
+  route_status: single_reference_route
+  held_out_status: available
+- pdb_chain: 6rrv_A
+  status: pass
+  errors: []
+  nominal_compression: 2.013888888888889
+  route_status: single_reference_route
+  held_out_status: unavailable
+- pdb_chain: 6gus_A
+  status: pass
+  errors: []
+  nominal_compression: 2.0295698924731185
+  route_status: independently_supported_route
+  held_out_status: available
+- pdb_chain: 6q9c_A
+  status: pass
+  errors: []
+  nominal_compression: 1.8541666666666667
+  route_status: single_reference_route
+  held_out_status: unavailable
+- pdb_chain: 7rm7_A
+  status: pass
+  errors: []
+  nominal_compression: 1.1875
+  route_status: single_reference_route
+  held_out_status: unavailable
+- pdb_chain: 7aex_A
+  status: pass
+  errors: []
+  nominal_compression: 1.3333333333333333
+  route_status: single_reference_route
+  held_out_status: unavailable
+- pdb_chain: 7p46_A
+  status: pass
+  errors: []
+  nominal_compression: 2.0572916666666665
+  route_status: single_reference_route
+  held_out_status: unavailable
+pending_gpu_gates:
+- ConfRover representation cache
+- unsteered one-step calibration and reachability
+- checkpoint continuation-predictivity
+- generated whole-path structural validity

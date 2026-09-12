@@ -1,0 +1,2770 @@
+{
+  "scope": "posthoc_only",
+  "protein": "prmt6",
+  "selection": "all 16 generated frames each from existing Bundle-A official_forward and current_custom_sde; no holo/target coordinates used as restraint reference",
+  "forcefield": "protein.ff14SBonlysc + implicit/gbn2; existing PRMT6 prepared topology",
+  "restraint": {
+    "heavy_atoms": "all topology heavy atoms",
+    "reference": "the evaluated frame itself",
+    "strength_kcal_mol_a2": 10.0,
+    "all_atoms_movable": true
+  },
+  "minimizer": {
+    "force_tolerance_kj_mol_nm": 10.0,
+    "max_iterations": 2000
+  },
+  "force_manifest": [
+    {
+      "force": "HarmonicBondForce",
+      "group": 0,
+      "category": "bonded"
+    },
+    {
+      "force": "PeriodicTorsionForce",
+      "group": 0,
+      "category": "bonded"
+    },
+    {
+      "force": "NonbondedForce",
+      "group": 1,
+      "category": "nonbonded"
+    },
+    {
+      "force": "CMMotionRemover",
+      "group": 3,
+      "category": "other"
+    },
+    {
+      "force": "HarmonicAngleForce",
+      "group": 0,
+      "category": "bonded"
+    },
+    {
+      "force": "CustomGBForce",
+      "group": 2,
+      "category": "solvation"
+    }
+  ],
+  "frames": [
+    {
+      "arm": "official_forward",
+      "path_index": 0,
+      "frame_index": 1,
+      "frame_digest": "d45ab8202d1b90af6b25b85aef79a9983711052c0cd3b6b9c08e42f9f46c3ccf",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0026768092066049576,
+      "minimization_s": 12.429907336831093,
+      "raw_physical_energy_kj_mol": 664076518.3648148,
+      "relaxed_physical_energy_kj_mol": -45318.35033607483,
+      "raw_components_kj_mol": {
+        "bonded": 8006141.940368652,
+        "nonbonded": 656107528.778595,
+        "solvation": -37138.98405075073,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19137.867908477783,
+        "nonbonded": -42439.09289550781,
+        "solvation": -22017.13277053833,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 8896.6240234375,
+      "max_force_kj_mol_nm": 111.46898405965683,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.40174705841301406,
+          2.5859763865241323
+        ],
+        "peptide_c_n_gross_count": 134,
+        "n_ca_min_max_a": [
+          1.4542182392087537,
+          1.464772484367422
+        ],
+        "ca_c_min_max_a": [
+          1.516999278387201,
+          1.5270007461150668
+        ],
+        "adjacent_ca_max_a": 4.937649687099793,
+        "nonbonded_heavy_clash_lt_1a_count": 2,
+        "nonbonded_heavy_min_distance_a": 0.899990255637026,
+        "bond_deviation_gt_0_5a_count": 1428,
+        "max_bond_deviation_nm": 0.7814032885291885,
+        "angle_deviation_gt_20deg_count": 3704,
+        "max_angle_deviation_rad": 2.02970293643488,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3067885302373292,
+          1.3596280752426264
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4248007500706548,
+          1.4973372704268673
+        ],
+        "ca_c_min_max_a": [
+          1.490209602238152,
+          1.5616475665402263
+        ],
+        "adjacent_ca_max_a": 3.9657216330930267,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1559602014783588,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.004962245798398712,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.3140709374767008,
+        "chirality_inverted_count": 9,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.30763645801955947,
+        "p95": 0.7139122770214015,
+        "max": 2.558134088697255
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 0,
+      "frame_index": 2,
+      "frame_digest": "69e87f68c45fc96da19a47a218026754020ae8103bea433b1ef09169281058f9",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.006212659180164337,
+      "minimization_s": 31.569557533599436,
+      "raw_physical_energy_kj_mol": 2650958324078090.0,
+      "relaxed_physical_energy_kj_mol": -45203.99393463135,
+      "raw_components_kj_mol": {
+        "bonded": 7894816.323669434,
+        "nonbonded": 2650958316276126.5,
+        "solvation": -37180.63052368164,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19032.845512390137,
+        "nonbonded": -41430.761322021484,
+        "solvation": -22806.075340270996,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 9425.258422851562,
+      "max_force_kj_mol_nm": 107.0520498999089,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.1904754756276806,
+          2.388517483866378
+        ],
+        "peptide_c_n_gross_count": 137,
+        "n_ca_min_max_a": [
+          1.4542184921755617,
+          1.4647726250902144
+        ],
+        "ca_c_min_max_a": [
+          1.5169993984964045,
+          1.5270009868216075
+        ],
+        "adjacent_ca_max_a": 5.003330731437726,
+        "nonbonded_heavy_clash_lt_1a_count": 5,
+        "nonbonded_heavy_min_distance_a": 0.6998944747533921,
+        "bond_deviation_gt_0_5a_count": 1387,
+        "max_bond_deviation_nm": 0.8642325983156416,
+        "angle_deviation_gt_20deg_count": 3684,
+        "max_angle_deviation_rad": 2.0595061893253477,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3035576112178695,
+          1.3592780406084803
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.423911676490998,
+          1.4997213382289154
+        ],
+        "ca_c_min_max_a": [
+          1.4948236668196482,
+          1.5658726798952505
+        ],
+        "adjacent_ca_max_a": 3.9760230294191867,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.155280103489352,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005072133822891539,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.24840969159440496,
+        "chirality_inverted_count": 3,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.31126826328793367,
+        "p95": 0.6803565856844072,
+        "max": 2.634173443422972
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 0,
+      "frame_index": 3,
+      "frame_digest": "f5cd109dc42beb7409f014d2d9949d79ef09bce95f5c25b7254d0d252e567e22",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.00292821042239666,
+      "minimization_s": 29.974442436359823,
+      "raw_physical_energy_kj_mol": 1566661543642.3818,
+      "relaxed_physical_energy_kj_mol": -44535.96257209778,
+      "raw_components_kj_mol": {
+        "bonded": 12135512.41192627,
+        "nonbonded": 1566649490939.6282,
+        "solvation": -46432.21647644043,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19481.494968414307,
+        "nonbonded": -41284.85250854492,
+        "solvation": -22732.604820251465,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 11301.025512695312,
+      "max_force_kj_mol_nm": 120.00990355954657,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.26287913962577186,
+          2.8251528641177908
+        ],
+        "peptide_c_n_gross_count": 136,
+        "n_ca_min_max_a": [
+          1.4542183580662653,
+          1.464772531321945
+        ],
+        "ca_c_min_max_a": [
+          1.516999298180486,
+          1.5270009233864204
+        ],
+        "adjacent_ca_max_a": 5.578245115452385,
+        "nonbonded_heavy_clash_lt_1a_count": 5,
+        "nonbonded_heavy_min_distance_a": 0.5065848333648333,
+        "bond_deviation_gt_0_5a_count": 1711,
+        "max_bond_deviation_nm": 0.954306348769528,
+        "angle_deviation_gt_20deg_count": 4043,
+        "max_angle_deviation_rad": 2.0820120973079286,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.305274197323763,
+          1.3663904297583598
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.414858010188297,
+          1.5079318156798698
+        ],
+        "ca_c_min_max_a": [
+          1.4921959976415922,
+          1.5758013808188802
+        ],
+        "adjacent_ca_max_a": 4.011462484135562,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.136093293762464,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.006552713675585964,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.24876608718716797,
+        "chirality_inverted_count": 11,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.32975212245720065,
+        "p95": 0.7721198084067682,
+        "max": 2.7408076198611013
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 0,
+      "frame_index": 4,
+      "frame_digest": "2db6ddfcb0551e2c3a4a4a132dbfa951b2bc8328b6e0aec8d979c0e1edab8cd9",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0031916890293359756,
+      "minimization_s": 32.58385317213833,
+      "raw_physical_energy_kj_mol": 403763669142410.94,
+      "relaxed_physical_energy_kj_mol": -43403.533923625946,
+      "raw_components_kj_mol": {
+        "bonded": 12730610.230773926,
+        "nonbonded": 403763656512318.25,
+        "solvation": -44371.03910827637,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 20338.694778442383,
+        "nonbonded": -41040.21780395508,
+        "solvation": -22702.012687683105,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 11673.724243164062,
+      "max_force_kj_mol_nm": 102.9968561522105,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2829221809877905,
+          2.618276558320956
+        ],
+        "peptide_c_n_gross_count": 147,
+        "n_ca_min_max_a": [
+          1.4542185072643228,
+          1.4647727587680142
+        ],
+        "ca_c_min_max_a": [
+          1.5169989929739514,
+          1.5270008125697916
+        ],
+        "adjacent_ca_max_a": 5.0841022963969245,
+        "nonbonded_heavy_clash_lt_1a_count": 2,
+        "nonbonded_heavy_min_distance_a": 0.8572798308470462,
+        "bond_deviation_gt_0_5a_count": 1689,
+        "max_bond_deviation_nm": 0.8927269708238228,
+        "angle_deviation_gt_20deg_count": 3890,
+        "max_angle_deviation_rad": 2.0263059552316336,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.2989847030902835,
+          1.3601577627763088
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.42417191952619,
+          1.5071833088328261
+        ],
+        "ca_c_min_max_a": [
+          1.4878519293478991,
+          1.5752306828240785
+        ],
+        "adjacent_ca_max_a": 3.995906150339782,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.130345214718658,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005818330883282624,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.2661958314995112,
+        "chirality_inverted_count": 15,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.3365211123875179,
+        "p95": 0.8019847627564223,
+        "max": 2.5892153975214445
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 1,
+      "frame_index": 1,
+      "frame_digest": "e6ad229c81bbe555fc80d19f655c557e4d91c057478aba39fbd2d9462f1c2bd2",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.002888917922973633,
+      "minimization_s": 8.008728617802262,
+      "raw_physical_energy_kj_mol": 7714455447.551756,
+      "relaxed_physical_energy_kj_mol": -44905.13332939148,
+      "raw_components_kj_mol": {
+        "bonded": 6443928.814819336,
+        "nonbonded": 7708048039.427818,
+        "solvation": -36846.006744384766,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19436.06972694397,
+        "nonbonded": -41571.79551696777,
+        "solvation": -22769.410522460938,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 9767.627197265625,
+      "max_force_kj_mol_nm": 196.0126369078424,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.40947698976647295,
+          2.490634172875413
+        ],
+        "peptide_c_n_gross_count": 120,
+        "n_ca_min_max_a": [
+          1.4542182570911633,
+          1.4647727065694347
+        ],
+        "ca_c_min_max_a": [
+          1.5169990867288508,
+          1.5270013655206782
+        ],
+        "adjacent_ca_max_a": 5.041794400455051,
+        "nonbonded_heavy_clash_lt_1a_count": 4,
+        "nonbonded_heavy_min_distance_a": 0.6008243431214465,
+        "bond_deviation_gt_0_5a_count": 1118,
+        "max_bond_deviation_nm": 0.8359416149323989,
+        "angle_deviation_gt_20deg_count": 3175,
+        "max_angle_deviation_rad": 1.994301669858274,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.300380243726932,
+          1.3628287767573002
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4241386317261973,
+          1.5053012525650922
+        ],
+        "ca_c_min_max_a": [
+          1.4921504599341582,
+          1.6109519887392638
+        ],
+        "adjacent_ca_max_a": 3.986727852267777,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 1.9323977362038407,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.008895198873926369,
+        "angle_deviation_gt_20deg_count": 3,
+        "max_angle_deviation_rad": 0.7163625438472399,
+        "chirality_inverted_count": 5,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.3007455573258326,
+        "p95": 0.7402702830810024,
+        "max": 2.6359579731410263
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 1,
+      "frame_index": 2,
+      "frame_digest": "9567c84e9396df60b85f220326a176baad771be913afbf49ca9f3dcd808d123e",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0032507767900824547,
+      "minimization_s": 16.687970004044473,
+      "raw_physical_energy_kj_mol": 463061148151.4092,
+      "relaxed_physical_energy_kj_mol": -44861.45321273804,
+      "raw_components_kj_mol": {
+        "bonded": 8647855.968017578,
+        "nonbonded": 463052564931.1094,
+        "solvation": -40024.95400238037,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19117.22046661377,
+        "nonbonded": -41262.85270690918,
+        "solvation": -22715.81979751587,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10046.259887695312,
+      "max_force_kj_mol_nm": 121.7161350048387,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.09643770907526747,
+          2.588513128109185
+        ],
+        "peptide_c_n_gross_count": 126,
+        "n_ca_min_max_a": [
+          1.454218250782569,
+          1.464772598229858
+        ],
+        "ca_c_min_max_a": [
+          1.5169989408206552,
+          1.5270007912269976
+        ],
+        "adjacent_ca_max_a": 5.135099124805648,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 1.0903434872657705,
+        "bond_deviation_gt_0_5a_count": 1553,
+        "max_bond_deviation_nm": 0.7615650167175325,
+        "angle_deviation_gt_20deg_count": 3832,
+        "max_angle_deviation_rad": 2.0095519676932954,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3062601308428206,
+          1.3682252699954418
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4220827722363303,
+          1.5021709030273132
+        ],
+        "ca_c_min_max_a": [
+          1.4985933240109792,
+          1.5704610257329834
+        ],
+        "adjacent_ca_max_a": 4.006544164324151,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1542153448080077,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005317090302731309,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.23966707254958908,
+        "chirality_inverted_count": 5,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.3163937274724404,
+        "p95": 0.71173971826554,
+        "max": 2.4646349466727893
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 1,
+      "frame_index": 3,
+      "frame_digest": "9db0b36200e27a8f54686cbe2f4a27821f1f5187be1e3c66c1e4137fe739c74a",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.002942955121397972,
+      "minimization_s": 30.96614863909781,
+      "raw_physical_energy_kj_mol": 46436618467116.266,
+      "relaxed_physical_energy_kj_mol": -43710.51231384277,
+      "raw_components_kj_mol": {
+        "bonded": 14207787.523742676,
+        "nonbonded": 46436604298533.984,
+        "solvation": -43688.790351867676,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 20079.198947906494,
+        "nonbonded": -40622.84735107422,
+        "solvation": -23166.85926437378,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 11672.727294921875,
+      "max_force_kj_mol_nm": 67.57582149043638,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2632707402003054,
+          2.497295864857568
+        ],
+        "peptide_c_n_gross_count": 141,
+        "n_ca_min_max_a": [
+          1.4542181532491294,
+          1.4647728389955585
+        ],
+        "ca_c_min_max_a": [
+          1.5169993302112612,
+          1.5270009948098335
+        ],
+        "adjacent_ca_max_a": 4.97501842423213,
+        "nonbonded_heavy_clash_lt_1a_count": 5,
+        "nonbonded_heavy_min_distance_a": 0.5575057148184307,
+        "bond_deviation_gt_0_5a_count": 1832,
+        "max_bond_deviation_nm": 1.0487417197867173,
+        "angle_deviation_gt_20deg_count": 4063,
+        "max_angle_deviation_rad": 2.032858320559198,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3025762060492552,
+          1.3651528138857434
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.423426292185086,
+          1.5036911153241412
+        ],
+        "ca_c_min_max_a": [
+          1.4914136431048113,
+          1.5638893437384893
+        ],
+        "adjacent_ca_max_a": 3.9722649974568296,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.163793993499294,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.0054691115324141115,
+        "angle_deviation_gt_20deg_count": 6,
+        "max_angle_deviation_rad": 0.5132090018074578,
+        "chirality_inverted_count": 19,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.32403705475060524,
+        "p95": 0.7644151160659981,
+        "max": 3.1080564638987425
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 1,
+      "frame_index": 4,
+      "frame_digest": "1805b9b78bed3ffb6b0d82934eb3786a7ceddb72caa410a8315c689b21a29693",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.003288016654551029,
+      "minimization_s": 46.888284106738865,
+      "raw_physical_energy_kj_mol": 332553769932792.4,
+      "relaxed_physical_energy_kj_mol": -44798.762952804565,
+      "raw_components_kj_mol": {
+        "bonded": 12348286.203063965,
+        "nonbonded": 332553757588740.5,
+        "solvation": -44278.346771240234,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19248.105461120605,
+        "nonbonded": -40302.249031066895,
+        "solvation": -23744.62200164795,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10056.717041015625,
+      "max_force_kj_mol_nm": 93.69865866785914,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2467206743376,
+          2.5888570152696553
+        ],
+        "peptide_c_n_gross_count": 124,
+        "n_ca_min_max_a": [
+          1.4542180144893981,
+          1.4647723503491845
+        ],
+        "ca_c_min_max_a": [
+          1.516999413359283,
+          1.5270009707138978
+        ],
+        "adjacent_ca_max_a": 5.420305945538307,
+        "nonbonded_heavy_clash_lt_1a_count": 7,
+        "nonbonded_heavy_min_distance_a": 0.21912985308118538,
+        "bond_deviation_gt_0_5a_count": 1627,
+        "max_bond_deviation_nm": 1.0131530080776252,
+        "angle_deviation_gt_20deg_count": 3755,
+        "max_angle_deviation_rad": 2.0613869538039564,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3062730368695517,
+          1.3618588202645867
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4203141185312427,
+          1.5030118959268461
+        ],
+        "ca_c_min_max_a": [
+          1.495146153488682,
+          1.5711362778128464
+        ],
+        "adjacent_ca_max_a": 3.9638339148263873,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.141571780940492,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005817862672709562,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.25149680807515895,
+        "chirality_inverted_count": 17,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.29540035580100993,
+        "p95": 0.75012869486366,
+        "max": 2.5402933934030627
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 2,
+      "frame_index": 1,
+      "frame_digest": "f177e55a2def914a9bfb7b380ef3be4097ee83e9c4d645d785414a67b9ff44d4",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0031197601929306984,
+      "minimization_s": 30.19358746521175,
+      "raw_physical_energy_kj_mol": 500347747988333.06,
+      "relaxed_physical_energy_kj_mol": -45395.63042449951,
+      "raw_components_kj_mol": {
+        "bonded": 8516916.524536133,
+        "nonbonded": 500347741180679.44,
+        "solvation": -38656.8085899353,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19342.820037841797,
+        "nonbonded": -41868.42153930664,
+        "solvation": -22870.024055480957,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 9603.26953125,
+      "max_force_kj_mol_nm": 116.96489751079626,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2768179204355601,
+          2.6096387104178094
+        ],
+        "peptide_c_n_gross_count": 133,
+        "n_ca_min_max_a": [
+          1.4542184208493512,
+          1.464772514935973
+        ],
+        "ca_c_min_max_a": [
+          1.5169993613223485,
+          1.5270008888152404
+        ],
+        "adjacent_ca_max_a": 5.102404543200414,
+        "nonbonded_heavy_clash_lt_1a_count": 3,
+        "nonbonded_heavy_min_distance_a": 0.8523171910216296,
+        "bond_deviation_gt_0_5a_count": 1528,
+        "max_bond_deviation_nm": 0.7840425524246075,
+        "angle_deviation_gt_20deg_count": 3809,
+        "max_angle_deviation_rad": 2.021931802371353,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3057167447584639,
+          1.3654513369748067
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4259995369534275,
+          1.504634312457838
+        ],
+        "ca_c_min_max_a": [
+          1.4978803255705537,
+          1.5640418037098383
+        ],
+        "adjacent_ca_max_a": 3.976256661865609,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.165216107151571,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.0055634312457838175,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.23955330375143813,
+        "chirality_inverted_count": 13,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.2982293455672714,
+        "p95": 0.730436242169391,
+        "max": 2.3536169207563664
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 2,
+      "frame_index": 2,
+      "frame_digest": "da4e3ed76fbb0f8dde6501a192b1dd301b85e6254cfdcf168cf12e04f1ef8f5a",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0033544013276696205,
+      "minimization_s": 51.406344305723906,
+      "raw_physical_energy_kj_mol": 9893783054025544.0,
+      "relaxed_physical_energy_kj_mol": -43751.55381774902,
+      "raw_components_kj_mol": {
+        "bonded": 17252176.543640137,
+        "nonbonded": 9893783036873078.0,
+        "solvation": -48876.061935424805,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 20397.12127304077,
+        "nonbonded": -40738.16094970703,
+        "solvation": -23410.51197052002,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10462.426513671875,
+      "max_force_kj_mol_nm": 87.05626457217166,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.3195409509460494,
+          2.56493179019484
+        ],
+        "peptide_c_n_gross_count": 130,
+        "n_ca_min_max_a": [
+          1.4542182338166316,
+          1.4647724469938013
+        ],
+        "ca_c_min_max_a": [
+          1.51699936063678,
+          1.5270005719604987
+        ],
+        "adjacent_ca_max_a": 4.873027397971777,
+        "nonbonded_heavy_clash_lt_1a_count": 4,
+        "nonbonded_heavy_min_distance_a": 0.7995139825691026,
+        "bond_deviation_gt_0_5a_count": 1898,
+        "max_bond_deviation_nm": 0.9989149785940457,
+        "angle_deviation_gt_20deg_count": 4040,
+        "max_angle_deviation_rad": 2.070217564359112,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.303273142950719,
+          1.3684099842082962
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4317980305989697,
+          1.5025231333730666
+        ],
+        "ca_c_min_max_a": [
+          1.4960021029642432,
+          1.5649637483120393
+        ],
+        "adjacent_ca_max_a": 4.009201810726765,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1550846535876356,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.007938093069866287,
+        "angle_deviation_gt_20deg_count": 1,
+        "max_angle_deviation_rad": 0.36593180094732825,
+        "chirality_inverted_count": 25,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.30047807089473655,
+        "p95": 0.7745520961834582,
+        "max": 2.8542587850790055
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 2,
+      "frame_index": 3,
+      "frame_digest": "61bc6330f9f269420e2b3cccf40bd6755c9578099681951707e36301238aacc8",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0033006900921463966,
+      "minimization_s": 30.116496719419956,
+      "raw_physical_energy_kj_mol": 10354205156157.057,
+      "relaxed_physical_energy_kj_mol": -43993.19302368164,
+      "raw_components_kj_mol": {
+        "bonded": 11486321.110412598,
+        "nonbonded": 10354193779185.57,
+        "solvation": -41353.26377868652,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19891.36515045166,
+        "nonbonded": -41498.68721008301,
+        "solvation": -22385.866569519043,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 11173.598388671875,
+      "max_force_kj_mol_nm": 107.92118372328206,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.443743188533053,
+          2.99256499614946
+        ],
+        "peptide_c_n_gross_count": 108,
+        "n_ca_min_max_a": [
+          1.4542182764095966,
+          1.4647729272771994
+        ],
+        "ca_c_min_max_a": [
+          1.5169986231818486,
+          1.5270010120777882
+        ],
+        "adjacent_ca_max_a": 5.039117053819817,
+        "nonbonded_heavy_clash_lt_1a_count": 3,
+        "nonbonded_heavy_min_distance_a": 0.3846049514652213,
+        "bond_deviation_gt_0_5a_count": 1669,
+        "max_bond_deviation_nm": 1.0448875132214024,
+        "angle_deviation_gt_20deg_count": 3980,
+        "max_angle_deviation_rad": 2.0708598490532966,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3056578279656479,
+          1.3643994475169188
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4252742520053328,
+          1.5014627144262438
+        ],
+        "ca_c_min_max_a": [
+          1.493686763068701,
+          1.564189916206416
+        ],
+        "adjacent_ca_max_a": 3.9941737953395076,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.141610197088064,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.006573815688481477,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.2610400354603417,
+        "chirality_inverted_count": 16,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.3174263348732628,
+        "p95": 0.8163183687616017,
+        "max": 2.4900671809447537
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 2,
+      "frame_index": 4,
+      "frame_digest": "334103dece82b45ea4ff13f62ef4ed98bce673c37f9d7b650878c8929de80d9f",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.003305397927761078,
+      "minimization_s": 55.99955783598125,
+      "raw_physical_energy_kj_mol": 5.942080723165308e+18,
+      "relaxed_physical_energy_kj_mol": -43948.35675048828,
+      "raw_components_kj_mol": {
+        "bonded": 14835355.959777832,
+        "nonbonded": 5.942080723151294e+18,
+        "solvation": -44784.403816223145,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 20171.105712890625,
+        "nonbonded": -40804.08868408203,
+        "solvation": -23315.371742248535,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10591.001708984375,
+      "max_force_kj_mol_nm": 171.45617612946148,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.24475682727790526,
+          2.803856005661035
+        ],
+        "peptide_c_n_gross_count": 116,
+        "n_ca_min_max_a": [
+          1.4542182105542807,
+          1.4647721452706162
+        ],
+        "ca_c_min_max_a": [
+          1.5169991869052226,
+          1.5270005913089189
+        ],
+        "adjacent_ca_max_a": 5.271901928276213,
+        "nonbonded_heavy_clash_lt_1a_count": 7,
+        "nonbonded_heavy_min_distance_a": 0.3751372462538852,
+        "bond_deviation_gt_0_5a_count": 1766,
+        "max_bond_deviation_nm": 1.3056876811999456,
+        "angle_deviation_gt_20deg_count": 4013,
+        "max_angle_deviation_rad": 2.0713440100656326,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3071187247339637,
+          1.3629199245749555
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4214710211928225,
+          1.5109164953993515
+        ],
+        "ca_c_min_max_a": [
+          1.5015490743851418,
+          1.5696556837109268
+        ],
+        "adjacent_ca_max_a": 4.029623605891416,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1458002086972474,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.006191649539935146,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.25855205600533404,
+        "chirality_inverted_count": 27,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.30785686312867067,
+        "p95": 0.8268783808295489,
+        "max": 3.0218187815080766
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 3,
+      "frame_index": 1,
+      "frame_digest": "412e23cb46f8c1290214c66c1d8ede2034d4f679a045a4443c072482c061d70c",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.002895427867770195,
+      "minimization_s": 40.210518014617264,
+      "raw_physical_energy_kj_mol": 3.4618528161835424e+16,
+      "relaxed_physical_energy_kj_mol": -45008.763690948486,
+      "raw_components_kj_mol": {
+        "bonded": 9859090.669311523,
+        "nonbonded": 3.461852815408937e+16,
+        "solvation": -41755.90571975708,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19438.928115844727,
+        "nonbonded": -41719.51382446289,
+        "solvation": -22728.175750732422,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 8822.8955078125,
+      "max_force_kj_mol_nm": 118.0112963578834,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.20948501967158667,
+          2.6094701587876235
+        ],
+        "peptide_c_n_gross_count": 128,
+        "n_ca_min_max_a": [
+          1.454218354458469,
+          1.464773034840743
+        ],
+        "ca_c_min_max_a": [
+          1.5169991463706343,
+          1.5270010406430947
+        ],
+        "adjacent_ca_max_a": 5.050968796411764,
+        "nonbonded_heavy_clash_lt_1a_count": 2,
+        "nonbonded_heavy_min_distance_a": 0.5913539263421386,
+        "bond_deviation_gt_0_5a_count": 1643,
+        "max_bond_deviation_nm": 0.9403601977290257,
+        "angle_deviation_gt_20deg_count": 3868,
+        "max_angle_deviation_rad": 2.088098379476246,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.30114639437052,
+          1.3624128123212529
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4208230554913934,
+          1.5097663281444316
+        ],
+        "ca_c_min_max_a": [
+          1.494480201701971,
+          1.564985443617038
+        ],
+        "adjacent_ca_max_a": 4.000352530588414,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1484237243718285,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.00607663281444315,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.2564210683086092,
+        "chirality_inverted_count": 19,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.3033488878253857,
+        "p95": 0.7291874121413967,
+        "max": 1.6621361958579723
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 3,
+      "frame_index": 2,
+      "frame_digest": "e46d3183477738dd37d2cf32f34930618b74bcc89c8183a073d8a10241ab1591",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.002833399921655655,
+      "minimization_s": 60.69607088621706,
+      "raw_physical_energy_kj_mol": 1.8385035905878487e+21,
+      "relaxed_physical_energy_kj_mol": -44429.613693237305,
+      "raw_components_kj_mol": {
+        "bonded": 11181632.325683594,
+        "nonbonded": 1.8385035905878377e+21,
+        "solvation": -44086.151332855225,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19986.623207092285,
+        "nonbonded": -41927.0623626709,
+        "solvation": -22489.172687530518,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 11058.781127929688,
+      "max_force_kj_mol_nm": 106.94535855667193,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2956849637661367,
+          2.6199172553834362
+        ],
+        "peptide_c_n_gross_count": 138,
+        "n_ca_min_max_a": [
+          1.4542185093648679,
+          1.4647725736470252
+        ],
+        "ca_c_min_max_a": [
+          1.5169995296559702,
+          1.5270010170964634
+        ],
+        "adjacent_ca_max_a": 5.072683422255299,
+        "nonbonded_heavy_clash_lt_1a_count": 4,
+        "nonbonded_heavy_min_distance_a": 0.9054952989558404,
+        "bond_deviation_gt_0_5a_count": 1719,
+        "max_bond_deviation_nm": 1.0511611323100145,
+        "angle_deviation_gt_20deg_count": 3953,
+        "max_angle_deviation_rad": 2.0492213335313916,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3026385047950526,
+          1.359734731896021
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4207838096254821,
+          1.5028885744596214
+        ],
+        "ca_c_min_max_a": [
+          1.5013029448486481,
+          1.5639562277605084
+        ],
+        "adjacent_ca_max_a": 3.9746040784640306,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.136452886044124,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005388857445962153,
+        "angle_deviation_gt_20deg_count": 6,
+        "max_angle_deviation_rad": 0.6379958068465537,
+        "chirality_inverted_count": 15,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.31216111546575587,
+        "p95": 0.7541666005973352,
+        "max": 2.627449187137202
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 3,
+      "frame_index": 3,
+      "frame_digest": "6235335e8f819984c3c4cf334954bd45ed0b0dcaf9f13307ba75910a805c33eb",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.003324105404317379,
+      "minimization_s": 68.01629101485014,
+      "raw_physical_energy_kj_mol": 5.538087441491265e+18,
+      "relaxed_physical_energy_kj_mol": -44059.197761535645,
+      "raw_components_kj_mol": {
+        "bonded": 16530554.947631836,
+        "nonbonded": 5.53808744147495e+18,
+        "solvation": -47054.58165359497,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19978.070182800293,
+        "nonbonded": -41294.1199798584,
+        "solvation": -22743.151916503906,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10015.826416015625,
+      "max_force_kj_mol_nm": 136.01994566977956,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2951051902066847,
+          2.512085579147575
+        ],
+        "peptide_c_n_gross_count": 133,
+        "n_ca_min_max_a": [
+          1.4542181410669965,
+          1.4647723160409836
+        ],
+        "ca_c_min_max_a": [
+          1.5169992723264916,
+          1.5270007322408867
+        ],
+        "adjacent_ca_max_a": 5.1951503449684395,
+        "nonbonded_heavy_clash_lt_1a_count": 5,
+        "nonbonded_heavy_min_distance_a": 0.5851858489577617,
+        "bond_deviation_gt_0_5a_count": 1776,
+        "max_bond_deviation_nm": 0.9973284790950161,
+        "angle_deviation_gt_20deg_count": 3990,
+        "max_angle_deviation_rad": 2.0122765483469633,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3050576107170515,
+          1.3639836720003622
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4334290662395923,
+          1.5121901018570658
+        ],
+        "ca_c_min_max_a": [
+          1.4928547046186376,
+          1.5643664240574344
+        ],
+        "adjacent_ca_max_a": 3.999792919147738,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1534527004572563,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.006319010185706575,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.34706197865748045,
+        "chirality_inverted_count": 26,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.3140484115556711,
+        "p95": 0.7768061309154379,
+        "max": 2.6504009902058656
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "official_forward",
+      "path_index": 3,
+      "frame_index": 4,
+      "frame_digest": "05886bc25d27486dc8a41e84b47adc29b27b8d0f4bbae64b37543f942a5c44bc",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0027998005971312523,
+      "minimization_s": 28.560231663286686,
+      "raw_physical_energy_kj_mol": 2594444677813.1973,
+      "relaxed_physical_energy_kj_mol": -35546.230405807495,
+      "raw_components_kj_mol": {
+        "bonded": 14979505.376831055,
+        "nonbonded": 2594429763457.5747,
+        "solvation": -47477.28856277466,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 25979.90399169922,
+        "nonbonded": -38541.564796447754,
+        "solvation": -22984.571922302246,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 12286.661499023438,
+      "max_force_kj_mol_nm": 175.43579301609992,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.1240633116656727,
+          2.603174254370673
+        ],
+        "peptide_c_n_gross_count": 118,
+        "n_ca_min_max_a": [
+          1.4542181830650103,
+          1.4647730083422792
+        ],
+        "ca_c_min_max_a": [
+          1.5169991458599237,
+          1.5270007530613516
+        ],
+        "adjacent_ca_max_a": 4.838168585600261,
+        "nonbonded_heavy_clash_lt_1a_count": 6,
+        "nonbonded_heavy_min_distance_a": 0.487261870226975,
+        "bond_deviation_gt_0_5a_count": 1577,
+        "max_bond_deviation_nm": 1.2610393655690708,
+        "angle_deviation_gt_20deg_count": 3824,
+        "max_angle_deviation_rad": 1.9853275529424042,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.306830924330702,
+          1.396732864391001
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4172577293672495,
+          1.6123563494773034
+        ],
+        "ca_c_min_max_a": [
+          1.490531335524158,
+          1.6304452362411448
+        ],
+        "adjacent_ca_max_a": 4.15622882211607,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.0001945253480353,
+        "bond_deviation_gt_0_5a_count": 2,
+        "max_bond_deviation_nm": 0.1498657215420868,
+        "angle_deviation_gt_20deg_count": 3,
+        "max_angle_deviation_rad": 0.8746341508405391,
+        "chirality_inverted_count": 22,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.31429440712443457,
+        "p95": 0.8290167550372591,
+        "max": 3.4644200175393607
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 0,
+      "frame_index": 1,
+      "frame_digest": "e266a8b210d55ae4f883c1e58ad49fd9316e2d44d7528d301b66be5841b2240a",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0029873810708522797,
+      "minimization_s": 24.560737377032638,
+      "raw_physical_energy_kj_mol": 803371170419.863,
+      "relaxed_physical_energy_kj_mol": -44466.29204368591,
+      "raw_components_kj_mol": {
+        "bonded": 12421420.566833496,
+        "nonbonded": 803358822347.3647,
+        "solvation": -43820.571296691895,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19721.61368560791,
+        "nonbonded": -41405.13756561279,
+        "solvation": -22782.76695251465,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10042.541870117188,
+      "max_force_kj_mol_nm": 137.69087572002752,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2594783260083848,
+          2.8329563671257514
+        ],
+        "peptide_c_n_gross_count": 120,
+        "n_ca_min_max_a": [
+          1.4542182082481045,
+          1.4647726470152913
+        ],
+        "ca_c_min_max_a": [
+          1.516998995841704,
+          1.5270007733116697
+        ],
+        "adjacent_ca_max_a": 5.337545904102789,
+        "nonbonded_heavy_clash_lt_1a_count": 7,
+        "nonbonded_heavy_min_distance_a": 0.6713555679025373,
+        "bond_deviation_gt_0_5a_count": 1538,
+        "max_bond_deviation_nm": 0.8848454665407341,
+        "angle_deviation_gt_20deg_count": 3700,
+        "max_angle_deviation_rad": 2.0454532181948903,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3000312951740667,
+          1.3628312292457403
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4197648472556048,
+          1.510074525912556
+        ],
+        "ca_c_min_max_a": [
+          1.500290395936159,
+          1.5698036329626932
+        ],
+        "adjacent_ca_max_a": 3.9905507907265125,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.159211095316708,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.006107452591255613,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.29978675842205016,
+        "chirality_inverted_count": 9,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.3083250437845213,
+        "p95": 0.7826964180013839,
+        "max": 2.4266058808171205
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 0,
+      "frame_index": 2,
+      "frame_digest": "98b7105ee8f82d1e346db240fe61dff7849f50b614c72ce0cfb6793616c03f0c",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.002794702537357807,
+      "minimization_s": 35.466710057109594,
+      "raw_physical_energy_kj_mol": 23794220146879.46,
+      "relaxed_physical_energy_kj_mol": -44826.62805175781,
+      "raw_components_kj_mol": {
+        "bonded": 19131086.487182617,
+        "nonbonded": 23794201071133.79,
+        "solvation": -54366.30502700806,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19538.389667510986,
+        "nonbonded": -41937.37939453125,
+        "solvation": -22427.6384601593,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 9013.727905273438,
+      "max_force_kj_mol_nm": 87.30184296843271,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.1904014320954483,
+          2.5002581833516246
+        ],
+        "peptide_c_n_gross_count": 103,
+        "n_ca_min_max_a": [
+          1.4542177532030485,
+          1.4647725603536121
+        ],
+        "ca_c_min_max_a": [
+          1.5169991149430628,
+          1.5270011272080963
+        ],
+        "adjacent_ca_max_a": 4.9458050586427325,
+        "nonbonded_heavy_clash_lt_1a_count": 3,
+        "nonbonded_heavy_min_distance_a": 0.4270899554634368,
+        "bond_deviation_gt_0_5a_count": 1767,
+        "max_bond_deviation_nm": 1.2432986722317207,
+        "angle_deviation_gt_20deg_count": 4030,
+        "max_angle_deviation_rad": 2.042180269852627,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3056540283942673,
+          1.3629979507448615
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4293042389117108,
+          1.499968506182627
+        ],
+        "ca_c_min_max_a": [
+          1.4937212302123117,
+          1.5557271385418157
+        ],
+        "adjacent_ca_max_a": 3.959521476150829,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1503715407372743,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005096850618262677,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.2448706517950583,
+        "chirality_inverted_count": 19,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.29673313561267817,
+        "p95": 0.7444481965916385,
+        "max": 2.8394091576486242
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 0,
+      "frame_index": 3,
+      "frame_digest": "82a920864026ca083e65a0c1253eb952c3d67424b31daf2ac54b151db53aec42",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.00277055986225605,
+      "minimization_s": 50.11694495845586,
+      "raw_physical_energy_kj_mol": 1.8879672944043305e+18,
+      "relaxed_physical_energy_kj_mol": -43934.04871749878,
+      "raw_components_kj_mol": {
+        "bonded": 12400791.655395508,
+        "nonbonded": 1.8879672943924293e+18,
+        "solvation": -40346.80805969238,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19748.877490997314,
+        "nonbonded": -41167.61389160156,
+        "solvation": -22515.314701080322,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 11208.749267578125,
+      "max_force_kj_mol_nm": 165.51346763291443,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.13401285264515012,
+          2.6926998150242416
+        ],
+        "peptide_c_n_gross_count": 137,
+        "n_ca_min_max_a": [
+          1.4542182569438773,
+          1.4647727340496677
+        ],
+        "ca_c_min_max_a": [
+          1.516999238324075,
+          1.5270007803390315
+        ],
+        "adjacent_ca_max_a": 5.218314513184625,
+        "nonbonded_heavy_clash_lt_1a_count": 2,
+        "nonbonded_heavy_min_distance_a": 0.7860284935092217,
+        "bond_deviation_gt_0_5a_count": 1745,
+        "max_bond_deviation_nm": 0.8641473405620644,
+        "angle_deviation_gt_20deg_count": 4021,
+        "max_angle_deviation_rad": 2.0025498934064463,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3038208296524023,
+          1.361124520273105
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.420329044405499,
+          1.5086459616131365
+        ],
+        "ca_c_min_max_a": [
+          1.4984424086757167,
+          1.558982812480067
+        ],
+        "adjacent_ca_max_a": 3.9846962569108975,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.148549088234005,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.0059645961613136456,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.24931908575312622,
+        "chirality_inverted_count": 10,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.3232682518330386,
+        "p95": 0.7651142546650733,
+        "max": 2.6330450536307395
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 0,
+      "frame_index": 4,
+      "frame_digest": "1435db9a9ca2ebaf6030098954cc07a1381b40c95c856ed10bf2f2a2bd7c63a3",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0028339438140392303,
+      "minimization_s": 38.678504494950175,
+      "raw_physical_energy_kj_mol": 2389255720832368.0,
+      "relaxed_physical_energy_kj_mol": -42510.69116306305,
+      "raw_components_kj_mol": {
+        "bonded": 11574785.609069824,
+        "nonbonded": 2389255709332312.5,
+        "solvation": -41645.27806472778,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 20498.24271774292,
+        "nonbonded": -39989.86111450195,
+        "solvation": -23019.070720672607,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 12033.323486328125,
+      "max_force_kj_mol_nm": 167.62110658814967,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.22072037147751586,
+          2.762200218267945
+        ],
+        "peptide_c_n_gross_count": 120,
+        "n_ca_min_max_a": [
+          1.4542183953660601,
+          1.4647721862315637
+        ],
+        "ca_c_min_max_a": [
+          1.5169989879762378,
+          1.5270008292333546
+        ],
+        "adjacent_ca_max_a": 5.117031024011742,
+        "nonbonded_heavy_clash_lt_1a_count": 8,
+        "nonbonded_heavy_min_distance_a": 0.6250045670162339,
+        "bond_deviation_gt_0_5a_count": 1672,
+        "max_bond_deviation_nm": 0.8378522021841125,
+        "angle_deviation_gt_20deg_count": 3820,
+        "max_angle_deviation_rad": 2.017009216041738,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3023826770555165,
+          1.3725998457674664
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4264483574522808,
+          1.5140161929128455
+        ],
+        "ca_c_min_max_a": [
+          1.4844885281701405,
+          1.5852987182228013
+        ],
+        "adjacent_ca_max_a": 4.012198037476947,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1422061847819727,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.006501619291284538,
+        "angle_deviation_gt_20deg_count": 1,
+        "max_angle_deviation_rad": 0.35991038078578286,
+        "chirality_inverted_count": 10,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.32088294555731606,
+        "p95": 0.8645191906836656,
+        "max": 2.7948113223471527
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 1,
+      "frame_index": 1,
+      "frame_digest": "e419852d2334c2c3ee6bbc0bfd0be4796ee4491806d00c432b55ce9a94341d83",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0031835194677114487,
+      "minimization_s": 38.628529673442245,
+      "raw_physical_energy_kj_mol": 2229744023063889.5,
+      "relaxed_physical_energy_kj_mol": -45413.55609893799,
+      "raw_components_kj_mol": {
+        "bonded": 8793546.279846191,
+        "nonbonded": 2229744014342647.2,
+        "solvation": -40641.63570022583,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19310.28848838806,
+        "nonbonded": -41711.00682067871,
+        "solvation": -23012.838970184326,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10607.873779296875,
+      "max_force_kj_mol_nm": 103.13334439327582,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2000284487057195,
+          2.5506452629706136
+        ],
+        "peptide_c_n_gross_count": 138,
+        "n_ca_min_max_a": [
+          1.454217955576902,
+          1.464772414096334
+        ],
+        "ca_c_min_max_a": [
+          1.5169990457435636,
+          1.527000705247609
+        ],
+        "adjacent_ca_max_a": 5.1101608711221225,
+        "nonbonded_heavy_clash_lt_1a_count": 6,
+        "nonbonded_heavy_min_distance_a": 0.3243942561078426,
+        "bond_deviation_gt_0_5a_count": 1485,
+        "max_bond_deviation_nm": 1.0193395823442526,
+        "angle_deviation_gt_20deg_count": 3809,
+        "max_angle_deviation_rad": 1.9838521738628456,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.2977124597395198,
+          1.3689061654253727
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4261794324576118,
+          1.513359405154697
+        ],
+        "ca_c_min_max_a": [
+          1.489114677043285,
+          1.5649428381402448
+        ],
+        "adjacent_ca_max_a": 4.010147684533667,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1540470103519476,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.006679568818510173,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.25210748277379347,
+        "chirality_inverted_count": 11,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.31945003961328217,
+        "p95": 0.7397460777795394,
+        "max": 2.5371555003170942
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 1,
+      "frame_index": 2,
+      "frame_digest": "3f8edd41e651a373046ac681f19d3987a916017b12d979b711370d0882b94fee",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.002747087739408016,
+      "minimization_s": 24.891797109507024,
+      "raw_physical_energy_kj_mol": 10286100644818.447,
+      "relaxed_physical_energy_kj_mol": -44063.79258441925,
+      "raw_components_kj_mol": {
+        "bonded": 10545741.30645752,
+        "nonbonded": 10286090141207.064,
+        "solvation": -40520.40812301636,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19941.880195617676,
+        "nonbonded": -41609.5615234375,
+        "solvation": -22396.11460876465,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 11845.530883789062,
+      "max_force_kj_mol_nm": 126.57689789617106,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.21472681549574954,
+          2.7052956982807292
+        ],
+        "peptide_c_n_gross_count": 134,
+        "n_ca_min_max_a": [
+          1.4542178184151202,
+          1.4647724420050066
+        ],
+        "ca_c_min_max_a": [
+          1.5169992781932713,
+          1.5270008296685398
+        ],
+        "adjacent_ca_max_a": 5.057673705063448,
+        "nonbonded_heavy_clash_lt_1a_count": 5,
+        "nonbonded_heavy_min_distance_a": 0.5323669112570011,
+        "bond_deviation_gt_0_5a_count": 1610,
+        "max_bond_deviation_nm": 0.8334502844172628,
+        "angle_deviation_gt_20deg_count": 3849,
+        "max_angle_deviation_rad": 2.0446266675257445,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.2960126261913762,
+          1.363379679970898
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.417269654256107,
+          1.508606155820225
+        ],
+        "ca_c_min_max_a": [
+          1.482704758656487,
+          1.5903927187425737
+        ],
+        "adjacent_ca_max_a": 4.033717958763808,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1555962393829837,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.006839271874257369,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.3038962008408168,
+        "chirality_inverted_count": 16,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.33100652784540857,
+        "p95": 0.835474897981713,
+        "max": 2.5193212762574677
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 1,
+      "frame_index": 3,
+      "frame_digest": "2c9609a5d0399f1ce5aa70f39084010e5dc5a3e1a8f82baaa5bd80b071773ba1",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.002742292359471321,
+      "minimization_s": 34.41258313320577,
+      "raw_physical_energy_kj_mol": 9884738828099.795,
+      "relaxed_physical_energy_kj_mol": -43484.75881195068,
+      "raw_components_kj_mol": {
+        "bonded": 18861518.916870117,
+        "nonbonded": 9884720014041.768,
+        "solvation": -46900.92663002014,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 20593.87758255005,
+        "nonbonded": -41578.78515625,
+        "solvation": -22499.85356903076,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 11133.136474609375,
+      "max_force_kj_mol_nm": 127.93200326380584,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2732849847997423,
+          2.452839057098509
+        ],
+        "peptide_c_n_gross_count": 132,
+        "n_ca_min_max_a": [
+          1.4542184004930823,
+          1.464772454614661
+        ],
+        "ca_c_min_max_a": [
+          1.516999454643316,
+          1.5270008198492446
+        ],
+        "adjacent_ca_max_a": 5.141137469044762,
+        "nonbonded_heavy_clash_lt_1a_count": 2,
+        "nonbonded_heavy_min_distance_a": 0.6789508458317374,
+        "bond_deviation_gt_0_5a_count": 1968,
+        "max_bond_deviation_nm": 1.4220614027735332,
+        "angle_deviation_gt_20deg_count": 4165,
+        "max_angle_deviation_rad": 2.0845476398563347,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.2993842209365782,
+          1.365626072545449
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.416149511138048,
+          1.4960521236239488
+        ],
+        "ca_c_min_max_a": [
+          1.4880020536609142,
+          1.5626455900394753
+        ],
+        "adjacent_ca_max_a": 3.980784114448553,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1471144779373224,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005768136327014395,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.26613464561215805,
+        "chirality_inverted_count": 26,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.33009244810908733,
+        "p95": 0.7991365885609725,
+        "max": 2.5086629942647427
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 1,
+      "frame_index": 4,
+      "frame_digest": "471dfb5f8a84d1f2cc091a85dd90a0f73100594f8599979289f484388d0c1eaf",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.003626658581197262,
+      "minimization_s": 25.32367813680321,
+      "raw_physical_energy_kj_mol": 5612969392213.195,
+      "relaxed_physical_energy_kj_mol": -44051.14047622681,
+      "raw_components_kj_mol": {
+        "bonded": 18458175.931030273,
+        "nonbonded": 5612950931773.561,
+        "solvation": -48515.26658630371,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 20056.845344543457,
+        "nonbonded": -40568.54884338379,
+        "solvation": -23539.44089126587,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10799.32958984375,
+      "max_force_kj_mol_nm": 61.91871316114792,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.2702967157122144,
+          2.559888560365031
+        ],
+        "peptide_c_n_gross_count": 132,
+        "n_ca_min_max_a": [
+          1.454218418642563,
+          1.4647728256420018
+        ],
+        "ca_c_min_max_a": [
+          1.5169993915701043,
+          1.5270007206213947
+        ],
+        "adjacent_ca_max_a": 4.931083084050677,
+        "nonbonded_heavy_clash_lt_1a_count": 2,
+        "nonbonded_heavy_min_distance_a": 0.5453533775375484,
+        "bond_deviation_gt_0_5a_count": 1940,
+        "max_bond_deviation_nm": 1.4915977998620695,
+        "angle_deviation_gt_20deg_count": 4213,
+        "max_angle_deviation_rad": 2.0642804235305383,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.2968364422528227,
+          1.37156691974517
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4264426350553292,
+          1.5033339391588167
+        ],
+        "ca_c_min_max_a": [
+          1.4901420111254504,
+          1.5681211032648628
+        ],
+        "adjacent_ca_max_a": 4.0058824839633385,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1593988795897427,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005433393915881685,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.26738184173196244,
+        "chirality_inverted_count": 24,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.31379099716424824,
+        "p95": 0.7771456557822911,
+        "max": 2.4600928242254523
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 2,
+      "frame_index": 1,
+      "frame_digest": "6600a219c7898596a42b7531f24da1578cfe4cedf73ce475529717c61fbb3016",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0030716676265001297,
+      "minimization_s": 6.700074141845107,
+      "raw_physical_energy_kj_mol": 35897293666.39819,
+      "relaxed_physical_energy_kj_mol": -45694.57203292847,
+      "raw_components_kj_mol": {
+        "bonded": 6373285.0478515625,
+        "nonbonded": 35890957537.05156,
+        "solvation": -34671.687324523926,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19030.257808685303,
+        "nonbonded": -41831.39140319824,
+        "solvation": -22893.43804168701,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 8832.334594726562,
+      "max_force_kj_mol_nm": 160.12256589047027,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.23555839915452917,
+          2.6383183182696714
+        ],
+        "peptide_c_n_gross_count": 132,
+        "n_ca_min_max_a": [
+          1.4542179706748857,
+          1.4647725461558407
+        ],
+        "ca_c_min_max_a": [
+          1.5169994963319184,
+          1.5270007017300848
+        ],
+        "adjacent_ca_max_a": 5.3978940828485165,
+        "nonbonded_heavy_clash_lt_1a_count": 5,
+        "nonbonded_heavy_min_distance_a": 0.8621202129175713,
+        "bond_deviation_gt_0_5a_count": 1300,
+        "max_bond_deviation_nm": 0.7721588584051459,
+        "angle_deviation_gt_20deg_count": 3449,
+        "max_angle_deviation_rad": 2.0250074209682145,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3042998033459885,
+          1.368440819136482
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4243941025327596,
+          1.5013538035004896
+        ],
+        "ca_c_min_max_a": [
+          1.4935075874249994,
+          1.5686319878346355
+        ],
+        "adjacent_ca_max_a": 3.9746411424469614,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1636661332083174,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005861536177095422,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.27205339048869526,
+        "chirality_inverted_count": 5,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.29669376900046684,
+        "p95": 0.6930139808314185,
+        "max": 2.4115920825102406
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 2,
+      "frame_index": 2,
+      "frame_digest": "77938e0246b10d432e40de68de52d2792dbe62dea934f8accae94a14b071d234",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0026546968147158623,
+      "minimization_s": 22.700430739670992,
+      "raw_physical_energy_kj_mol": 54788924184.21302,
+      "relaxed_physical_energy_kj_mol": -43878.85788726807,
+      "raw_components_kj_mol": {
+        "bonded": 14449554.507202148,
+        "nonbonded": 54774514872.54126,
+        "solvation": -42225.01049423218,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 20141.735065460205,
+        "nonbonded": -41746.90364074707,
+        "solvation": -22273.69019317627,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 12530.963134765625,
+      "max_force_kj_mol_nm": 108.75280269624582,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.15120099467221593,
+          2.8818164642825606
+        ],
+        "peptide_c_n_gross_count": 139,
+        "n_ca_min_max_a": [
+          1.4542183763408372,
+          1.4647726176727818
+        ],
+        "ca_c_min_max_a": [
+          1.5169992565167507,
+          1.5270008218454265
+        ],
+        "adjacent_ca_max_a": 5.209540071797166,
+        "nonbonded_heavy_clash_lt_1a_count": 10,
+        "nonbonded_heavy_min_distance_a": 0.6028192465182692,
+        "bond_deviation_gt_0_5a_count": 1630,
+        "max_bond_deviation_nm": 1.0522906425187455,
+        "angle_deviation_gt_20deg_count": 3809,
+        "max_angle_deviation_rad": 2.0611033916312653,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3069507514827468,
+          1.366083369766803
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.427927559300528,
+          1.5039384077149012
+        ],
+        "ca_c_min_max_a": [
+          1.4947002806022318,
+          1.5708401883688425
+        ],
+        "adjacent_ca_max_a": 3.9738453828007856,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1584308010545126,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005493840771490122,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.3499054188501973,
+        "chirality_inverted_count": 14,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.32359852714409376,
+        "p95": 0.8308568164835115,
+        "max": 3.7976621721509294
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 2,
+      "frame_index": 3,
+      "frame_digest": "05f005ff6b276a4fba37af09526d6eb2753aa7ad2838da2dd56040239524ff5b",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.008773915469646454,
+      "minimization_s": 38.236389179714024,
+      "raw_physical_energy_kj_mol": 39287160665476.74,
+      "relaxed_physical_energy_kj_mol": -43322.55502128601,
+      "raw_components_kj_mol": {
+        "bonded": 14405401.018493652,
+        "nonbonded": 39287147540337.375,
+        "solvation": -43230.23040390015,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 20341.566818237305,
+        "nonbonded": -41064.14157104492,
+        "solvation": -22599.982749938965,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 11923.848022460938,
+      "max_force_kj_mol_nm": 141.83999874258043,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.09412453698508502,
+          2.752369006752329
+        ],
+        "peptide_c_n_gross_count": 130,
+        "n_ca_min_max_a": [
+          1.454218426638535,
+          1.4647722690725025
+        ],
+        "ca_c_min_max_a": [
+          1.5169992513789368,
+          1.5270017714246904
+        ],
+        "adjacent_ca_max_a": 4.991315075457177,
+        "nonbonded_heavy_clash_lt_1a_count": 7,
+        "nonbonded_heavy_min_distance_a": 0.3370763534611459,
+        "bond_deviation_gt_0_5a_count": 1696,
+        "max_bond_deviation_nm": 1.044808920127684,
+        "angle_deviation_gt_20deg_count": 3940,
+        "max_angle_deviation_rad": 2.060038566700171,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.2949466670994727,
+          1.3626978718186955
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.419947421529643,
+          1.5054733371275508
+        ],
+        "ca_c_min_max_a": [
+          1.4926911823587652,
+          1.598904119587757
+        ],
+        "adjacent_ca_max_a": 4.058451542632806,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1288318647421733,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.008722170798716872,
+        "angle_deviation_gt_20deg_count": 6,
+        "max_angle_deviation_rad": 0.6808715784315624,
+        "chirality_inverted_count": 16,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.32211500313826835,
+        "p95": 0.8229340880499324,
+        "max": 2.9399341403116197
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 2,
+      "frame_index": 4,
+      "frame_digest": "16346c98218025309880785276f7eaf133d9c5ee09b36736f19c8d7956aae09a",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.002988383173942566,
+      "minimization_s": 32.727112584747374,
+      "raw_physical_energy_kj_mol": 231611671751871.94,
+      "relaxed_physical_energy_kj_mol": -44100.39344787598,
+      "raw_components_kj_mol": {
+        "bonded": 14302712.183532715,
+        "nonbonded": 231611657607214.7,
+        "solvation": -43086.75180435181,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19774.56745147705,
+        "nonbonded": -40273.9933013916,
+        "solvation": -23600.971004486084,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10823.45068359375,
+      "max_force_kj_mol_nm": 98.20891502956952,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.22609866716835494,
+          2.7152933750740464
+        ],
+        "peptide_c_n_gross_count": 133,
+        "n_ca_min_max_a": [
+          1.454218587534243,
+          1.46477266671209
+        ],
+        "ca_c_min_max_a": [
+          1.516999111895643,
+          1.5270007932070795
+        ],
+        "adjacent_ca_max_a": 5.193604281891507,
+        "nonbonded_heavy_clash_lt_1a_count": 4,
+        "nonbonded_heavy_min_distance_a": 0.8051164690118404,
+        "bond_deviation_gt_0_5a_count": 1686,
+        "max_bond_deviation_nm": 1.0406742114681509,
+        "angle_deviation_gt_20deg_count": 4011,
+        "max_angle_deviation_rad": 2.0675520263859197,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3037273079470466,
+          1.3656732426901452
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4233661673216178,
+          1.4991802090594972
+        ],
+        "ca_c_min_max_a": [
+          1.4891043101611048,
+          1.5602310387334712
+        ],
+        "adjacent_ca_max_a": 3.9733190041020094,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1571791929590534,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.0054234815435273975,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.26590546145567817,
+        "chirality_inverted_count": 14,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.3095108328806959,
+        "p95": 0.8084223409683478,
+        "max": 2.592282840252035
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 3,
+      "frame_index": 1,
+      "frame_digest": "35da3111c63a231aa620216d9aa1cbf3d20e82ee1262804b3a1ffa301e8a380d",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.0028016166761517525,
+      "minimization_s": 67.17563357111067,
+      "raw_physical_energy_kj_mol": 1.7651054486282543e+19,
+      "relaxed_physical_energy_kj_mol": 589400468748.333,
+      "raw_components_kj_mol": {
+        "bonded": 10272533.680786133,
+        "nonbonded": 1.7651054486272313e+19,
+        "solvation": -41918.754066467285,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 10491859.5234375,
+        "nonbonded": 589390015171.0686,
+        "solvation": -41894.63610458374,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 1046.0,
+      "max_force_kj_mol_nm": 3719533198.2041526,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.23275033470714995,
+          2.7897561238649407
+        ],
+        "peptide_c_n_gross_count": 120,
+        "n_ca_min_max_a": [
+          1.4542184038292196,
+          1.4647725699144134
+        ],
+        "ca_c_min_max_a": [
+          1.5169990146565964,
+          1.5270006718012095
+        ],
+        "adjacent_ca_max_a": 5.30404201484727,
+        "nonbonded_heavy_clash_lt_1a_count": 5,
+        "nonbonded_heavy_min_distance_a": 0.4975791040467659,
+        "bond_deviation_gt_0_5a_count": 1410,
+        "max_bond_deviation_nm": 0.7615383691042185,
+        "angle_deviation_gt_20deg_count": 3612,
+        "max_angle_deviation_rad": 2.0407875162362923,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.23274991834905434,
+          2.789755926006569
+        ],
+        "peptide_c_n_gross_count": 120,
+        "n_ca_min_max_a": [
+          1.454217710425047,
+          1.4647724617248912
+        ],
+        "ca_c_min_max_a": [
+          1.5169983513536693,
+          1.527001456073243
+        ],
+        "adjacent_ca_max_a": 5.304042034864065,
+        "nonbonded_heavy_clash_lt_1a_count": 6,
+        "nonbonded_heavy_min_distance_a": 0.49757887286222474,
+        "bond_deviation_gt_0_5a_count": 1412,
+        "max_bond_deviation_nm": 0.8057888659943853,
+        "angle_deviation_gt_20deg_count": 3616,
+        "max_angle_deviation_rad": 2.040787501652121,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 4.806057638785284e-07,
+        "p95": 1.0679050008755277e-06,
+        "max": 7.0710679817294295
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 3,
+      "frame_index": 2,
+      "frame_digest": "e477467a58fe7b240b9a3156d64f557b0156f55966d986bc6f1d25724972a3fd",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.002785990945994854,
+      "minimization_s": 34.16652126330882,
+      "raw_physical_energy_kj_mol": 122791161201422.5,
+      "relaxed_physical_energy_kj_mol": -44927.7949552536,
+      "raw_components_kj_mol": {
+        "bonded": 18000804.271118164,
+        "nonbonded": 122791143279895.06,
+        "solvation": -49971.51661682129,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19678.480751037598,
+        "nonbonded": -41928.41525268555,
+        "solvation": -22677.86524581909,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 9569.074096679688,
+      "max_force_kj_mol_nm": 106.57578131022933,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.1117856649747954,
+          2.5822408548302507
+        ],
+        "peptide_c_n_gross_count": 124,
+        "n_ca_min_max_a": [
+          1.4542182059431252,
+          1.464772399910533
+        ],
+        "ca_c_min_max_a": [
+          1.5169990875324717,
+          1.5270005142135943
+        ],
+        "adjacent_ca_max_a": 5.26474544389131,
+        "nonbonded_heavy_clash_lt_1a_count": 5,
+        "nonbonded_heavy_min_distance_a": 0.5468347682196304,
+        "bond_deviation_gt_0_5a_count": 1763,
+        "max_bond_deviation_nm": 1.3561691656441464,
+        "angle_deviation_gt_20deg_count": 4092,
+        "max_angle_deviation_rad": 2.041407665966833,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.2989952739681347,
+          1.3597319888219461
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4242010289435254,
+          1.4957922766912066
+        ],
+        "ca_c_min_max_a": [
+          1.4917206309043645,
+          1.564328863270759
+        ],
+        "adjacent_ca_max_a": 3.9782572922254733,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.15894230213934,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.00507841429213704,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.2393152933599958,
+        "chirality_inverted_count": 18,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.30287665029347166,
+        "p95": 0.7502401780166972,
+        "max": 2.383453852032987
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 3,
+      "frame_index": 3,
+      "frame_digest": "08f7212688cd99ba1ead69ce143be405399d5777136176fc3eeaba8c09065c4c",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.003014693036675453,
+      "minimization_s": 16.858834072947502,
+      "raw_physical_energy_kj_mol": 1922253940115.8398,
+      "relaxed_physical_energy_kj_mol": -44716.37741470337,
+      "raw_components_kj_mol": {
+        "bonded": 9931982.785644531,
+        "nonbonded": 1922244081732.7263,
+        "solvation": -41357.6121635437,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19502.575691223145,
+        "nonbonded": -41533.15742492676,
+        "solvation": -22685.798751831055,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 9541.148315429688,
+      "max_force_kj_mol_nm": 119.10800622336342,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.18164417377626263,
+          2.7535817661968234
+        ],
+        "peptide_c_n_gross_count": 121,
+        "n_ca_min_max_a": [
+          1.4542180735583226,
+          1.4647725418905642
+        ],
+        "ca_c_min_max_a": [
+          1.5169992588995478,
+          1.5270008178643792
+        ],
+        "adjacent_ca_max_a": 5.204632408798814,
+        "nonbonded_heavy_clash_lt_1a_count": 9,
+        "nonbonded_heavy_min_distance_a": 0.3653138086715276,
+        "bond_deviation_gt_0_5a_count": 1457,
+        "max_bond_deviation_nm": 0.8824220134693401,
+        "angle_deviation_gt_20deg_count": 3631,
+        "max_angle_deviation_rad": 1.9764178096326694,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3017055113003921,
+          1.3667382947599698
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.4211536979793205,
+          1.5030188993195448
+        ],
+        "ca_c_min_max_a": [
+          1.4965738309440522,
+          1.5675777274967244
+        ],
+        "adjacent_ca_max_a": 3.971762303298805,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.1470590256453224,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.005401889931954479,
+        "angle_deviation_gt_20deg_count": 0,
+        "max_angle_deviation_rad": 0.2812241515493237,
+        "chirality_inverted_count": 10,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.29464668047294307,
+        "p95": 0.7652954310444093,
+        "max": 2.384473730679263
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    },
+    {
+      "arm": "current_custom_sde",
+      "path_index": 3,
+      "frame_index": 4,
+      "frame_digest": "379b6c094583b1c873982654f4a639017e3b24229f2b94ebb4e7438ce314e52d",
+      "status": "complete",
+      "error": null,
+      "preparation_s": 0.003079848363995552,
+      "minimization_s": 21.49068117234856,
+      "raw_physical_energy_kj_mol": 5668951443475.036,
+      "relaxed_physical_energy_kj_mol": -43959.13067436218,
+      "raw_components_kj_mol": {
+        "bonded": 13099190.735290527,
+        "nonbonded": 5668938377984.895,
+        "solvation": -44740.81702041626,
+        "other": 0.0
+      },
+      "relaxed_components_kj_mol": {
+        "bonded": 19981.89214324951,
+        "nonbonded": -41367.49090576172,
+        "solvation": -22573.53371810913,
+        "other": 0.0
+      },
+      "restraint_energy_kj_mol": 10538.063232421875,
+      "max_force_kj_mol_nm": 101.57930078377623,
+      "force_tolerance_met": false,
+      "max_iterations": 2000,
+      "iteration_cap_reached_not_observable": true,
+      "raw_geometry": {
+        "peptide_c_n_min_max_a": [
+          0.4344860217733357,
+          2.5358730177608217
+        ],
+        "peptide_c_n_gross_count": 131,
+        "n_ca_min_max_a": [
+          1.454218216034813,
+          1.4647727324102275
+        ],
+        "ca_c_min_max_a": [
+          1.5169991590750893,
+          1.5270011105011876
+        ],
+        "adjacent_ca_max_a": 5.16883621201261,
+        "nonbonded_heavy_clash_lt_1a_count": 6,
+        "nonbonded_heavy_min_distance_a": 0.31028889269192444,
+        "bond_deviation_gt_0_5a_count": 1668,
+        "max_bond_deviation_nm": 1.2120243756135731,
+        "angle_deviation_gt_20deg_count": 3954,
+        "max_angle_deviation_rad": 1.9784745673605715,
+        "chirality_inverted_count": 0,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "relaxed_geometry": {
+        "peptide_c_n_min_max_a": [
+          1.3029555681935172,
+          1.3652550347443393
+        ],
+        "peptide_c_n_gross_count": 0,
+        "n_ca_min_max_a": [
+          1.424777977597337,
+          1.512156663780598
+        ],
+        "ca_c_min_max_a": [
+          1.4935508988544357,
+          1.5596759713079134
+        ],
+        "adjacent_ca_max_a": 3.9702562522911613,
+        "nonbonded_heavy_clash_lt_1a_count": 0,
+        "nonbonded_heavy_min_distance_a": 2.125949044692472,
+        "bond_deviation_gt_0_5a_count": 0,
+        "max_bond_deviation_nm": 0.006315666378059803,
+        "angle_deviation_gt_20deg_count": 1,
+        "max_angle_deviation_rad": 0.4058051202514936,
+        "chirality_inverted_count": 12,
+        "chirality_tested_count": 295,
+        "finite": true
+      },
+      "generated_atom_displacement_a": {
+        "median": 0.31264251830131073,
+        "p95": 0.783989094037913,
+        "max": 2.501592643135655
+      },
+      "restraint_reference": "each completed generated frame's own heavy-atom coordinates"
+    }
+  ]
+}

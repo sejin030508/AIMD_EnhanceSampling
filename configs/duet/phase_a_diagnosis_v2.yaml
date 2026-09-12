@@ -1,0 +1,41 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: phase_a_diagnosis_v2
+  sampler_mode: exact
+  reverse_steps: 3
+  device: cpu
+  dtype: float64
+
+trajectory:
+  horizon: 5
+  initial_state: S
+
+particles:
+  outer_k: 16
+  inner_m: 2
+  inner_checkpoint_progress: 0.3333333333333333
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 1.0
+  inner_resampling: systematic
+
+program:
+  type: terminal
+  potential_floor: 0.05
+
+phase_a_diagnosis_v2:
+  frozen_phase_a_root: outputs/duet_md/phase_a_cross_clock
+  epsilon: 0.05
+  master_seed: 20260908
+  pilot_repetitions: 1000
+  confirmation_repetitions: 5000
+  actions:
+    - [12, 2]
+    - [6, 4]
+    - [3, 8]
+  temporal_outer_k: 16
+  temporal_total_inner_budget: 10
+
+experiment:
+  methods: [duet]
+  output_directory: outputs/duet_md/phase_a_diagnosis_v2

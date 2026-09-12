@@ -1,0 +1,32 @@
+{
+  "rationale": "The 1000-repetition pilot gave a consistent direction. Confirm all four cause-separation arms in the four canonical informative settings, expand only the three missing Y1 checkpoint cells, and confirm the only temporal schedule that consistently beat static (concentrated_t3) against its matched static control.",
+  "cells": [
+    {"family": "exact_stat_allocator", "setting": "common_low_informative", "label": "exact_stat_allocator"},
+    {"family": "matched_production", "setting": "common_low_informative", "label": "current_probe_allocator"},
+    {"family": "matched_production", "setting": "common_low_informative", "label": "matched_production_k12_m2"},
+    {"family": "matched_production", "setting": "common_low_informative", "label": "global_static_k16_m2"},
+    {"family": "exact_stat_allocator", "setting": "rare_low_informative", "label": "exact_stat_allocator"},
+    {"family": "matched_production", "setting": "rare_low_informative", "label": "current_probe_allocator"},
+    {"family": "matched_production", "setting": "rare_low_informative", "label": "matched_production_k12_m2"},
+    {"family": "matched_production", "setting": "rare_low_informative", "label": "global_static_k16_m2"},
+    {"family": "exact_stat_allocator", "setting": "common_high_informative", "label": "exact_stat_allocator"},
+    {"family": "matched_production", "setting": "common_high_informative", "label": "current_probe_allocator"},
+    {"family": "matched_production", "setting": "common_high_informative", "label": "matched_production_k12_m2"},
+    {"family": "matched_production", "setting": "common_high_informative", "label": "global_static_k16_m2"},
+    {"family": "exact_stat_allocator", "setting": "rare_high_informative", "label": "exact_stat_allocator"},
+    {"family": "matched_production", "setting": "rare_high_informative", "label": "current_probe_allocator"},
+    {"family": "matched_production", "setting": "rare_high_informative", "label": "matched_production_k12_m2"},
+    {"family": "matched_production", "setting": "rare_high_informative", "label": "global_static_k16_m2"},
+    {"family": "checkpoint_test", "setting": "common_low_informative", "label": "duet_y1"},
+    {"family": "checkpoint_test", "setting": "common_high_informative", "label": "duet_y1"},
+    {"family": "checkpoint_test", "setting": "rare_high_informative", "label": "duet_y1"},
+    {"family": "temporal_budget_schedules", "setting": "common_low_informative", "label": "static_m2"},
+    {"family": "temporal_budget_schedules", "setting": "common_low_informative", "label": "concentrated_t3"},
+    {"family": "temporal_budget_schedules", "setting": "rare_low_informative", "label": "static_m2"},
+    {"family": "temporal_budget_schedules", "setting": "rare_low_informative", "label": "concentrated_t3"},
+    {"family": "temporal_budget_schedules", "setting": "common_high_informative", "label": "static_m2"},
+    {"family": "temporal_budget_schedules", "setting": "common_high_informative", "label": "concentrated_t3"},
+    {"family": "temporal_budget_schedules", "setting": "rare_high_informative", "label": "static_m2"},
+    {"family": "temporal_budget_schedules", "setting": "rare_high_informative", "label": "concentrated_t3"}
+  ]
+}

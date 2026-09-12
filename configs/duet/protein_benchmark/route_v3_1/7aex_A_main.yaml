@@ -1,0 +1,135 @@
+project_root: ${DUET_PROJECT_ROOT}
+model:
+  backend: confrover
+  repository_path: ${DUET_ASSET_ROOT}/external/ConfRover
+  checkpoint: ${DUET_ASSET_ROOT}/data/confrover_cache/confrover_ckpts/confrover_base_20m_v1_0.pt
+  cache_dir: ${DUET_ASSET_ROOT}/data/confrover_cache
+  sampler_mode: sde
+  physical_lag_in_10ps: 20
+  reverse_steps: 200
+  device: cuda:0
+  dtype: float32
+  kv_cache_type: offloaded
+trajectory:
+  case_id: 7aex_A
+  seqres: MHHHHHHSEINPAEFEQVNMVLQGFVETSVLPVLELSADESHIEFREHSRNAHTVVWKIISTSYQDELTVSLHITTGKLQIQGRPLSCYRVFTFNLAALLDLQGLEKVLIRQEDGKANIVQQEVARTYLQTVMADAYPHLHVTAEKLLVSGLCVKLAAPDLPDYCMLLYPELRTIEGVLKSKMSGLGMPVQQPAGFGTYFDKPAAHYILKPQFAATLRPEQINIISTAYTFFNVERHSLFHMETVVDASRMISDMARLMGKATRAWGIIKDLYIV
+  horizon: 24
+  initial_structure: ${DUET_ASSET_ROOT}/data/atlas/7aex_A/7aex_A_R3F5000_start.pdb
+  initial_history: null
+particles:
+  outer_k: 16
+  inner_m: 4
+  inner_checkpoint_progress: 0.95
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.5
+  inner_resampling: systematic
+program:
+  type: ordered
+  failure_guidance_weight: 1.0
+  potential_floor: 1.0e-30
+  catalog: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7aex_A/duet_programs.yaml
+reference:
+  topology: ${DUET_ASSET_ROOT}/data/atlas/7aex_A/7aex_A.pdb
+  design_trajectories:
+  - ${DUET_ASSET_ROOT}/data/atlas/7aex_A/7aex_A_prod_R3_fit.xtc
+  - ${DUET_ASSET_ROOT}/data/atlas/7aex_A/7aex_A_prod_R1_fit.xtc
+  design_labels:
+  - D1
+  - D2
+  held_out_trajectories:
+  - ${DUET_ASSET_ROOT}/data/atlas/7aex_A/7aex_A_prod_R2_fit.xtc
+  held_out_labels:
+  - H
+  held_out_trajectory: ${DUET_ASSET_ROOT}/data/atlas/7aex_A/7aex_A_prod_R2_fit.xtc
+  replicate_roles:
+    D1: R3
+    D2: R1
+    H: R2
+  initial_structure: ${DUET_ASSET_ROOT}/data/atlas/7aex_A/7aex_A_R3F5000_start.pdb
+  route_endpoint_structure: ${DUET_ASSET_ROOT}/data/atlas/7aex_A/7aex_A_R3F7048_end.pdb
+  protein_selection: protein and chainid 0
+  stride: 10
+  evaluation_stride: 10
+  max_frames_per_trajectory: null
+  n_components: 3
+  basin_half_width: 0.25
+  target_basin_half_width: 0.5
+  pca_model: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7aex_A/design_pca_d1_d2/pca_cv.npz
+benchmark_protocol:
+  version: route_v3_1
+  transition_mode: last_exit_route_geometry
+  route_discovery_role: D1
+  route_discovery_trajectory_index: 0
+  route_discovery_original_start_frame: 5000
+  route_discovery_original_end_frame: 7048
+  route_discovery_start_time_ps: 50000.0
+  route_discovery_end_time_ps: 70480.0
+  reference_route_analysis_frames: 25
+  reference_start_dwell_ps: 200.0
+  reference_target_dwell_ps: 200.0
+  max_start_ca_rmsd_nm: 0.3
+  lag_selection_mode: reference_first_passage_target_compression
+  target_nominal_compression: 2.0
+  model_lag_bounds_in_10ps:
+  - 20
+  - 210
+  nominal_compression_factor:
+  - 1.0
+  - 10.0
+  event_timing_mode: ordered_by_common_deadline
+  generated_event_persistence_frames: 2
+  generated_target_persistence_frames: 2
+  allow_same_frame_stage_completion: false
+  terminal_mode: first_stable_hit_by_deadline
+  record_time_to_success: true
+  held_out_role: optional_secondary_fidelity
+  nominal_time_only: true
+  physical_kinetics_claim: false
+trajectory_horizon: 24
+contact_selection:
+  min_sequence_separation: 5
+  min_change_nm: 0.15
+  min_initial_margin_nm: 0.15
+  min_event_separation: 2
+  threshold_statistic: discovery_route_midpoint
+  reference_crossing_persistence: 2
+  min_event_support_count: 1
+  min_route_support_count: 1
+output:
+  directory: ${DUET_PROJECT_ROOT}/data/duet/protein_benchmark/route_v3_1/7aex_A
+experiment:
+  methods:
+  - frozen
+  - outer_only
+  - inner_only
+  - complete_nested
+  - duet
+  decoder_population_budget: 64
+  method_settings:
+    frozen:
+      outer_k: 64
+      inner_m: 1
+    outer_only:
+      outer_k: 64
+      inner_m: 1
+    inner_only:
+      outer_k: 1
+      inner_m: 64
+    complete_nested:
+      outer_k: 16
+      inner_m: 4
+    duet:
+      outer_k: 16
+      inner_m: 4
+  tasks:
+  - endpoint
+  - ordered
+  task_count: 2
+  seeds:
+  - 20261001
+  - 20261002
+  - 20261003
+  - 20261004
+  - 20261005
+  output_directory: ${DUET_PROJECT_ROOT}/outputs/duet_md/protein_benchmark/route_v3_1/7aex_A
+  reference_split: D1_D2_design_H_optional_secondary

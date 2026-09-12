@@ -21,6 +21,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
     parser.add_argument("--methods", nargs="+")
+    parser.add_argument("--tasks", nargs="+")
     parser.add_argument("--seed", type=int)
     parser.add_argument("--outer-k", type=int)
     parser.add_argument("--inner-m", type=int)
@@ -37,6 +38,9 @@ def main() -> int:
     cfg = load_duet_config(args.config)
     if args.methods:
         cfg["experiment"]["methods"] = list(args.methods)
+    if args.tasks:
+        cfg["experiment"]["tasks"] = list(args.tasks)
+        cfg["experiment"]["task_count"] = len(args.tasks)
     if args.seed is not None:
         cfg["experiment"]["seeds"] = [int(args.seed)]
     if (args.outer_k is None) != (args.inner_m is None):
@@ -51,6 +55,12 @@ def main() -> int:
         for method in active_methods:
             method_settings.setdefault(method, {})["outer_k"] = int(args.outer_k)
             method_settings[method]["inner_m"] = int(args.inner_m)
+        cfg["experiment"]["decoder_population_budget"] = int(
+            args.outer_k * args.inner_m
+        )
+        cfg["experiment"].setdefault("cost_budget", {})[
+            "decoder_population_per_step"
+        ] = int(args.outer_k * args.inner_m)
     if args.horizon is not None:
         if args.horizon < 1:
             parser.error("--horizon must be positive")

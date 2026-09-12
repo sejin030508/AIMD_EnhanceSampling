@@ -8,6 +8,72 @@
 
 ---
 
+## 2026-09-05 신규 단백질 코호트 프로토콜 보충
+
+아래 본문에 기록된 6J56, 7LP1, ABL1 결과와 당시의 R1/R2 설계·R3
+held-out 정의는 **역사적 실험 정의 그대로** 유지한다. 앞으로 수행할 약 10개
+단백질의 confirmatory route benchmark에는 다음 문서를 우선 적용한다.
+
+- 주 프로토콜: [DUET_PROTEIN_BENCHMARK_PROTOCOL_V3.md](DUET_PROTEIN_BENCHMARK_PROTOCOL_V3.md)
+- 사전등록 후보군: [DUET_ATLAS_CONFIRMATORY_COHORT_SCREEN_V1.md](DUET_ATLAS_CONFIRMATORY_COHORT_SCREEN_V1.md)
+- 실제 동결 결과: [DUET_ATLAS_COHORT_PREPARATION_2026-09-05.md](DUET_ATLAS_COHORT_PREPARATION_2026-09-05.md)
+- 설정 명세: `configs/duet/templates/prepare_atlas_route_benchmark_v3.yaml`
+
+동결된 핵심 결정은 다음과 같다.
+
+1. original R1/R2/R3 번호를 고정 역할로 보지 않는다. 공식 ConfRover case가
+   사용한 replicate를 `D1`, 남은 것 중 번호가 가장 낮은 replicate를 `D2`,
+   마지막 replicate를 `H`로 지정한다. D1/D2는 task 설계용이고 H는 task를
+   정의하지 않는 선택적 2차 fidelity 자료다.
+2. reference transition path는 A→B라는 구조적 route와 residue-distance
+   milestone을 정하는 데 쓴다. 생성 trajectory가 reference의 좁은 시간 창을
+   그대로 재현하도록 요구하지 않는다.
+3. reference 첫 도달 시간 대비 생성 nominal deadline은 사전등록된 최대 10배
+   압축을 허용한다. 단, 이는 frozen surrogate 안에서의 biased path discovery
+   비교이지 실제 kinetics, MFPT, rate 또는 free energy의 추정이 아니다.
+4. 성공은 같은 deadline 안에서 generated A, B, target이 각각 2 frame 이상
+   지속되며 엄격히 A→B→target 순서로 끝나는 것이다. 안정적 target에 일찍
+   도달해도 성공이며 `time_to_success`와 누적 성공곡선을 기록한다.
+5. H에 같은 transition이 없으면 fidelity는 `unavailable`이다. 다른 route가
+   보이면 heterogeneity로 기록하며, 어느 경우도 단독 탈락 조건이 아니다.
+6. 모든 주 실험은 decoder population budget `B=64`를 사용한다. Frozen 및
+   Outer-only는 `K64×M1`, Inner-only는 `K1×M64`, Complete Nested와 DuET은
+   `K16×M4`로 맞춘다.
+
+2026-09-05에 generated multi-frame persistence, strict A→B→target state
+transition, first-stable target hit, deadline censoring 및 time-to-success를
+runtime에 구현했고 DuET 단위 테스트 전체가 통과했다(`61 passed`). 새 코호트는
+method outcome을 생성하지 않은 채 ATLAS asset, transition, nominal challenge,
+A/B catalog를 동결했다. Primary 10개 중 `6in7_A`, `6lus_A`, `6ovk_R`이
+pre-method gate에서 탈락했고 사전등록 reserve 1--3을 순서대로 넣어 10개 task를
+확보했다. Static prelaunch audit는 10/10 통과했다. 실제 method comparison
+전에는 각 단백질의 ConfRover representation과 Frozen reachability, checkpoint
+predictivity, whole-path validity support gate를 GPU에서 별도로 통과해야 한다.
+2026-09-05 H100 staging에서 representation/config gate와 p=.95 checkpoint
+continuation-predictivity gate는 10/10 통과했다. K=1 whole-path smoke는 endpoint
+10/10 valid, strict whole-path 8/10 valid였으며, K=8 Frozen pilot이 진행 중이다.
+메인 5-method evaluation seed는 아직 시작하지 않았다. 자세한 실행 기록은
+`docs/DUET_ATLAS_COHORT_PREPARATION_2026-09-05.md`에 있다.
+2026-09-06 확인 시 K=8 pilot은 9/10 완료됐다. full success는 아직 0건,
+A→B는 `6q9c_A`에서만 1/8이었으며 `6tly_A` whole-path valid는 2/8이었다.
+따라서 reachability/validity gate 미해결 상태이고, 마지막 `7p46_A`만 persistent
+remote job으로 재개했다.
+같은 날 overnight final Frozen eligibility queue도 두 H100에 시작했다. 설정은
+protein당 `K48×M1`, ordered task, seeds `20260993/20260994`이며 총 20 run이다.
+GPU1은 `6tly_A`부터 즉시 시작했고 GPU2는 `7p46_A` K=8 종료 후 `6q9c_A`부터
+자동 시작한다. 이 queue는 eligibility 검사이며 main 5-method 결과가 아니다.
+이후 Frozen nonzero를 필수 gate로 두는 것은 rare-event benchmark를 쉬운
+task로 편향시킨다는 판단에 따라 K48 queue를 첫 완료 전에 중단했다. 실제 B=64
+main queue를 protein-first 방식으로 시작했으며, 두 H100은 `6jv8_A/ordered`의
+서로 다른 main seed에서 다섯 방법을 모두 순차 실행한다. 모든 ordered seed를
+끝낸 후 endpoint, 그 후 다음 protein으로 이동한다.
+사용자 요청으로 이 five-seed queue도 첫 완료 전에 중단하고 seed `20261001`
+하나만 남겼다. 현재 총계는 `5 methods x 10 proteins x 2 tasks = 100 runs`다.
+GPU1은 Frozen/Outer-only/Inner-only, GPU2는 Complete Nested/DuET을 담당하고,
+두 lane이 같은 protein/task를 모두 끝내야 다음 task로 이동한다.
+
+---
+
 ## 0. 가장 먼저 읽을 요약
 
 ### 연구 질문

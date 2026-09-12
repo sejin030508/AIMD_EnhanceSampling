@@ -1,0 +1,177 @@
+name: atlas_confirmatory_v1
+protocol_version: route_v3_1
+frozen_at: 2026-09-05
+reference_frame_step_ps: 10.0
+generated_horizon: 24
+reference_route_analysis_frames: 25
+target_nominal_compression: 2.0
+allowed_nominal_compression: [1.0, 10.0]
+model_lag_bounds_in_10ps: [20, 210]
+evaluation_seeds: [20261001, 20261002, 20261003, 20261004, 20261005]
+decoder_population_budget: 64
+methods: [frozen, outer_only, inner_only, complete_nested, duet]
+target_frozen_count: 10
+
+cases:
+  - priority: 1
+    official_case: 6JV8-A-R3F1000S256
+    pdb_chain: 6jv8_A
+    residues: 76
+    d1: R3
+    d2: R1
+    h: R2
+    start_frame: 1000
+    official_stride_in_10ps: 256
+    archive_size_bytes: 176125792
+  - priority: 2
+    official_case: 6IN7-A-R3F5000S128
+    pdb_chain: 6in7_A
+    residues: 81
+    d1: R3
+    d2: R1
+    h: R2
+    start_frame: 5000
+    official_stride_in_10ps: 128
+    archive_size_bytes: 176108329
+  - priority: 3
+    official_case: 7BWF-B-R3F3000S128
+    pdb_chain: 7bwf_B
+    residues: 92
+    d1: R3
+    d2: R1
+    h: R2
+    start_frame: 3000
+    official_stride_in_10ps: 128
+    archive_size_bytes: 203983239
+  - priority: 4
+    official_case: 6TLY-A-R2F1000S256
+    pdb_chain: 6tly_A
+    residues: 99
+    d1: R2
+    d2: R1
+    h: R3
+    start_frame: 1000
+    official_stride_in_10ps: 256
+    archive_size_bytes: 217883644
+  - priority: 5
+    official_case: 7S86-A-R3F5000S256
+    pdb_chain: 7s86_A
+    residues: 99
+    d1: R3
+    d2: R1
+    h: R2
+    start_frame: 5000
+    official_stride_in_10ps: 256
+    archive_size_bytes: 199734125
+  - priority: 6
+    official_case: 6RRV-A-R1F1000S256
+    pdb_chain: 6rrv_A
+    residues: 127
+    d1: R1
+    d2: R2
+    h: R3
+    start_frame: 1000
+    official_stride_in_10ps: 256
+    archive_size_bytes: 296438399
+  - priority: 7
+    official_case: 6LUS-A-R2F3000S128
+    pdb_chain: 6lus_A
+    residues: 133
+    d1: R2
+    d2: R1
+    h: R3
+    start_frame: 3000
+    official_stride_in_10ps: 128
+    archive_size_bytes: 294295149
+  - priority: 8
+    official_case: 6GUS-A-R2F7000S256
+    pdb_chain: 6gus_A
+    residues: 155
+    d1: R2
+    d2: R1
+    h: R3
+    start_frame: 7000
+    official_stride_in_10ps: 256
+    archive_size_bytes: 355689580
+  - priority: 9
+    official_case: 6Q9C-A-R3F3000S256
+    pdb_chain: 6q9c_A
+    residues: 155
+    d1: R3
+    d2: R1
+    h: R2
+    start_frame: 3000
+    official_stride_in_10ps: 256
+    archive_size_bytes: 356501589
+  - priority: 10
+    official_case: 6OVK-R-R2F7000S128
+    pdb_chain: 6ovk_R
+    residues: 219
+    d1: R2
+    d2: R1
+    h: R3
+    start_frame: 7000
+    official_stride_in_10ps: 128
+    archive_size_bytes: 479059850
+
+reserves:
+  - priority: 11
+    reserve_order: 1
+    official_case: 7RM7-A-R3F3000S128
+    pdb_chain: 7rm7_A
+    residues: 228
+    d1: R3
+    d2: R1
+    h: R2
+    start_frame: 3000
+    official_stride_in_10ps: 128
+  - priority: 12
+    reserve_order: 2
+    official_case: 7AEX-A-R3F5000S256
+    pdb_chain: 7aex_A
+    residues: 275
+    d1: R3
+    d2: R1
+    h: R2
+    start_frame: 5000
+    official_stride_in_10ps: 256
+  - priority: 13
+    reserve_order: 3
+    official_case: 7P46-A-R3F5000S256
+    pdb_chain: 7p46_A
+    residues: 282
+    d1: R3
+    d2: R1
+    h: R2
+    start_frame: 5000
+    official_stride_in_10ps: 256
+  - priority: 14
+    reserve_order: 4
+    official_case: 6QJ0-A-R1F1000S256
+    pdb_chain: 6qj0_A
+    residues: 412
+    d1: R1
+    d2: R2
+    h: R3
+    start_frame: 1000
+    official_stride_in_10ps: 256
+  - priority: 15
+    reserve_order: 5
+    official_case: 7P41-D-R2F3000S256
+    pdb_chain: 7p41_D
+    residues: 448
+    d1: R2
+    d2: R1
+    h: R3
+    start_frame: 3000
+    official_stride_in_10ps: 256
+  - priority: 16
+    reserve_order: 6
+    official_case: 6P5X-B-R1F3000S256
+    pdb_chain: 6p5x_B
+    residues: 457
+    d1: R1
+    d2: R2
+    h: R3
+    start_frame: 3000
+    official_stride_in_10ps: 256

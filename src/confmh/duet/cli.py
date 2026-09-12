@@ -16,6 +16,10 @@ from confmh.duet.config import (
     resolve_config_path,
 )
 from confmh.duet.exact_benchmark import run_exact_benchmark
+from confmh.duet.phase_a_cross_clock import (
+    run_phase_a_cross_clock,
+    validate_phase_a_config,
+)
 from confmh.duet.preflight import run_confrover_preflight
 from confmh.duet.runner import run_allocation_grid, run_experiment_config
 
@@ -52,11 +56,34 @@ def _apply_overrides(cfg, args):
         else:
             cfg["experiment"]["output_directory"] = args.output_dir
     if args.seed is not None:
-        cfg["experiment"]["seeds"] = [int(args.seed)]
+        seed = int(args.seed)
+        cfg["experiment"]["seed"] = seed
+        cfg["experiment"]["seeds"] = [seed]
+        if str(cfg["model"].get("backend", "confrover")) == "phase_a_cross_clock":
+            cfg["phase_a"]["master_seed"] = seed
     return cfg
 
 
 def _summary(cfg):
+    if str(cfg["model"].get("backend", "confrover")) == "phase_a_cross_clock":
+        validation = validate_phase_a_config(cfg)
+        return {
+            "config": cfg["_config_path"],
+            "backend": "phase_a_cross_clock",
+            "states": 7,
+            "physical_horizon": 5,
+            "reverse_transitions_per_physical_step": 3,
+            "fixed_methods": cfg["phase_a"]["fixed_methods"],
+            "static_allocations": cfg["phase_a"]["static_allocations"],
+            "adaptive_actions": cfg["phase_a"]["adaptive"]["actions"],
+            "checkpoint": cfg["phase_a"]["main_checkpoint"],
+            "repetitions_per_cell": cfg["phase_a"]["repetitions"],
+            "output": str(
+                resolve_config_path(cfg, cfg["experiment"]["output_directory"])
+            ),
+            "validation": validation,
+            "missing_assets": missing_assets(cfg),
+        }
     methods = cfg["experiment"].get("methods", [cfg["experiment"].get("method", "duet")])
     checkpoint_progresses = inner_checkpoint_progresses(cfg)
     return {
@@ -97,6 +124,10 @@ def main(argv=None) -> int:
         outputs = run_allocation_grid(cfg, resume=args.resume, overwrite=args.overwrite)
     elif str(cfg["model"].get("backend", "confrover")) == "exact_toy":
         outputs = [run_exact_benchmark(cfg, resume=args.resume, overwrite=args.overwrite)]
+    elif str(cfg["model"].get("backend", "confrover")) == "phase_a_cross_clock":
+        outputs = [
+            run_phase_a_cross_clock(cfg, resume=args.resume, overwrite=args.overwrite)
+        ]
     elif str(cfg["model"].get("backend", "confrover")) == "proar":
         raise RuntimeError(
             "Phase F is gated and the ProAR stochastic intermediate checkpoint has not been verified"

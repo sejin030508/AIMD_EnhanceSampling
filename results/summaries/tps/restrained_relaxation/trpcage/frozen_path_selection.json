@@ -1,0 +1,73 @@
+{
+  "selection_rule": "For each method, lexicographically first (stride, seed, run path, population index) raw-valid final TICA hit and raw-valid path with no generated-frame TICA hit. Selection performed before minimization.",
+  "paths": [
+    {
+      "sort": [
+        16,
+        223,
+        "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/frozen/seed_223",
+        6
+      ],
+      "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/frozen/seed_223",
+      "method": "frozen",
+      "stride": 16,
+      "seed": 223,
+      "path_index": 6,
+      "valid": true,
+      "final_hit": true,
+      "any_generated_hit": true,
+      "selection_role": "final_TICA_hit"
+    },
+    {
+      "sort": [
+        16,
+        211,
+        "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/frozen/seed_211",
+        11
+      ],
+      "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/frozen/seed_211",
+      "method": "frozen",
+      "stride": 16,
+      "seed": 211,
+      "path_index": 11,
+      "valid": true,
+      "final_hit": false,
+      "any_generated_hit": false,
+      "selection_role": "valid_generated_TICA_nonhit"
+    },
+    {
+      "sort": [
+        128,
+        211,
+        "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride128_t32/duet/seed_211",
+        3
+      ],
+      "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride128_t32/duet/seed_211",
+      "method": "duet",
+      "stride": 128,
+      "seed": 211,
+      "path_index": 3,
+      "valid": true,
+      "final_hit": true,
+      "any_generated_hit": true,
+      "selection_role": "final_TICA_hit"
+    },
+    {
+      "sort": [
+        16,
+        211,
+        "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/duet/seed_211",
+        0
+      ],
+      "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/duet/seed_211",
+      "method": "duet",
+      "stride": 16,
+      "seed": 211,
+      "path_index": 0,
+      "valid": true,
+      "final_hit": false,
+      "any_generated_hit": false,
+      "selection_role": "valid_generated_TICA_nonhit"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: phase_a_cross_clock
+  sampler_mode: exact
+  reverse_steps: 3
+  device: cpu
+  dtype: float64
+
+trajectory:
+  horizon: 5
+  initial_state: S
+  initial_structure: null
+  initial_history: null
+
+particles:
+  outer_k: 8
+  inner_m: 4
+  inner_checkpoint_progress: 0.3333333333333333
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 1.0
+  inner_resampling: systematic
+
+program:
+  type: terminal
+  potential_floor: 0.05
+
+phase_a:
+  epsilon: 0.05
+  beta1: 0.05
+  beta2: 0.20
+  beta3: 0.50
+  main_checkpoint: Y2
+  repetitions: 5000
+  master_seed: 20260908
+
+  fixed_methods:
+    frozen: [32, 1]
+    outer_only: [32, 1]
+    inner_only: [1, 32]
+    complete_nested: [8, 4]
+    fixed_duet: [8, 4]
+
+  static_allocations:
+    - [16, 2]
+    - [8, 4]
+    - [4, 8]
+    - [2, 16]
+
+  adaptive:
+    initial_allocation: [32, 1]
+    probe_parent_slots: 4
+    probes_per_slot: 2
+    actions:
+      - [12, 2]
+      - [6, 4]
+      - [3, 8]
+    tie_break: [6, 4]
+
+  checkpoint_diagnostic:
+    representative_setting: rare_low_informative
+    stages: [Y3, Y2, Y1]
+    primary_metric: terminal_success_rmse
+
+  held_out_count: 20
+  held_out:
+    commitment_probability: log_uniform_0.01_0.25
+    route_heterogeneity: uniform_0.0_0.18
+    checkpoint_beta2: uniform_0.1_0.5
+    high_route_assignment_probability: 0.5
+
+experiment:
+  methods:
+    - frozen
+    - outer_only
+    - inner_only
+    - complete_nested
+    - duet
+  repetitions: 5000
+  seed: 20260908
+  seeds: [20260908]
+  task_count: 1
+  output_directory: outputs/duet_md/phase_a_cross_clock
+  reference_split: exact_enumeration

@@ -15,9 +15,11 @@ import hashlib
 import json
 import os
 import shutil
+import ssl
 import tarfile
 import tempfile
 import urllib.request
+import urllib.error
 import zipfile
 from pathlib import Path
 
@@ -25,16 +27,38 @@ from pathlib import Path
 CHUNK_BYTES = 4 * 1024 * 1024
 
 
+def _ssl_context() -> ssl.SSLContext:
+    """Use certifi when an embedded Python lacks the macOS system CA bridge."""
+    try:
+        import certifi
+
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        return ssl.create_default_context()
+
+
 def _request_size(url: str) -> int:
     request = urllib.request.Request(url, method="HEAD")
-    with urllib.request.urlopen(request) as response:
-        return int(response.headers["Content-Length"])
+    try:
+        with urllib.request.urlopen(request, context=_ssl_context()) as response:
+            return int(response.headers["Content-Length"])
+    except urllib.error.HTTPError as error:
+        if error.code != 405:
+            raise
+    request = urllib.request.Request(url, headers={"Range": "bytes=0-0"})
+    with urllib.request.urlopen(request, context=_ssl_context()) as response:
+        content_range = response.headers.get("Content-Range", "")
+        if "/" not in content_range:
+            raise RuntimeError(f"Server did not report total size: {content_range!r}")
+        return int(content_range.rsplit("/", 1)[1])
 
 
 def _download_range(url: str, start: int, end: int, destination: Path) -> int:
     request = urllib.request.Request(url, headers={"Range": f"bytes={start}-{end}"})
     written = 0
-    with urllib.request.urlopen(request) as response, destination.open("wb") as handle:
+    with urllib.request.urlopen(request, context=_ssl_context()) as response, destination.open(
+        "wb"
+    ) as handle:
         if response.status != 206:
             raise RuntimeError(f"Server ignored byte range {start}-{end}: HTTP {response.status}")
         while True:

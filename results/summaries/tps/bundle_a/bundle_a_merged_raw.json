@@ -1,0 +1,2217 @@
+{
+  "scope": "Bundle A only",
+  "production_results_modified": false,
+  "sampler_transition_count": 96,
+  "tps_audits": {
+    "chignolin": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/bundle_a_cross_clock_audit/tps_audit/chignolin/audit.json",
+    "trpcage": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/bundle_a_cross_clock_audit/tps_audit/trpcage/audit.json",
+    "bba": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/bundle_a_cross_clock_audit/tps_audit/bba/audit.json"
+  },
+  "hit_frame_summary": [
+    {
+      "protein": "chignolin",
+      "method": "duet",
+      "stride_in_10ps": 16,
+      "seed": 211,
+      "actual_hit_frame_count": 36,
+      "hit_frames_on_whole_valid_paths": 0,
+      "backbone_rmsd_a_min_median_max": [
+        1.0860336412565448,
+        2.3376611809555308,
+        2.840009706853086
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.7,
+        0.95,
+        1.0
+      ]
+    },
+    {
+      "protein": "chignolin",
+      "method": "duet",
+      "stride_in_10ps": 16,
+      "seed": 223,
+      "actual_hit_frame_count": 4,
+      "hit_frames_on_whole_valid_paths": 3,
+      "backbone_rmsd_a_min_median_max": [
+        2.798202514556254,
+        2.798202514556254,
+        2.798202514556254
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "protein": "chignolin",
+      "method": "duet",
+      "stride_in_10ps": 128,
+      "seed": 211,
+      "actual_hit_frame_count": 8,
+      "hit_frames_on_whole_valid_paths": 0,
+      "backbone_rmsd_a_min_median_max": [
+        2.1952756725133944,
+        2.506129499242556,
+        2.816983325971717
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.8,
+        0.9,
+        1.0
+      ]
+    },
+    {
+      "protein": "chignolin",
+      "method": "duet",
+      "stride_in_10ps": 128,
+      "seed": 223,
+      "actual_hit_frame_count": 42,
+      "hit_frames_on_whole_valid_paths": 0,
+      "backbone_rmsd_a_min_median_max": [
+        0.927681078818823,
+        1.5341893675541471,
+        2.717733937867594
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.7,
+        0.9,
+        1.0
+      ]
+    },
+    {
+      "protein": "chignolin",
+      "method": "frozen",
+      "stride_in_10ps": 16,
+      "seed": 211,
+      "actual_hit_frame_count": 39,
+      "hit_frames_on_whole_valid_paths": 10,
+      "backbone_rmsd_a_min_median_max": [
+        1.2812226400598896,
+        2.6671265470925456,
+        6.641622097834788
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.1,
+        0.8,
+        1.0
+      ]
+    },
+    {
+      "protein": "chignolin",
+      "method": "frozen",
+      "stride_in_10ps": 16,
+      "seed": 223,
+      "actual_hit_frame_count": 37,
+      "hit_frames_on_whole_valid_paths": 16,
+      "backbone_rmsd_a_min_median_max": [
+        1.5517638468648876,
+        3.291004662390282,
+        6.476476821007129
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.0,
+        0.4,
+        1.0
+      ]
+    },
+    {
+      "protein": "chignolin",
+      "method": "frozen",
+      "stride_in_10ps": 128,
+      "seed": 211,
+      "actual_hit_frame_count": 14,
+      "hit_frames_on_whole_valid_paths": 8,
+      "backbone_rmsd_a_min_median_max": [
+        1.2648813332006563,
+        2.883775759470686,
+        6.741271523829787
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.1,
+        0.4,
+        1.0
+      ]
+    },
+    {
+      "protein": "chignolin",
+      "method": "frozen",
+      "stride_in_10ps": 128,
+      "seed": 223,
+      "actual_hit_frame_count": 49,
+      "hit_frames_on_whole_valid_paths": 42,
+      "backbone_rmsd_a_min_median_max": [
+        1.5194060046229456,
+        3.296049036946662,
+        6.311241783734352
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.1,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "protein": "trpcage",
+      "method": "duet",
+      "stride_in_10ps": 128,
+      "seed": 211,
+      "actual_hit_frame_count": 65,
+      "hit_frames_on_whole_valid_paths": 38,
+      "backbone_rmsd_a_min_median_max": [
+        2.0633374276315752,
+        2.6586489278910577,
+        4.009051484577542
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.15384615384615385,
+        0.6923076923076923,
+        0.8846153846153846
+      ]
+    },
+    {
+      "protein": "trpcage",
+      "method": "duet",
+      "stride_in_10ps": 128,
+      "seed": 223,
+      "actual_hit_frame_count": 32,
+      "hit_frames_on_whole_valid_paths": 32,
+      "backbone_rmsd_a_min_median_max": [
+        2.9428001950195437,
+        3.4000160357102867,
+        4.023840651865594
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.5,
+        0.6346153846153846,
+        0.7692307692307693
+      ]
+    },
+    {
+      "protein": "trpcage",
+      "method": "frozen",
+      "stride_in_10ps": 16,
+      "seed": 211,
+      "actual_hit_frame_count": 41,
+      "hit_frames_on_whole_valid_paths": 0,
+      "backbone_rmsd_a_min_median_max": [
+        3.1210043414255924,
+        5.009491177490929,
+        6.469768335291569
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.19230769230769232,
+        0.46153846153846156,
+        0.9230769230769231
+      ]
+    },
+    {
+      "protein": "trpcage",
+      "method": "frozen",
+      "stride_in_10ps": 16,
+      "seed": 223,
+      "actual_hit_frame_count": 52,
+      "hit_frames_on_whole_valid_paths": 21,
+      "backbone_rmsd_a_min_median_max": [
+        3.8557978091829677,
+        4.748439181563187,
+        7.960946877708394
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.19230769230769232,
+        0.5,
+        0.8846153846153846
+      ]
+    },
+    {
+      "protein": "trpcage",
+      "method": "frozen",
+      "stride_in_10ps": 128,
+      "seed": 211,
+      "actual_hit_frame_count": 74,
+      "hit_frames_on_whole_valid_paths": 60,
+      "backbone_rmsd_a_min_median_max": [
+        2.2042914659628936,
+        3.9861780137880443,
+        7.355389074658448
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.23076923076923078,
+        0.5769230769230769,
+        0.8846153846153846
+      ]
+    },
+    {
+      "protein": "trpcage",
+      "method": "frozen",
+      "stride_in_10ps": 128,
+      "seed": 223,
+      "actual_hit_frame_count": 106,
+      "hit_frames_on_whole_valid_paths": 29,
+      "backbone_rmsd_a_min_median_max": [
+        2.949009998466546,
+        5.103382893334002,
+        6.856505117237486
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.15384615384615385,
+        0.46153846153846156,
+        0.8076923076923077
+      ]
+    },
+    {
+      "protein": "bba",
+      "method": "duet",
+      "stride_in_10ps": 16,
+      "seed": 223,
+      "actual_hit_frame_count": 52,
+      "hit_frames_on_whole_valid_paths": 52,
+      "backbone_rmsd_a_min_median_max": [
+        2.474171586331052,
+        3.5212610195780822,
+        4.728498750188252
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.4666666666666667,
+        0.6555555555555556,
+        0.8444444444444444
+      ]
+    },
+    {
+      "protein": "bba",
+      "method": "duet",
+      "stride_in_10ps": 128,
+      "seed": 211,
+      "actual_hit_frame_count": 84,
+      "hit_frames_on_whole_valid_paths": 84,
+      "backbone_rmsd_a_min_median_max": [
+        2.410051767248339,
+        3.3790016544781896,
+        4.108912914951823
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.4222222222222222,
+        0.6888888888888889,
+        0.9111111111111111
+      ]
+    },
+    {
+      "protein": "bba",
+      "method": "frozen",
+      "stride_in_10ps": 16,
+      "seed": 211,
+      "actual_hit_frame_count": 98,
+      "hit_frames_on_whole_valid_paths": 98,
+      "backbone_rmsd_a_min_median_max": [
+        3.369692795870481,
+        6.548718688011432,
+        10.05996872286948
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.26666666666666666,
+        0.4444444444444444,
+        0.7777777777777778
+      ]
+    },
+    {
+      "protein": "bba",
+      "method": "frozen",
+      "stride_in_10ps": 16,
+      "seed": 223,
+      "actual_hit_frame_count": 90,
+      "hit_frames_on_whole_valid_paths": 82,
+      "backbone_rmsd_a_min_median_max": [
+        3.7434076367231803,
+        6.613841976368992,
+        10.447458459394563
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.28888888888888886,
+        0.4888888888888889,
+        0.7555555555555555
+      ]
+    },
+    {
+      "protein": "bba",
+      "method": "frozen",
+      "stride_in_10ps": 128,
+      "seed": 211,
+      "actual_hit_frame_count": 144,
+      "hit_frames_on_whole_valid_paths": 78,
+      "backbone_rmsd_a_min_median_max": [
+        3.3816563460199744,
+        6.140486092855394,
+        11.501600809019394
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.3333333333333333,
+        0.5444444444444445,
+        0.9333333333333333
+      ]
+    },
+    {
+      "protein": "bba",
+      "method": "frozen",
+      "stride_in_10ps": 128,
+      "seed": 223,
+      "actual_hit_frame_count": 125,
+      "hit_frames_on_whole_valid_paths": 73,
+      "backbone_rmsd_a_min_median_max": [
+        3.281962981885833,
+        7.08993615209085,
+        9.989879729874863
+      ],
+      "heavy_native_contact_q_min_median_max": [
+        0.3111111111111111,
+        0.5333333333333333,
+        0.8
+      ]
+    }
+  ],
+  "tica_serialization_audit": [
+    {
+      "protein": "chignolin",
+      "usable_frame_count": 2640,
+      "stored_vs_recomputed_max_tica_error": 0.0,
+      "raw_vs_pdb_coordinate_precision_max_tica_error": 0.02751159904448909,
+      "rows": [
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/chignolin/stride128_t32/duet/seed_211",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.004374230371011579
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/chignolin/stride128_t32/duet/seed_223",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.0031955346467880128
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/chignolin/stride128_t32/frozen/seed_211",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.01812052864312542
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/chignolin/stride128_t32/frozen/seed_223",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.005664170667860482
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/chignolin/stride16_t32/duet/seed_211",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.003963071471438309
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/chignolin/stride16_t32/duet/seed_223",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.002257252642439091
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/chignolin/stride16_t32/frozen/seed_211",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.01392865483548877
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/chignolin/stride16_t32/frozen/seed_223",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.02751159904448909
+        }
+      ],
+      "conclusion": "The stored evaluator exactly reuses official backbone-torsion features and TICA transform; 0.001 A coordinate serialization sensitivity is reported separately.",
+      "target_hit_label_changes_after_0.001A_quantization": 1,
+      "classification_frame_count": 2640,
+      "minimum_raw_distance_margin_to_0.75_cutoff": 7.766380850715571e-05
+    },
+    {
+      "protein": "trpcage",
+      "usable_frame_count": 2640,
+      "stored_vs_recomputed_max_tica_error": 0.0,
+      "raw_vs_pdb_coordinate_precision_max_tica_error": 0.061462958989634116,
+      "rows": [
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride128_t32/duet/seed_211",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.011535023932071986
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride128_t32/duet/seed_223",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.005211189575697517
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride128_t32/frozen/seed_211",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.061462958989634116
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride128_t32/frozen/seed_223",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.027666355157188988
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/duet/seed_211",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.00653463921618236
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/duet/seed_223",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.017267290550326157
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/frozen/seed_211",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.023473264528153803
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/trpcage/stride16_t32/frozen/seed_223",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.039616252447996776
+        }
+      ],
+      "conclusion": "The stored evaluator exactly reuses official backbone-torsion features and TICA transform; 0.001 A coordinate serialization sensitivity is reported separately.",
+      "target_hit_label_changes_after_0.001A_quantization": 0,
+      "classification_frame_count": 2640,
+      "minimum_raw_distance_margin_to_0.75_cutoff": 0.0005688904101511794
+    },
+    {
+      "protein": "bba",
+      "usable_frame_count": 2640,
+      "stored_vs_recomputed_max_tica_error": 0.0,
+      "raw_vs_pdb_coordinate_precision_max_tica_error": 0.011521619509807362,
+      "rows": [
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/bba/stride128_t32/duet/seed_211",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.006433503762401635
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/bba/stride128_t32/duet/seed_223",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.0010345826324974034
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/bba/stride128_t32/frozen/seed_211",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.004530162895536219
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/bba/stride128_t32/frozen/seed_223",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.0055509744263520094
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/bba/stride16_t32/duet/seed_211",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.0032624873705026946
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/bba/stride16_t32/duet/seed_223",
+          "usable_frames": 132,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.002397301500736158
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/bba/stride16_t32/frozen/seed_211",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.011059908268068352
+        },
+        {
+          "run": "/workspace/sejin/AI_MD_NSMC_phase_b_recovery/outputs/small_protein_transition_pilot/bba/stride16_t32/frozen/seed_223",
+          "usable_frames": 528,
+          "stored_vs_recomputed_max_tica_error": 0.0,
+          "raw_vs_0.001A_quantized_max_tica_error": 0.011521619509807362
+        }
+      ],
+      "conclusion": "The stored evaluator exactly reuses official backbone-torsion features and TICA transform; 0.001 A coordinate serialization sensitivity is reported separately.",
+      "target_hit_label_changes_after_0.001A_quantization": 0,
+      "classification_frame_count": 2640,
+      "minimum_raw_distance_margin_to_0.75_cutoff": 0.0021886939482099743
+    }
+  ],
+  "sampler_contrast": [
+    {
+      "protein": "prmt6",
+      "arm": "current_custom_sde",
+      "seed": 307,
+      "trajectory_count": 4,
+      "transitions_per_trajectory": 4,
+      "physical_transition_count": 16,
+      "stride_in_10ps": 256,
+      "reverse_steps": 200,
+      "wall_clock_s": 170.35055583622307,
+      "generated_frame_count": 16,
+      "invalid_generated_frame_count": 0,
+      "invalid_generated_frames": [],
+      "global_ca_adjacent_max_a": 5.397893905639648,
+      "gross_peptide_cn_frame_count_lt1A_or_gt1_7A": 16,
+      "peptide_cn_global_min_max_a": [
+        0.09412453698508502,
+        2.8818164642825606
+      ],
+      "peptide_cn_median_frame_min_max_a": [
+        0.2177235934866327,
+        2.6989977566524854
+      ]
+    },
+    {
+      "protein": "prmt6",
+      "arm": "official_forward",
+      "seed": 307,
+      "trajectory_count": 4,
+      "transitions_per_trajectory": 4,
+      "physical_transition_count": 16,
+      "stride_in_10ps": 256,
+      "reverse_steps": 200,
+      "wall_clock_s": 124.04090474825352,
+      "generated_frame_count": 16,
+      "invalid_generated_frame_count": 1,
+      "invalid_generated_frames": [
+        {
+          "path_index": 0,
+          "frame_index": 3,
+          "geometry": {
+            "n_ca_min_max_a": [
+              1.4542183580662653,
+              1.464772531321945
+            ],
+            "ca_c_min_max_a": [
+              1.516999298180486,
+              1.5270009233864204
+            ],
+            "peptide_c_n_min_max_a": [
+              0.26287913962577186,
+              2.8251528641177908
+            ],
+            "adjacent_ca_max_a": 5.578245115452385,
+            "adjacent_ca_gt_5_5_count": 1,
+            "finite_generated_coordinates": true
+          },
+          "max_adjacent_pair_model_indices_0based": [
+            178,
+            179
+          ],
+          "max_adjacent_distance_a": 5.578245115452385,
+          "ca_clash_pairs_model_indices_0based": []
+        }
+      ],
+      "global_ca_adjacent_max_a": 5.578245162963867,
+      "gross_peptide_cn_frame_count_lt1A_or_gt1_7A": 16,
+      "peptide_cn_global_min_max_a": [
+        0.09643770907526747,
+        2.99256499614946
+      ],
+      "peptide_cn_median_frame_min_max_a": [
+        0.27004433031793273,
+        2.596015634820164
+      ]
+    },
+    {
+      "protein": "prmt6",
+      "arm": "official_sampler_adapter",
+      "seed": 307,
+      "trajectory_count": 4,
+      "transitions_per_trajectory": 4,
+      "physical_transition_count": 16,
+      "stride_in_10ps": 256,
+      "reverse_steps": 200,
+      "wall_clock_s": 177.92867260996718,
+      "generated_frame_count": 16,
+      "invalid_generated_frame_count": 0,
+      "invalid_generated_frames": [],
+      "global_ca_adjacent_max_a": 5.4849467277526855,
+      "gross_peptide_cn_frame_count_lt1A_or_gt1_7A": 16,
+      "peptide_cn_global_min_max_a": [
+        0.1573908465209206,
+        3.0057390685961285
+      ],
+      "peptide_cn_median_frame_min_max_a": [
+        0.2919214449570965,
+        2.6149855895996166
+      ]
+    },
+    {
+      "protein": "trpcage",
+      "arm": "current_custom_sde",
+      "seed": 307,
+      "trajectory_count": 4,
+      "transitions_per_trajectory": 4,
+      "physical_transition_count": 16,
+      "stride_in_10ps": 128,
+      "reverse_steps": 200,
+      "wall_clock_s": 80.73759238701314,
+      "generated_frame_count": 16,
+      "invalid_generated_frame_count": 0,
+      "invalid_generated_frames": [],
+      "global_ca_adjacent_max_a": 4.750457763671875,
+      "gross_peptide_cn_frame_count_lt1A_or_gt1_7A": 16,
+      "peptide_cn_global_min_max_a": [
+        0.3796944515225774,
+        2.0901920807660486
+      ],
+      "peptide_cn_median_frame_min_max_a": [
+        0.615547772566976,
+        1.795984863881734
+      ]
+    },
+    {
+      "protein": "trpcage",
+      "arm": "official_forward",
+      "seed": 307,
+      "trajectory_count": 4,
+      "transitions_per_trajectory": 4,
+      "physical_transition_count": 16,
+      "stride_in_10ps": 128,
+      "reverse_steps": 200,
+      "wall_clock_s": 74.58367250207812,
+      "generated_frame_count": 16,
+      "invalid_generated_frame_count": 1,
+      "invalid_generated_frames": [
+        {
+          "path_index": 2,
+          "frame_index": 2,
+          "geometry": {
+            "n_ca_min_max_a": [
+              1.4542190311658836,
+              1.4647721843087205
+            ],
+            "ca_c_min_max_a": [
+              1.5169999911179057,
+              1.527000173748399
+            ],
+            "peptide_c_n_min_max_a": [
+              0.43183684189858096,
+              1.9178783694434343
+            ],
+            "adjacent_ca_max_a": 4.58506912246608,
+            "adjacent_ca_gt_5_5_count": 0,
+            "finite_generated_coordinates": true
+          },
+          "max_adjacent_pair_model_indices_0based": [
+            16,
+            17
+          ],
+          "max_adjacent_distance_a": 4.58506912246608,
+          "ca_clash_pairs_model_indices_0based": [
+            [
+              9,
+              17
+            ]
+          ]
+        }
+      ],
+      "global_ca_adjacent_max_a": 4.585069179534912,
+      "gross_peptide_cn_frame_count_lt1A_or_gt1_7A": 16,
+      "peptide_cn_global_min_max_a": [
+        0.07329777131628344,
+        2.0070190458719286
+      ],
+      "peptide_cn_median_frame_min_max_a": [
+        0.6720398476980869,
+        1.8098098688191158
+      ]
+    },
+    {
+      "protein": "trpcage",
+      "arm": "official_sampler_adapter",
+      "seed": 307,
+      "trajectory_count": 4,
+      "transitions_per_trajectory": 4,
+      "physical_transition_count": 16,
+      "stride_in_10ps": 128,
+      "reverse_steps": 200,
+      "wall_clock_s": 72.91119524009991,
+      "generated_frame_count": 16,
+      "invalid_generated_frame_count": 0,
+      "invalid_generated_frames": [],
+      "global_ca_adjacent_max_a": 4.913697242736816,
+      "gross_peptide_cn_frame_count_lt1A_or_gt1_7A": 16,
+      "peptide_cn_global_min_max_a": [
+        0.17981713019460874,
+        2.132726959478526
+      ],
+      "peptide_cn_median_frame_min_max_a": [
+        0.690387096372336,
+        1.8612187546927552
+      ]
+    }
+  ],
+  "sampler_trpcage_energy": [
+    {
+      "arm": "official_forward",
+      "evaluated_first_and_final_generated_frames": 8,
+      "energy_min_median_max_kj_mol": [
+        157175.69877544494,
+        94786791.19221655,
+        10666840535.69264
+      ],
+      "frames": [
+        {
+          "path_index": 0,
+          "frame_index": 1,
+          "total_kj_mol": 701314614.1916797,
+          "components_kj_mol": {
+            "bonded": 243867.39252239594,
+            "nonbonded": 701072396.0352446,
+            "solvation": -1649.2359127781037,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 216964.4016900124,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.014091552509498,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 457624297.77737874,
+            "distance_a": 0.6718302996458383,
+            "atoms": [
+              {
+                "topology_atom_index": 117,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 235,
+                "residue_index_0based": 16,
+                "residue": "<Residue 16 (PRO) of chain 0>",
+                "atom": "CG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 0,
+          "frame_index": 4,
+          "total_kj_mol": 189113915.11370277,
+          "components_kj_mol": {
+            "bonded": 301661.16494534415,
+            "nonbonded": 188813792.03944853,
+            "solvation": -1538.0906195186126,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 282347.71191522037,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.1392485108013986,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 53758206.410263374,
+            "distance_a": 0.7591695582449597,
+            "atoms": [
+              {
+                "topology_atom_index": 118,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "O",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 277,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 1,
+          "frame_index": 1,
+          "total_kj_mol": 273952.71936230373,
+          "components_kj_mol": {
+            "bonded": 111470.22954617826,
+            "nonbonded": 164339.21880571826,
+            "solvation": -1856.7290885565599,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 100006.93787352488,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 0.7286251234959363,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 106135.57905591089,
+            "distance_a": 1.3625537862093307,
+            "atoms": [
+              {
+                "topology_atom_index": 119,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "CB",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 235,
+                "residue_index_0based": 16,
+                "residue": "<Residue 16 (PRO) of chain 0>",
+                "atom": "CG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 1,
+          "frame_index": 4,
+          "total_kj_mol": 157175.69877544494,
+          "components_kj_mol": {
+            "bonded": 154557.2844432759,
+            "nonbonded": 4498.186254230752,
+            "solvation": -1879.772124711897,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 114662.4455132422,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 0.7713426915792354,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 790.5755041859813,
+            "distance_a": 1.6781857783612144,
+            "atoms": [
+              {
+                "topology_atom_index": 157,
+                "residue_index_0based": 10,
+                "residue": "<Residue 10 (GLY) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 241,
+                "residue_index_0based": 16,
+                "residue": "<Residue 16 (PRO) of chain 0>",
+                "atom": "HG3",
+                "origin": "added_hydrogen",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 2,
+          "frame_index": 1,
+          "total_kj_mol": 1384415360.3975782,
+          "components_kj_mol": {
+            "bonded": 254446.75899684255,
+            "nonbonded": 1384162455.9040573,
+            "solvation": -1542.265533126174,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 239285.4869977121,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.0587065852295585,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 1287633411.7624762,
+            "distance_a": 0.5983253761739686,
+            "atoms": [
+              {
+                "topology_atom_index": 144,
+                "residue_index_0based": 8,
+                "residue": "<Residue 8 (ASP) of chain 0>",
+                "atom": "OD2",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 236,
+                "residue_index_0based": 16,
+                "residue": "<Residue 16 (PRO) of chain 0>",
+                "atom": "CD",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 2,
+          "frame_index": 4,
+          "total_kj_mol": 10666840535.69264,
+          "components_kj_mol": {
+            "bonded": 775645.2541515826,
+            "nonbonded": 10666066328.001083,
+            "solvation": -1437.5624917815567,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 693744.3291932388,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.7148346769884322,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 9488529189.091053,
+            "distance_a": 0.5218396984316443,
+            "atoms": [
+              {
+                "topology_atom_index": 158,
+                "residue_index_0based": 10,
+                "residue": "<Residue 10 (GLY) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 245,
+                "residue_index_0based": 17,
+                "residue": "<Residue 17 (PRO) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 3,
+          "frame_index": 1,
+          "total_kj_mol": 160204.5478426686,
+          "components_kj_mol": {
+            "bonded": 156518.9059526988,
+            "nonbonded": 5614.997105971012,
+            "solvation": -1929.3552856867936,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 137432.44885669195,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 0.8326147628222316,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 1796.2167278261131,
+            "distance_a": 1.7339950232248016,
+            "atoms": [
+              {
+                "topology_atom_index": 247,
+                "residue_index_0based": 17,
+                "residue": "<Residue 17 (PRO) of chain 0>",
+                "atom": "O",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 259,
+                "residue_index_0based": 18,
+                "residue": "<Residue 18 (PRO) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 3,
+          "frame_index": 4,
+          "total_kj_mol": 459667.2707303049,
+          "components_kj_mol": {
+            "bonded": 141875.83272487234,
+            "nonbonded": 319539.7105457644,
+            "solvation": -1748.2727355416864,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 124539.90644771417,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 0.7986068733338639,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 162181.2475706072,
+            "distance_a": 1.264083621631191,
+            "atoms": [
+              {
+                "topology_atom_index": 168,
+                "residue_index_0based": 11,
+                "residue": "<Residue 11 (PRO) of chain 0>",
+                "atom": "CG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 209,
+                "residue_index_0based": 15,
+                "residue": "<Residue 15 (ARG) of chain 0>",
+                "atom": "O",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "arm": "official_sampler_adapter",
+      "evaluated_first_and_final_generated_frames": 8,
+      "energy_min_median_max_kj_mol": [
+        50610.444691224824,
+        4451949521.799231,
+        2363038530993.096
+      ],
+      "frames": [
+        {
+          "path_index": 0,
+          "frame_index": 1,
+          "total_kj_mol": 6264433934.548057,
+          "components_kj_mol": {
+            "bonded": 244346.79800499996,
+            "nonbonded": 6264191555.524436,
+            "solvation": -1967.7744094604059,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 216326.67127501534,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.0127839232748288,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 6263488842.974477,
+            "distance_a": 0.5191960587294078,
+            "atoms": [
+              {
+                "topology_atom_index": 84,
+                "residue_index_0based": 5,
+                "residue": "<Residue 5 (TRP) of chain 0>",
+                "atom": "CZ3",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 118,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "O",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 0,
+          "frame_index": 4,
+          "total_kj_mol": 50610.444691224824,
+          "components_kj_mol": {
+            "bonded": 27485.20904492991,
+            "nonbonded": 24827.756660796564,
+            "solvation": -1702.5210912807852,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 16735.51220088731,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 0.3719288005043273,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 16225.21210998907,
+            "distance_a": 1.5925431619309656,
+            "atoms": [
+              {
+                "topology_atom_index": 150,
+                "residue_index_0based": 9,
+                "residue": "<Residue 9 (GLY) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 235,
+                "residue_index_0based": 16,
+                "residue": "<Residue 16 (PRO) of chain 0>",
+                "atom": "CG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 1,
+          "frame_index": 1,
+          "total_kj_mol": 2363038530993.096,
+          "components_kj_mol": {
+            "bonded": 358892.9827827705,
+            "nonbonded": 2363038173641.1436,
+            "solvation": -1541.0300454450335,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 326837.46421551565,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.2162346772888266,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 2040570080055.2864,
+            "distance_a": 0.33560058076662747,
+            "atoms": [
+              {
+                "topology_atom_index": 115,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "N",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 276,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "CB",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 1,
+          "frame_index": 4,
+          "total_kj_mol": 38745179.807751015,
+          "components_kj_mol": {
+            "bonded": 312514.515820821,
+            "nonbonded": 38434316.03071322,
+            "solvation": -1650.738743921498,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 208708.07783915615,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 0.9970108156025483,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 34322303.0946897,
+            "distance_a": 0.8336778196790353,
+            "atoms": [
+              {
+                "topology_atom_index": 142,
+                "residue_index_0based": 8,
+                "residue": "<Residue 8 (ASP) of chain 0>",
+                "atom": "CG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 262,
+                "residue_index_0based": 18,
+                "residue": "<Residue 18 (PRO) of chain 0>",
+                "atom": "CB",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 2,
+          "frame_index": 1,
+          "total_kj_mol": 2639465109.050405,
+          "components_kj_mol": {
+            "bonded": 897408.4274956989,
+            "nonbonded": 2638569800.721322,
+            "solvation": -2100.0982909632803,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 886127.7302446184,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.9218027603893009,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 2491623320.0973625,
+            "distance_a": 0.5775303609787921,
+            "atoms": [
+              {
+                "topology_atom_index": 151,
+                "residue_index_0based": 9,
+                "residue": "<Residue 9 (GLY) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 246,
+                "residue_index_0based": 17,
+                "residue": "<Residue 17 (PRO) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 2,
+          "frame_index": 4,
+          "total_kj_mol": 124818807.36283824,
+          "components_kj_mol": {
+            "bonded": 63137.11761425226,
+            "nonbonded": 124757232.06581882,
+            "solvation": -1561.8206164426083,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 13569.95334998769,
+            "atoms": [
+              {
+                "topology_atom_index": 167,
+                "residue_index_0based": 11,
+                "residue": "<Residue 11 (PRO) of chain 0>",
+                "atom": "CB",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 172,
+                "residue_index_0based": 11,
+                "residue": "<Residue 11 (PRO) of chain 0>",
+                "atom": "HB3",
+                "origin": "added_hydrogen",
+                "region": "sidechain"
+              }
+            ],
+            "value": 0.41785446266941356,
+            "reference": 0.10900000000000001,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 115585060.00049993,
+            "distance_a": 0.7580918285642078,
+            "atoms": [
+              {
+                "topology_atom_index": 164,
+                "residue_index_0based": 11,
+                "residue": "<Residue 11 (PRO) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 213,
+                "residue_index_0based": 15,
+                "residue": "<Residue 15 (ARG) of chain 0>",
+                "atom": "NE",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 3,
+          "frame_index": 1,
+          "total_kj_mol": 86278897005.62508,
+          "components_kj_mol": {
+            "bonded": 605256.6194339468,
+            "nonbonded": 86278293561.8959,
+            "solvation": -1812.8902357965362,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 427064.12002149643,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.3723800249246985,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 83541261332.52982,
+            "distance_a": 0.43971086213188726,
+            "atoms": [
+              {
+                "topology_atom_index": 119,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "CB",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 245,
+                "residue_index_0based": 17,
+                "residue": "<Residue 17 (PRO) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 3,
+          "frame_index": 4,
+          "total_kj_mol": 31658333233.57702,
+          "components_kj_mol": {
+            "bonded": 138935.1668430581,
+            "nonbonded": 31658195978.403378,
+            "solvation": -1679.9932962294042,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 117631.13171262831,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 0.7796563428633949,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 31479392483.283844,
+            "distance_a": 0.47696880719307505,
+            "atoms": [
+              {
+                "topology_atom_index": 120,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "CG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 231,
+                "residue_index_0based": 16,
+                "residue": "<Residue 16 (PRO) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "arm": "current_custom_sde",
+      "evaluated_first_and_final_generated_frames": 8,
+      "energy_min_median_max_kj_mol": [
+        286514.55638378457,
+        3654207.1221027756,
+        6.598764388957779e+17
+      ],
+      "frames": [
+        {
+          "path_index": 0,
+          "frame_index": 1,
+          "total_kj_mol": 871003.833704243,
+          "components_kj_mol": {
+            "bonded": 206027.44320989028,
+            "nonbonded": 666839.3638389119,
+            "solvation": -1862.9735272416292,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 193791.60028797452,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 0.9652716612483199,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 456746.6853153889,
+            "distance_a": 1.1947105488847582,
+            "atoms": [
+              {
+                "topology_atom_index": 78,
+                "residue_index_0based": 5,
+                "residue": "<Residue 5 (TRP) of chain 0>",
+                "atom": "CD1",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 235,
+                "residue_index_0based": 16,
+                "residue": "<Residue 16 (PRO) of chain 0>",
+                "atom": "CG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 0,
+          "frame_index": 4,
+          "total_kj_mol": 6420831.046667198,
+          "components_kj_mol": {
+            "bonded": 98722.71454009754,
+            "nonbonded": 6324176.904184752,
+            "solvation": -2068.5719941066127,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 80493.06791786515,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 0.6665411745894684,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 5295818.001968963,
+            "distance_a": 0.961584689853265,
+            "atoms": [
+              {
+                "topology_atom_index": 35,
+                "residue_index_0based": 2,
+                "residue": "<Residue 2 (TYR) of chain 0>",
+                "atom": "OH",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 207,
+                "residue_index_0based": 15,
+                "residue": "<Residue 15 (ARG) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 1,
+          "frame_index": 1,
+          "total_kj_mol": 286514.55638378457,
+          "components_kj_mol": {
+            "bonded": 282685.2604059845,
+            "nonbonded": 5851.405577251558,
+            "solvation": -2022.1095946787973,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 258299.17266944086,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.0950938468840785,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 1290.2715126931262,
+            "distance_a": 1.6005776009350245,
+            "atoms": [
+              {
+                "topology_atom_index": 115,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "N",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 129,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "HG3",
+                "origin": "added_hydrogen",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 1,
+          "frame_index": 4,
+          "total_kj_mol": 483573.09970560943,
+          "components_kj_mol": {
+            "bonded": 473888.5624366211,
+            "nonbonded": 11396.496031894254,
+            "solvation": -1711.9585990484447,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 459619.34961742256,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.4190510048003582,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 6845.8017944818275,
+            "distance_a": 1.7104606435524758,
+            "atoms": [
+              {
+                "topology_atom_index": 168,
+                "residue_index_0based": 11,
+                "residue": "<Residue 11 (PRO) of chain 0>",
+                "atom": "CG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 231,
+                "residue_index_0based": 16,
+                "residue": "<Residue 16 (PRO) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 2,
+          "frame_index": 1,
+          "total_kj_mol": 794809494.301287,
+          "components_kj_mol": {
+            "bonded": 340039.25311998226,
+            "nonbonded": 794471440.3053254,
+            "solvation": -1985.2572181955584,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 331729.18440733815,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.2243705094448136,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 784933854.6915699,
+            "distance_a": 0.6172987433876947,
+            "atoms": [
+              {
+                "topology_atom_index": 81,
+                "residue_index_0based": 5,
+                "residue": "<Residue 5 (TRP) of chain 0>",
+                "atom": "CE2",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 144,
+                "residue_index_0based": 8,
+                "residue": "<Residue 8 (ASP) of chain 0>",
+                "atom": "OD2",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 2,
+          "frame_index": 4,
+          "total_kj_mol": 168056926.3256166,
+          "components_kj_mol": {
+            "bonded": 452590.68150765414,
+            "nonbonded": 167605812.85648447,
+            "solvation": -1477.2123840350687,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 438387.2853682303,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.3888083407490082,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 161328823.93866763,
+            "distance_a": 0.7401946294319737,
+            "atoms": [
+              {
+                "topology_atom_index": 150,
+                "residue_index_0based": 9,
+                "residue": "<Residue 9 (GLY) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 210,
+                "residue_index_0based": 15,
+                "residue": "<Residue 15 (ARG) of chain 0>",
+                "atom": "CB",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 3,
+          "frame_index": 1,
+          "total_kj_mol": 887583.197538353,
+          "components_kj_mol": {
+            "bonded": 517746.8925741253,
+            "nonbonded": 371458.18553164153,
+            "solvation": -1621.8805153787762,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 503032.76769925933,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.4787871278680578,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 360905.4580452158,
+            "distance_a": 1.182701104806112,
+            "atoms": [
+              {
+                "topology_atom_index": 118,
+                "residue_index_0based": 7,
+                "residue": "<Residue 7 (LYS) of chain 0>",
+                "atom": "O",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 235,
+                "residue_index_0based": 16,
+                "residue": "<Residue 16 (PRO) of chain 0>",
+                "atom": "CG",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              }
+            ]
+          }
+        },
+        {
+          "path_index": 3,
+          "frame_index": 4,
+          "total_kj_mol": 6.598764388957779e+17,
+          "components_kj_mol": {
+            "bonded": 472162.1094306692,
+            "nonbonded": 6.598764388953076e+17,
+            "solvation": -1920.2299459175847,
+            "other": 0.0
+          },
+          "top_bonded_term": {
+            "term": "bond",
+            "energy_kj_mol": 426767.3732997444,
+            "atoms": [
+              {
+                "topology_atom_index": 274,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "C",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              },
+              {
+                "topology_atom_index": 278,
+                "residue_index_0based": 19,
+                "residue": "<Residue 19 (SER) of chain 0>",
+                "atom": "OXT",
+                "origin": "template_OXT",
+                "region": "backbone"
+              }
+            ],
+            "value": 1.3719465768320762,
+            "reference": 0.125,
+            "unit": "nm"
+          },
+          "top_positive_nonbonded_pair": {
+            "term": "pair_vacuum_coulomb_plus_LJ",
+            "energy_kj_mol": 6.598824430123299e+17,
+            "distance_a": 0.11588181312981789,
+            "atoms": [
+              {
+                "topology_atom_index": 85,
+                "residue_index_0based": 5,
+                "residue": "<Residue 5 (TRP) of chain 0>",
+                "atom": "CH2",
+                "origin": "generated_heavy",
+                "region": "sidechain"
+              },
+              {
+                "topology_atom_index": 138,
+                "residue_index_0based": 8,
+                "residue": "<Residue 8 (ASP) of chain 0>",
+                "atom": "CA",
+                "origin": "generated_heavy",
+                "region": "backbone"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "All hit/validity labels are the original labels.",
+    "Diagnostic H minimization never reclassifies a path.",
+    "Sampler energy was computed for Trp-cage first/final generated frames; PRMT6 sampler contrast uses geometry because it is outside the TPS-DPS force-field package."
+  ]
+}

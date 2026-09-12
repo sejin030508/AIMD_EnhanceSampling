@@ -193,6 +193,25 @@ def run_experiment_config(
                     bool(program.successful(particle.progress, values, int(cfg["trajectory"]["horizon"])))
                     for particle, values in zip(active_particles, final_values)
                 ]
+                time_to_success_frames = [
+                    (
+                        int(particle.progress.completed_frames[-1])
+                        if good and particle.progress.completed_frames
+                        else None
+                    )
+                    for particle, good in zip(active_particles, success)
+                ]
+                model_step_ps = float(cfg["model"]["physical_lag_in_10ps"]) * 10.0
+                time_to_success_ps = [
+                    None if value is None else float(value * model_step_ps)
+                    for value in time_to_success_frames
+                ]
+                censored_time_frames = [
+                    int(cfg["trajectory"]["horizon"])
+                    if value is None
+                    else int(value)
+                    for value in time_to_success_frames
+                ]
                 failed = [bool(particle.progress.failed) for particle in active_particles]
                 unresolved = [not bad and not good for bad, good in zip(failed, success)]
                 if program.kind == "ordered":
@@ -278,6 +297,17 @@ def run_experiment_config(
                     "final_observables": final_values,
                     "joint_program_success": success,
                     "joint_program_success_rate": success_rate,
+                    "time_to_success_frames": time_to_success_frames,
+                    "time_to_success_ps": time_to_success_ps,
+                    "time_to_success_censoring_horizon_frames": int(
+                        cfg["trajectory"]["horizon"]
+                    ),
+                    "restricted_mean_time_to_success_frames": float(
+                        np.mean(censored_time_frames)
+                    ),
+                    "restricted_mean_time_to_success_ps": float(
+                        np.mean(censored_time_frames) * model_step_ps
+                    ),
                     "event_order_accuracy": float(np.mean(event_order)) if event_order else None,
                     "failure_rate": float(np.mean(failed)) if failed else 0.0,
                     "unresolved_rate": float(np.mean(unresolved)) if unresolved else 0.0,

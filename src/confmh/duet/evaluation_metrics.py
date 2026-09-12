@@ -99,6 +99,12 @@ def summarize_pre_resampling_population(
                 "weighted_stage_mass": weighted_stage_mass,
                 "failure_fraction": float(np.mean(failed)),
                 "weighted_failure_mass": float(np.dot(weights, failed)),
+                "cumulative_unique_success_rate": stage_fraction[
+                    str(required_success_stage)
+                ],
+                "cumulative_success_weight_mass": weighted_stage_mass[
+                    str(required_success_stage)
+                ],
             }
         )
 
@@ -118,6 +124,16 @@ def summarize_pre_resampling_population(
         if success.shape != (int(outer_k),):
             raise ValueError("final_success_flags must contain one flag per outer particle")
     success_mass = float(np.dot(final_weights, success))
+    time_to_success_frames: list[int | None] = []
+    for row, good in zip(final_rows, success):
+        completed = row.get("progress_completed_frames", [])
+        time_to_success_frames.append(
+            int(completed[-1]) if bool(good) and completed else None
+        )
+    censored_time = np.asarray(
+        [horizon if value is None else value for value in time_to_success_frames],
+        dtype=float,
+    )
     preterminal_resampling_steps = [
         int(item["t"])
         for item in weight_history[:-1]
@@ -128,6 +144,13 @@ def summarize_pre_resampling_population(
         "pre_resampling_unique_success_count": int(np.sum(success)),
         "pre_resampling_unique_success_rate": float(np.mean(success)),
         "pre_resampling_success_weight_mass": success_mass,
+        "pre_resampling_time_to_success_frames": time_to_success_frames,
+        "pre_resampling_restricted_mean_time_to_success_frames": float(
+            np.mean(censored_time)
+        ),
+        "pre_resampling_weighted_restricted_mean_time_to_success_frames": float(
+            np.dot(final_weights, censored_time)
+        ),
         "expected_success_copies_after_final_resampling": float(outer_k * success_mass),
         "pre_resampling_final_weights": final_weights.tolist(),
         "preterminal_outer_resampling_count": len(preterminal_resampling_steps),

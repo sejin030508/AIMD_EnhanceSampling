@@ -1,0 +1,14 @@
+{
+  "recorded_date_kst": "2026-09-10",
+  "b3_resolved_config": "/workspace/sejin/phase_b_pockets_recovery/outputs/prmt6/b3_duet_a16_t48/duet/seed_101/resolved_config.yaml",
+  "b4_resolved_config": "/workspace/sejin/phase_b_pockets_recovery/outputs/B4_pocket_search/prmt6/b4_duet_a16_t24_nofloor_cp075_090/duet/seed_103/resolved_config.yaml",
+  "prepared_input_path_b3": "/workspace/sejin/phase_b_pockets_recovery/prepared/prmt6/prmt6_start_model_numbering.pdb",
+  "prepared_input_path_b4": "/workspace/sejin/phase_b_pockets_recovery/prepared/prmt6/prmt6_start_model_numbering.pdb",
+  "sequence_sha256_b3": "6690d2c4919aab251231033af64ae53c2951af9e2ca98a6d00cceb8cf747e7fc",
+  "sequence_sha256_b4": "6690d2c4919aab251231033af64ae53c2951af9e2ca98a6d00cceb8cf747e7fc",
+  "prepared_pdb_sha256_b3": "aaa9c1262fc28e70d46710987646cc718605f6d9eab9857f15f63a8e6eb510cb",
+  "prepared_pdb_sha256_b4": "aaa9c1262fc28e70d46710987646cc718605f6d9eab9857f15f63a8e6eb510cb",
+  "sequence_identical": true,
+  "prepared_coordinates_file_identical": true,
+  "conclusion": "B3 and B4 use the exact same prepared PRMT6 input file; B4 differences do not include a PRMT6 input-coordinate change."
+}

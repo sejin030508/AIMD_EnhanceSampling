@@ -54,6 +54,8 @@ class StepRecord:
     telescoping_max_abs_log_error: float | None
     progress_stage: int
     progress_failed: bool
+    progress_completed_frames: list[int]
+    progress_current_streak: int
     values: dict[str, float]
 
 
@@ -67,6 +69,11 @@ class DuETRunResult:
     outer_resampled: list[bool]
     log_normalizer_estimate: float
     log_normalizer_increments: list[float]
+    # The outer implementation force-resamples at the terminal step.  Keep the
+    # weighted population just before that operation so endpoint metrics are
+    # not distorted by multinomial duplicates.
+    pre_final_particles: list[OuterParticle] = field(default_factory=list)
+    pre_final_normalized_weights: list[float] = field(default_factory=list)
 
 
 def _seed_family(base_seed: int, t: int, parent: int, count: int, stream: int) -> list[int]:
@@ -139,6 +146,8 @@ class OuterSMC:
         outer_resampled: list[bool] = []
         log_normalizer = float(initial_log_psi)
         log_normalizer_increments: list[float] = []
+        pre_final_particles: list[OuterParticle] = []
+        pre_final_normalized_weights: list[float] = []
 
         for t in range(1, int(horizon) + 1):
             children: list[OuterParticle] = []
@@ -276,6 +285,8 @@ class OuterSMC:
                         telescoping_max_abs_log_error=telescoping_error,
                         progress_stage=progress.stage,
                         progress_failed=progress.failed,
+                        progress_completed_frames=list(progress.completed_frames),
+                        progress_current_streak=progress.current_streak,
                         values=values,
                     )
                 )
@@ -284,6 +295,9 @@ class OuterSMC:
                 weights, log_weight_sum = normalize_log_weights(
                     np.asarray([p.log_weight for p in children])
                 )
+                if t == int(horizon):
+                    pre_final_particles = copy.deepcopy(children)
+                    pre_final_normalized_weights = weights.tolist()
                 log_normalizer += float(log_weight_sum)
                 log_normalizer_increments.append(float(log_weight_sum))
                 ess = effective_sample_size(weights)
@@ -305,6 +319,17 @@ class OuterSMC:
                         particle.log_weight -= float(log_weight_sum)
                 outer_resampled.append(should_resample)
             else:
+                if t == int(horizon):
+                    if self.method in {"frozen", "inner_only"}:
+                        terminal_weights = np.full(
+                            len(children), 1.0 / max(len(children), 1), dtype=float
+                        )
+                    else:
+                        terminal_weights, _ = normalize_log_weights(
+                            np.asarray([p.log_weight for p in children])
+                        )
+                    pre_final_particles = copy.deepcopy(children)
+                    pre_final_normalized_weights = terminal_weights.tolist()
                 if self.method not in {"frozen", "inner_only"}:
                     _, log_weight_sum = normalize_log_weights(
                         np.asarray([p.log_weight for p in children])
@@ -327,4 +352,6 @@ class OuterSMC:
             outer_resampled=outer_resampled,
             log_normalizer_estimate=log_normalizer,
             log_normalizer_increments=log_normalizer_increments,
+            pre_final_particles=pre_final_particles,
+            pre_final_normalized_weights=pre_final_normalized_weights,
         )

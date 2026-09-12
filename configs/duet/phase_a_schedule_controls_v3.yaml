@@ -1,0 +1,50 @@
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: phase_a_schedule_controls_v3
+  sampler_mode: exact
+  reverse_steps: 3
+  device: cpu
+  dtype: float64
+
+trajectory:
+  horizon: 5
+  initial_state: S
+
+particles:
+  outer_k: 16
+  inner_m: 2
+  inner_checkpoint_progress: 0.3333333333333333
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 1.0
+  inner_resampling: systematic
+
+program:
+  type: terminal
+  potential_floor: 0.05
+
+phase_a_schedule_controls_v3:
+  frozen_phase_a_root: outputs/duet_md/phase_a_cross_clock
+  diagnosis_v2_root: outputs/duet_md/phase_a_diagnosis_v2
+  diagnosis_v2_config: configs/duet/phase_a_diagnosis_v2.yaml
+  epsilon: 0.05
+  master_seed: 20260908
+  rng_namespace: 3001
+  repetitions: 5000
+  bootstrap_repetitions: 2000
+  bootstrap_namespace: 9001
+  complete_uniform_method_id: 3101
+  complete_concentrated_method_id: 3102
+  outer_only_method_id: 3103
+  duet_uniform_method_id: 2200
+  duet_concentrated_method_id: 2203
+  uniform_schedule: [2, 2, 2, 2, 2]
+  concentrated_schedule: [1, 1, 6, 1, 1]
+  outer_only_schedule: [1, 1, 1, 1, 1]
+  fixed_outer_k: 16
+  outer_only_k: 32
+  checkpoint: Y2
+
+experiment:
+  methods: [complete_nested, outer_only]
+  output_directory: outputs/duet_md/phase_a_schedule_controls_v3
