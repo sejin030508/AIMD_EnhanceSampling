@@ -1,0 +1,103 @@
+{
+  "checkpoint": "/workspace/sejin/pvb_assets/ckpt/pvb_atlas.ckpt",
+  "input_pdb": "/workspace/sejin/confrover_mh_steering/data/atlas/7lp1_A/7lp1_A_R2F5000_start.pdb",
+  "input_atoms_total": 647,
+  "atoms_kept_by_pvb": 329,
+  "residues_kept": 39,
+  "particles": 4,
+  "sde_step": 10,
+  "sigma": 0.2,
+  "using_ode": false,
+  "official_rollout_seconds": 2.14,
+  "official_rollout_frames": 8,
+  "frame_shape": [
+    1316,
+    3
+  ],
+  "geometry_first_frame": {
+    "n_atoms": 329,
+    "n_ca": 39,
+    "ca_adjacent_min_a": 3.677170515060425,
+    "ca_adjacent_max_a": 4.082343578338623,
+    "ca_adjacent_mean_a": 3.8189516067504883,
+    "ca_adjacent_gt_4p5a": 0,
+    "peptide_cn_min_a": 1.2645851373672485,
+    "peptide_cn_max_a": 1.4224506616592407,
+    "peptide_cn_violations": 0,
+    "peptide_cn_count": 38,
+    "ca_clash_lt_3a": 0,
+    "nonfinite": 0
+  },
+  "geometry_last_frame": {
+    "n_atoms": 329,
+    "n_ca": 39,
+    "ca_adjacent_min_a": 3.639667510986328,
+    "ca_adjacent_max_a": 4.043581485748291,
+    "ca_adjacent_mean_a": 3.800086498260498,
+    "ca_adjacent_gt_4p5a": 0,
+    "peptide_cn_min_a": 1.2810320854187012,
+    "peptide_cn_max_a": 1.4141525030136108,
+    "peptide_cn_violations": 0,
+    "peptide_cn_count": 38,
+    "ca_clash_lt_3a": 0,
+    "nonfinite": 0
+  },
+  "last_frame_displacement_a": {
+    "mean": 1.8043532371520996,
+    "max": 8.40830135345459
+  },
+  "split_loop_max_abs_difference": 0.00010943412780761719,
+  "split_loop_reproduces_official": false,
+  "x1_hat_vs_realised_endpoint_rmsd_a": [
+    {
+      "t": 0.0,
+      "rmsd_a": 0.8590855598449707
+    },
+    {
+      "t": 0.1,
+      "rmsd_a": 0.6275502443313599
+    },
+    {
+      "t": 0.2,
+      "rmsd_a": 0.4883872866630554
+    },
+    {
+      "t": 0.3,
+      "rmsd_a": 0.40921035408973694
+    },
+    {
+      "t": 0.4,
+      "rmsd_a": 0.3021443784236908
+    },
+    {
+      "t": 0.5,
+      "rmsd_a": 0.26448526978492737
+    },
+    {
+      "t": 0.6,
+      "rmsd_a": 0.2057194858789444
+    },
+    {
+      "t": 0.7,
+      "rmsd_a": 0.14365120232105255
+    },
+    {
+      "t": 0.8,
+      "rmsd_a": 0.0871906578540802
+    },
+    {
+      "t": 0.9,
+      "rmsd_a": 0.0
+    }
+  ],
+  "branch_test": {
+    "checkpoint_step": 7,
+    "all_particles_copied_from_particle_0": true,
+    "rmsd_to_particle_0_after_resume_a": [
+      0.1716865450143814,
+      0.16578927636146545,
+      0.1611161082983017
+    ],
+    "branches_diverge": true
+  }
+}
