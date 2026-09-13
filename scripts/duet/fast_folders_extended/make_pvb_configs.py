@@ -29,15 +29,32 @@ def main() -> int:
     parser.add_argument("--sde-step", type=int, default=20)
     parser.add_argument("--seeds", nargs="+", type=int, default=[211])
     parser.add_argument("--subdir", default="configs_pvb")
+    parser.add_argument("--outer-k", type=int, default=8)
+    parser.add_argument("--inner-m", type=int, default=8)
+    parser.add_argument("--frozen-k", type=int, default=64)
+    parser.add_argument(
+        "--checkpoints", nargs="+", type=float, default=[0.75, 0.90]
+    )
+    parser.add_argument(
+        "--methods", nargs="+", default=["frozen", "complete_nested", "duet"]
+    )
     args = parser.parse_args()
 
     destination = args.code_root / args.subdir
     destination.mkdir(parents=True, exist_ok=True)
     for molecule in args.molecules:
-        source = (
-            args.code_root / "configs"
-            / f"{molecule}_stride{args.source_stride}_t32.yaml"
-        )
+        # BBL was prepared later and its ConfRover config lives in
+        # configs_extended/, so both locations are searched.
+        candidates = [
+            args.code_root / sub / f"{molecule}_stride{args.source_stride}_t32.yaml"
+            for sub in ("configs", "configs_extended")
+        ]
+        source = next((path for path in candidates if path.exists()), None)
+        if source is None:
+            raise SystemExit(
+                f"no ConfRover config for {molecule}; looked in "
+                + ", ".join(str(path) for path in candidates)
+            )
         config = copy.deepcopy(yaml.safe_load(source.read_text(encoding="utf-8")))
         config["model"] = {
             "backend": "pvb",
@@ -68,8 +85,24 @@ def main() -> int:
         # sampling has already succeeded.  Isolation comes from a separate
         # SMALL_PROTEIN_OUTPUT_ROOT instead.
         config["experiment"]["stage"] = f"stride{args.source_stride}_t32"
+        budget = args.outer_k * args.inner_m
+        if args.frozen_k != budget:
+            raise SystemExit(
+                f"frozen K ({args.frozen_k}) must equal K*M ({budget}); the runner "
+                "rejects methods whose population differs from the budget"
+            )
+        config["particles"]["outer_k"] = args.outer_k
+        config["particles"]["inner_m"] = args.inner_m
+        config["particles"]["inner_checkpoint_progresses"] = list(args.checkpoints)
+        config["experiment"]["methods"] = list(args.methods)
+        config["experiment"]["method_settings"] = {
+            "frozen": {"outer_k": args.frozen_k, "inner_m": 1},
+            "complete_nested": {"outer_k": args.outer_k, "inner_m": args.inner_m},
+            "duet": {"outer_k": args.outer_k, "inner_m": args.inner_m},
+        }
+        config["experiment"]["decoder_population_budget"] = budget
         config["experiment"]["seeds"] = [int(seed) for seed in args.seeds]
-        config["experiment"]["task_count"] = 2 * len(args.seeds)
+        config["experiment"]["task_count"] = len(args.methods) * len(args.seeds)
         gate = config.setdefault("preflight", {}).setdefault("gate", {})
         gate.setdefault("ca_adjacent_quality_threshold_a", 4.5)
         gate.setdefault("ca_adjacent_hard_threshold_a", 5.5)
