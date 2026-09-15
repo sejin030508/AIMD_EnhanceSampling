@@ -27,3 +27,5 @@ data/duet/case_studies/**/source_archives/
 data/duet/case_studies/_downloads/
 data/duet/case_studies/**/reference_raw/
 local_analysis/
+
+assets/
