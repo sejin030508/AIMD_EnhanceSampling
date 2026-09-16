@@ -49,7 +49,8 @@ Validation completed before any production launch:
 - differentiable CA-distance and torsion TICA tests, including finite
   differences;
 - guided inner weighting with checkpoint resampling both on and off;
-- `eta=0` update parity;
+- `eta=0` update parity (bitwise at the isolated update level, and within the
+  measured CUDA base/base repeatability floor for a real full checkpoint);
 - full existing `tests/duet` regression suite.
 
 The real-checkpoint GPU smoke must be run on A6000, not on an active H100

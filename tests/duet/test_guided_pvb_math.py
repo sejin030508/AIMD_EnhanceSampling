@@ -81,7 +81,9 @@ def test_eta_zero_guided_update_is_exactly_the_base_update():
         value._particle_noise = lambda state: torch.full_like(state.xt, -0.4)
         return value
 
-    initial = torch.arange(12, dtype=torch.float64).reshape(4, 3) / 10.0
+    # PVB inference is float32, where algebraically equivalent rewrites can
+    # differ by an ulp.  The guided-off path must call the base update itself.
+    initial = torch.arange(12, dtype=torch.float32).reshape(4, 3) / 10.0
     base_state = PVBParticleState(
         x_rep=initial.clone(), xt=initial.clone(), step=0, count=2,
         noise_seeds=np.array([3, 5]),

@@ -88,7 +88,9 @@ def main() -> None:
     )
     differentiable = TorchTicaEndpointPotential.from_metric(
         metric, adapter.topology, coefficient=16.0, d0=d0, log_floor=None
-    )
+    ).to(args.device)
+    differentiable.eval()
+    differentiable.requires_grad_(False)
     coordinates = torch.as_tensor(
         history.coordinates_a, dtype=torch.float32, device=args.device
     )
@@ -107,12 +109,27 @@ def main() -> None:
         adapter, copy.deepcopy(history), seeds, continuations, checkpoints
     )
     base_endpoint = base_state.final_xt.detach().clone()
+    base_repeat_state = _complete_base(
+        adapter, copy.deepcopy(history), seeds, continuations, checkpoints
+    )
+    base_repeat_endpoint = base_repeat_state.final_xt.detach().clone()
+    base_repeat_max_abs_a = float(
+        torch.max(torch.abs(base_endpoint - base_repeat_endpoint)).cpu()
+    )
 
     adapter.configure_guidance(differentiable, strength=0.0)
     zero_state, zero_ratio, _ = _complete_guided(
         adapter, copy.deepcopy(history), seeds, continuations, checkpoints
     )
     eta_zero_exact = bool(torch.equal(base_endpoint, zero_state.final_xt))
+    eta_zero_max_abs_a = float(
+        torch.max(torch.abs(base_endpoint - zero_state.final_xt)).cpu()
+    )
+    # PVB's CUDA scatter kernels are not bitwise deterministic across complete
+    # repeated decodes.  The original PVB preflight measured an approximately
+    # 1.4e-4 A repeatability floor, so full-checkpoint parity is judged against
+    # both a conservative 2e-4 A ceiling and the observed base/base repeat.
+    eta_zero_tolerance_a = max(2.0e-4, 2.0 * base_repeat_max_abs_a)
 
     before_backward = adapter.accounting.guidance_backward_evaluations
     adapter.configure_guidance(differentiable, strength=args.eta)
@@ -129,7 +146,10 @@ def main() -> None:
         "torch_production_initial_log_potential_abs_error": float(
             abs(torch_initial - production_initial)
         ),
+        "base_repeat_max_abs_coordinate_a": base_repeat_max_abs_a,
         "eta_zero_endpoint_bitwise_equal": eta_zero_exact,
+        "eta_zero_max_abs_coordinate_a": eta_zero_max_abs_a,
+        "eta_zero_backend_tolerance_a": eta_zero_tolerance_a,
         "eta_zero_proposal_ratio": zero_ratio.tolist(),
         "guided_proposal_ratio": guided_ratio.tolist(),
         "guided_checkpoint_log_potentials": [row.tolist() for row in checkpoint_scores],
@@ -146,7 +166,9 @@ def main() -> None:
         "torch_production_parity": (
             result["torch_production_initial_log_potential_abs_error"] <= 2.0e-5
         ),
-        "eta_zero_exact": eta_zero_exact,
+        "eta_zero_within_backend_repeatability": (
+            eta_zero_max_abs_a <= eta_zero_tolerance_a
+        ),
         "eta_zero_ratio_zero": bool(np.array_equal(zero_ratio, np.zeros(1))),
         "guided_ratio_finite": bool(np.all(np.isfinite(guided_ratio))),
         "guided_score_finite": bool(np.all(np.isfinite(guided_endpoint_scores))),

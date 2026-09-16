@@ -35,9 +35,10 @@ Matching a horizon against ConfRover therefore means matching the number of
 autoregressive transitions, not the nominal physical time.
 """
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any
 
 import numpy as np
 
@@ -242,7 +243,7 @@ class PVBDuETAdapter(IterativeFrameAdapter):
                 name: rc.restype_order.get(rc.restype_3to1.get(name, "X"), 20)
                 for name in {residue.name for residue in residues}
             }
-        except Exception:
+        except ImportError:
             three_to_index = {}
         self._aatype = np.asarray(
             [three_to_index.get(residue.name, 20) for residue in residues], dtype=int
@@ -259,7 +260,7 @@ class PVBDuETAdapter(IterativeFrameAdapter):
         """Report where each requested progress actually lands on the SDE grid."""
         rows = []
         for progress in progresses:
-            step = int(round(self.sde_step * float(progress)))
+            step = round(self.sde_step * float(progress))
             step = max(1, min(step, self.sde_step - 1))
             rows.append(
                 {
@@ -515,41 +516,42 @@ class PVBDuETAdapter(IterativeFrameAdapter):
             and state.step in self._guidance_update_steps
             and state.step < self.sde_step - 1
         )
+        if not should_guide:
+            # Delegate literally to the production base update.  Rewriting the
+            # same expression with a tensor-valued sigma changes float32
+            # operation ordering by a few ulps, which breaks the required
+            # eta=0 exact-recovery invariant even though the mathematics is
+            # identical.
+            self._integrate(state)
+            state.cached_guidance_grad = None
+            state.cached_guidance_log_phi = None
+            return torch.zeros(
+                state.count, dtype=torch.float64, device=state.xt.device
+            )
         if state.cached_drift is None:
-            if should_guide:
-                self._guided_decode(state)
-            else:
-                self._decode(state)
+            self._guided_decode(state)
         dt = float(self._grid()[1] - self._grid()[0])
         drift = state.cached_drift
         correction = torch.zeros(
             state.count, dtype=state.xt.dtype, device=state.xt.device
         )
-        if state.step == self.sde_step - 1:
-            # The published PVB loop ends in a deterministic update.  It stays
-            # unmodified because no Gaussian density correction exists here.
-            state.xt = state.xt + drift * dt
-        else:
-            noise = self._particle_noise(state)
-            sigma = torch.as_tensor(
-                self.model.sigma, dtype=state.xt.dtype, device=state.xt.device
-            )
-            standard_deviation = sigma * np.sqrt(dt)
-            if state.cached_guidance_grad is not None:
-                mean_shift = (
-                    self._guidance_strength * sigma.square()
-                    * state.cached_guidance_grad * dt
-                )
-                correction = self._gaussian_shift_log_ratio(
-                    noise, mean_shift, standard_deviation, state.count
-                )
-                state.xt = (
-                    state.xt + drift * dt + mean_shift
-                    + standard_deviation * noise
-                )
-                self.accounting.guidance_log_ratio_evaluations += state.count
-            else:
-                state.xt = state.xt + drift * dt + standard_deviation * noise
+        noise = self._particle_noise(state)
+        sigma = torch.as_tensor(
+            self.model.sigma, dtype=state.xt.dtype, device=state.xt.device
+        )
+        standard_deviation = sigma * np.sqrt(dt)
+        mean_shift = (
+            self._guidance_strength * sigma.square()
+            * state.cached_guidance_grad * dt
+        )
+        correction = self._gaussian_shift_log_ratio(
+            noise, mean_shift, standard_deviation, state.count
+        )
+        state.xt = (
+            state.xt + drift * dt + mean_shift
+            + standard_deviation * noise
+        )
+        self.accounting.guidance_log_ratio_evaluations += state.count
         if not bool(torch.isfinite(state.xt).all()) or not bool(
             torch.isfinite(correction).all()
         ):
@@ -612,7 +614,7 @@ class PVBDuETAdapter(IterativeFrameAdapter):
     def denoise_to_checkpoint(
         self, particle_state: PVBParticleState, checkpoint_progress: float
     ) -> PVBParticleState:
-        target = int(round(self.sde_step * float(checkpoint_progress)))
+        target = round(self.sde_step * float(checkpoint_progress))
         target = max(1, min(target, self.sde_step - 1))
         while particle_state.step < target:
             self._integrate(particle_state)
@@ -696,7 +698,7 @@ class PVBDuETAdapter(IterativeFrameAdapter):
     def guided_denoise_to_checkpoint(
         self, particle_state: PVBParticleState, checkpoint_progress: float
     ) -> tuple[PVBParticleState, np.ndarray]:
-        target = int(round(self.sde_step * float(checkpoint_progress)))
+        target = round(self.sde_step * float(checkpoint_progress))
         target = max(1, min(target, self.sde_step - 1))
         correction = None
         while particle_state.step < target:
