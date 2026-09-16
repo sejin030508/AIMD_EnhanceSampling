@@ -1,0 +1,69 @@
+# Guided-PVB DuET template. This is a development configuration, not an
+# authorized production sweep. Replace every {PLACEHOLDER} before running.
+project_root: ${DUET_PROJECT_ROOT}
+
+model:
+  backend: pvb
+  repository_path: ${PVB_REPOSITORY}
+  checkpoint: ${PVB_CHECKPOINT}
+  device: cuda:0
+  sde_step: 20
+  reverse_steps: 20
+  physical_lag_in_10ps: 10
+  sampler_mode: sde
+
+trajectory:
+  case_id: guided_pvb_{PROTEIN}
+  seqres: {SEQRES}
+  horizon: 48
+  initial_structure: {INITIAL_STRUCTURE}
+
+particles:
+  outer_k: 8
+  inner_m: 8
+  inner_checkpoint_progresses: [0.50, 0.75]
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.5
+  inner_resampling: systematic
+
+program:
+  type: terminal
+  potential: tica
+  reward_coefficient: 16.0
+  reward_log_floor: null
+  potential_floor: 1.0e-300
+  tica:
+    dimensions: 2
+    # Omit projection_npz for official TPS-DPS torsion TICA. Provide the
+    # exported frozen projection for WW/NTL9 CA-distance TICA.
+    # projection_npz: {TICA_PROJECTION_NPZ}
+
+guidance:
+  enabled: true
+  # eta: proposal-drift strength, separate from reward_coefficient above.
+  strength: 0.1
+  # Guides stochastic update indices 0..sde_step-2. The last deterministic
+  # PVB update is always left unchanged.
+  schedule: all_stochastic
+  inner_resampling: true
+
+pocket:
+  manifest: {MANIFEST_JSON}
+  reference_npz: {REFERENCE_NPZ}
+
+experiment:
+  stage: guided_pvb_development
+  methods: [guided_duet]
+  method_settings:
+    guided_duet: {outer_k: 8, inner_m: 8}
+  seeds: [101]
+  analysis_transitions: [16, 32, 48]
+  task_count: 1
+  decoder_population_budget: 64
+  output_directory: {OUTPUT_DIRECTORY}
+
+preflight:
+  gate:
+    ca_adjacent_quality_threshold_a: 4.5
+    ca_adjacent_hard_threshold_a: 5.5
+    enforce_peptide_bond: true

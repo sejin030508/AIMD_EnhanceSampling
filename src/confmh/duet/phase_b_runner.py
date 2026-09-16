@@ -14,7 +14,12 @@ from typing import Any
 import numpy as np
 
 from confmh.adapters.confrover_duet import ConfRoverFrame
-from confmh.duet.config import load_duet_config, resolve_config_path
+from confmh.duet.config import (
+    guidance_update_steps,
+    inner_checkpoint_progresses,
+    load_duet_config,
+    resolve_config_path,
+)
 from confmh.duet.outer_smc import OuterSMC
 from confmh.duet.phase_b_pockets import (
     PocketEndpointMetric,
@@ -24,7 +29,7 @@ from confmh.duet.phase_b_pockets import (
     hidden_observables,
 )
 from confmh.duet.records import initialize_run_directory, write_json
-from confmh.duet.runner import build_confrover_adapter
+from confmh.duet.runner import build_adapter
 
 
 def _sha256(path: Path) -> str:
@@ -39,7 +44,8 @@ def _load_manifest(cfg: dict[str, Any]) -> tuple[dict[str, Any], Path]:
     path = resolve_config_path(cfg, cfg["pocket"]["manifest"])
     with path.open(encoding="utf-8") as handle:
         manifest = json.load(handle)
-    if manifest.get("status") != "ready":
+    status = str(manifest.get("status") or "")
+    if status != "ready" and not status.startswith("ready_"):
         raise RuntimeError(
             f"{manifest.get('protein')}: preparation status is {manifest.get('status')}"
         )
@@ -123,6 +129,18 @@ def run_one(
     run_cfg = copy.deepcopy(cfg)
     run_cfg["experiment"]["methods"] = [method]
     run_cfg["experiment"]["seeds"] = [int(seed)]
+    checkpoint_progresses = inner_checkpoint_progresses(run_cfg)
+    reward_coefficient = float(run_cfg["program"].get("reward_coefficient", 4.0))
+    configured_log_floor = run_cfg["program"].get("reward_log_floor", -30.0)
+    reward_log_floor = (
+        None if configured_log_floor is None else float(configured_log_floor)
+    )
+    horizon = int(run_cfg["trajectory"]["horizon"])
+    analysis_transitions = tuple(
+        int(item) for item in run_cfg["experiment"].get("analysis_transitions", [])
+    )
+    if any(item < 1 or item > horizon for item in analysis_transitions):
+        raise ValueError("analysis_transitions must lie within the physical horizon")
     initialize_run_directory(
         output,
         run_cfg,
@@ -131,13 +149,93 @@ def run_one(
         resume=False,
     )
 
-    adapter = build_confrover_adapter(run_cfg)
+    adapter = build_adapter(run_cfg)
     adapter.load_model()
     initial_history = adapter.initial_history()
     initial_d0 = metric.distance_a(initial_history[0])
     if not np.isclose(initial_d0, d0_a, rtol=0.0, atol=2.0e-3):
         raise RuntimeError(f"Prepared/runtime d0 mismatch: {d0_a} != {initial_d0}")
-    potential = PocketEndpointPotential(metric, d0_a, coefficient=4.0, log_floor=-30.0)
+    program_potential = str(run_cfg["program"].get("potential", "rmsd"))
+    tica_metric = None
+    tica_d0 = None
+    if program_potential == "tica":
+        from confmh.duet.tica_potential import TicaEndpointMetric, TicaEndpointPotential
+
+        tica_cfg = run_cfg["program"].get("tica", {})
+        projection_value = tica_cfg.get("projection_npz")
+        projection_path = (
+            resolve_config_path(run_cfg, projection_value)
+            if projection_value is not None else None
+        )
+        tica_metric = TicaEndpointMetric(
+            manifest,
+            projection_path=projection_path,
+            dimensions=int(tica_cfg.get("dimensions", 2)),
+        )
+        tica_d0 = tica_metric.distance_a(initial_history[0])
+        if tica_d0 <= 0.0:
+            raise RuntimeError(f"tica_endpoint_not_separated: d0={tica_d0:.6f}")
+        expected_target = tica_cfg.get("expected_folded_target")
+        if expected_target is not None and not np.allclose(
+            tica_metric.target, np.asarray(expected_target, dtype=float),
+            rtol=0.0, atol=1.0e-5,
+        ):
+            raise RuntimeError("Prepared/runtime folded TICA target mismatch")
+        expected_d0 = tica_cfg.get("expected_start_to_target_distance")
+        if expected_d0 is not None and not np.isclose(
+            tica_d0, float(expected_d0), rtol=0.0, atol=1.0e-5,
+        ):
+            raise RuntimeError("Prepared/runtime TICA d0 mismatch")
+        potential = TicaEndpointPotential(
+            tica_metric, tica_d0, coefficient=reward_coefficient,
+            log_floor=reward_log_floor,
+        )
+        reward_metadata = {
+            "reward_type": "tica_endpoint_distance",
+            "reward_distance_unit": tica_metric.distance_unit,
+            "reward_d0": float(tica_d0),
+            "reward_tica_dimensions": int(tica_metric.dimensions),
+            "reward_tica_feature": tica_metric.feature_kind,
+            "reward_tica_folded_target": tica_metric.target.tolist(),
+            "reward_tica_projection_path": tica_metric.projection_path,
+        }
+    else:
+        potential = PocketEndpointPotential(
+            metric, d0_a, coefficient=reward_coefficient,
+            log_floor=reward_log_floor,
+        )
+        reward_metadata = {
+            "reward_type": "aligned_backbone_rmsd",
+            "reward_distance_unit": "Angstrom",
+            "reward_d0": float(d0_a),
+        }
+
+    guidance_metadata: dict[str, Any] | None = None
+    if method == "guided_duet":
+        if tica_metric is None or tica_d0 is None:
+            raise RuntimeError("guided_duet requires a TICA endpoint potential")
+        from confmh.duet.torch_tica import TorchTicaEndpointPotential
+
+        torch_potential = TorchTicaEndpointPotential.from_metric(
+            tica_metric,
+            adapter.topology,
+            coefficient=reward_coefficient,
+            d0=tica_d0,
+            log_floor=reward_log_floor,
+        )
+        adapter.configure_guidance(
+            torch_potential,
+            strength=float(run_cfg["guidance"]["strength"]),
+            update_steps=guidance_update_steps(run_cfg),
+        )
+        guidance_metadata = {
+            **adapter.guidance_metadata,
+            "schedule": str(run_cfg["guidance"].get("schedule", "all_stochastic")),
+            "inner_resampling": bool(
+                run_cfg["guidance"].get("inner_resampling", True)
+            ),
+            "proposal_correction": "exact_discrete_gaussian_log_p_base_over_q_guided",
+        }
 
     try:
         import torch
@@ -153,22 +251,77 @@ def run_one(
         method=method,
         outer_k=k,
         inner_m=m,
-        checkpoint_progress=(0.75,),
-        outer_resampling_ess_fraction=0.5,
+        checkpoint_progress=checkpoint_progresses,
+        outer_resampling_ess_fraction=float(
+            run_cfg["particles"].get("outer_resampling_ess_fraction", 0.5)
+        ),
+        guided_inner_resampling=bool(
+            run_cfg.get("guidance", {}).get("inner_resampling", True)
+        ),
         seed=int(seed),
-    ).run(initial_history, int(run_cfg["trajectory"]["horizon"]))
+        snapshot_times=analysis_transitions,
+    ).run(initial_history, horizon)
     wall = time.perf_counter() - started
+    checkpoint_audit: dict[str, Any] = {
+        "checkpoint_progress_definition": "completed reverse-update fraction",
+        "configured_progresses": list(checkpoint_progresses),
+        "record_count": len(result.records),
+        "records": [],
+    }
+    if method in {"duet", "guided_duet"}:
+        maximum_telescoping_error = 0.0
+        all_ratios_finite = True
+        for record in result.records:
+            if record.inner_checkpoint_progresses != list(checkpoint_progresses):
+                raise RuntimeError("Missing or misordered inner interventions")
+            if record.inner_checkpoint_ancestors_history is None or len(
+                record.inner_checkpoint_ancestors_history
+            ) != len(checkpoint_progresses):
+                raise RuntimeError("Missing checkpoint ancestry")
+            error = float(record.telescoping_max_abs_log_error or 0.0)
+            maximum_telescoping_error = max(maximum_telescoping_error, error)
+            if record.guided_path_log_proposal_ratios is not None:
+                all_ratios_finite = all_ratios_finite and bool(
+                    np.all(np.isfinite(record.guided_path_log_proposal_ratios))
+                )
+            checkpoint_audit["records"].append(
+                {
+                    "t": record.t,
+                    "particle": record.particle,
+                    "checkpoint_progresses": record.inner_checkpoint_progresses,
+                    "checkpoint_ess": record.inner_checkpoint_ess,
+                    "checkpoint_ancestors_history": (
+                        record.inner_checkpoint_ancestors_history
+                    ),
+                    "potential_telescoping_max_abs_log_error": error,
+                    "guided_path_log_proposal_ratios": (
+                        record.guided_path_log_proposal_ratios
+                    ),
+                }
+            )
+        checkpoint_audit.update(
+            {
+                "max_potential_telescoping_abs_log_error": maximum_telescoping_error,
+                "proposal_log_ratios_all_finite": all_ratios_finite,
+                "passed": maximum_telescoping_error <= 1.0e-10 and all_ratios_finite,
+            }
+        )
+        if not checkpoint_audit["passed"]:
+            raise RuntimeError("Inner checkpoint/guided-weight audit failed")
     pre_particles = result.pre_final_particles
     pre_weights = result.pre_final_normalized_weights
     if len(pre_particles) != k or len(pre_weights) != k:
         raise RuntimeError("Terminal pre-resampling population was not captured")
 
-    construct_first = int(manifest["construct_uniprot_residues_inclusive"][0])
+    construct = manifest.get("construct_uniprot_residues_inclusive")
+    if construct is None:
+        construct = [1, int(manifest["model_length"])]
+    construct_first = int(construct[0])
     uniprot_to_model = {
         number: number - construct_first
         for number in range(
             construct_first,
-            int(manifest["construct_uniprot_residues_inclusive"][1]) + 1,
+            int(construct[1]) + 1,
         )
     }
     endpoint_metrics, curves = evaluate_population(
@@ -181,6 +334,32 @@ def run_one(
         uniprot_to_model_index=uniprot_to_model,
         start_reference=start_reference,
     )
+    intermediate_metrics: dict[str, dict[str, Any]] = {}
+    for transition in analysis_transitions:
+        snapshot = result.snapshot_particles.get(transition)
+        snapshot_weights = result.snapshot_normalized_weights.get(transition)
+        if snapshot is None or snapshot_weights is None:
+            raise RuntimeError(f"Missing requested pre-resampling snapshot t={transition}")
+        snapshot_metrics, snapshot_curves = evaluate_population(
+            particles=snapshot,
+            normalized_weights=snapshot_weights,
+            adapter=adapter,
+            metric=metric,
+            d0_a=d0_a,
+            protein=protein,
+            uniprot_to_model_index=uniprot_to_model,
+            start_reference=start_reference,
+        )
+        intermediate_metrics[str(transition)] = snapshot_metrics
+        write_json(output / f"population_curves_t{transition}.json", snapshot_curves)
+        write_json(
+            output / f"pre_resampling_normalized_weights_t{transition}.json",
+            snapshot_weights,
+        )
+        _save_population(
+            output / f"pre_resampling_population_t{transition}_atom37.npz",
+            snapshot,
+        )
     peak_memory = None
     if torch is not None and torch.cuda.is_available():
         peak_memory = int(torch.cuda.max_memory_allocated())
@@ -195,14 +374,17 @@ def run_one(
         "seed": int(seed),
         "outer_k": k,
         "inner_m": m,
-        "horizon": int(run_cfg["trajectory"]["horizon"]),
-        "total_frames_including_start": int(run_cfg["trajectory"]["horizon"]) + 1,
+        "horizon": horizon,
+        "total_frames_including_start": horizon + 1,
         "stride_in_10ps": int(run_cfg["model"]["physical_lag_in_10ps"]),
         "reverse_steps": int(run_cfg["model"]["reverse_steps"]),
         "sampler_mode": str(run_cfg["model"]["sampler_mode"]),
-        "inner_checkpoint_completed_reverse_fraction": 0.75,
+        "inner_checkpoint_completed_reverse_fraction": checkpoint_progresses[-1],
+        "inner_checkpoint_completed_reverse_fractions": list(checkpoint_progresses),
         "outer_resampling": "systematic",
-        "outer_resampling_ess_fraction": 0.5,
+        "outer_resampling_ess_fraction": float(
+            run_cfg["particles"].get("outer_resampling_ess_fraction", 0.5)
+        ),
         "checkpoint_path": str(checkpoint_path),
         "checkpoint_sha256": _sha256(checkpoint_path),
         "manifest_path": str(manifest_path),
@@ -222,7 +404,16 @@ def run_one(
             if potential.evaluations
             else 0.0
         ),
-        "reward_definition": "max(-30, -4*(d/d0)^2)",
+        "reward_coefficient": reward_coefficient,
+        "reward_log_floor": reward_log_floor,
+        "reward_definition": (
+            f"-{reward_coefficient:g}*(d/d0)^2"
+            if reward_log_floor is None else
+            f"max({reward_log_floor:g}, -{reward_coefficient:g}*(d/d0)^2)"
+        ),
+        "analysis_transitions": list(analysis_transitions),
+        "guidance": guidance_metadata,
+        **reward_metadata,
         "checkpoint_phi": "same reward evaluated on predicted-clean atom37 coordinates",
         "scientific_claim_boundary": (
             "exploratory candidate performance under a frozen surrogate prior; "
@@ -231,7 +422,9 @@ def run_one(
         **endpoint_metrics,
     }
     write_json(output / "metrics.json", metrics)
+    write_json(output / "checkpoint_audit.json", checkpoint_audit)
     write_json(output / "population_curves.json", curves)
+    write_json(output / "intermediate_metrics.json", intermediate_metrics)
     write_json(output / "records.json", [record.__dict__ for record in result.records])
     write_json(output / "outer_ancestry.json", result.ancestor_indices)
     write_json(output / "pre_final_normalized_weights.json", pre_weights)

@@ -10,6 +10,9 @@ class NFEAccounting:
     temporal_encoder_evaluations: int = 0
     reward_evaluations: int = 0
     generated_complete_frames: int = 0
+    guidance_backward_evaluations: int = 0
+    guidance_potential_evaluations: int = 0
+    guidance_log_ratio_evaluations: int = 0
 
     def add(self, other: "NFEAccounting") -> None:
         for key, value in asdict(other).items():
@@ -17,4 +20,3 @@ class NFEAccounting:
 
     def to_dict(self) -> dict[str, int]:
         return {key: int(value) for key, value in asdict(self).items()}
-

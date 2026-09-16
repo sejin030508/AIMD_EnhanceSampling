@@ -138,7 +138,7 @@ class PocketEndpointMetric:
 
 
 class PocketEndpointPotential:
-    """The fixed Phase-B potential log psi=max(-30, -4(d/d0)^2)."""
+    """Core-aligned endpoint potential with an optional numerical log floor."""
 
     def __init__(
         self,
@@ -146,16 +146,18 @@ class PocketEndpointPotential:
         d0_a: float,
         *,
         coefficient: float = 4.0,
-        log_floor: float = -30.0,
+        log_floor: float | None = -30.0,
     ) -> None:
         self.metric = metric
         self.d0_a = float(d0_a)
         self.coefficient = float(coefficient)
-        self.log_floor = float(log_floor)
+        self.log_floor = None if log_floor is None else float(log_floor)
         if self.d0_a <= 0.0:
             raise ValueError("d0 must be positive")
-        if self.coefficient <= 0.0 or self.log_floor >= 0.0:
+        if self.coefficient <= 0.0:
             raise ValueError("Invalid fixed-potential coefficients")
+        if self.log_floor is not None and self.log_floor >= 0.0:
+            raise ValueError("log_floor must be negative or None")
         self.evaluations = 0
         self.clipped_evaluations = 0
 
@@ -163,7 +165,7 @@ class PocketEndpointPotential:
         distance = self.metric.distance_a(frame)
         ratio = distance / self.d0_a
         raw = -self.coefficient * ratio * ratio
-        clipped = raw < self.log_floor
+        clipped = self.log_floor is not None and raw < self.log_floor
         return {
             "endpoint_distance_a": float(distance),
             "endpoint_distance_over_d0": float(ratio),
@@ -182,9 +184,10 @@ class PocketEndpointPotential:
         if values is None:
             values = self.values(history[-1])
         raw = -self.coefficient * float(values["endpoint_distance_over_d0"]) ** 2
-        if raw < self.log_floor:
+        if self.log_floor is not None and raw < self.log_floor:
             self.clipped_evaluations += 1
-        return float(max(self.log_floor, raw))
+            return float(self.log_floor)
+        return float(raw)
 
     def candidate_log_psi(
         self,
@@ -229,6 +232,13 @@ def hidden_observables(
     uniprot_to_model_index: Mapping[int, int],
     metric: PocketEndpointMetric,
 ) -> dict[str, float | None]:
+    if protein in {
+        "chignolin", "trpcage", "bba", "bbl", "protein_b", "homeodomain",
+        "ww_domain", "ntl9",
+    }:
+        # Fast-folding TPS tasks have no cryptic-pocket-specific hidden
+        # observables.  Their structural/TICA metrics are evaluated elsewhere.
+        return {}
     index = lambda number: int(uniprot_to_model_index[int(number)])
     if protein == "prmt5":
         asp = _available_points(frame, index(442), ("OD1", "OD2"))

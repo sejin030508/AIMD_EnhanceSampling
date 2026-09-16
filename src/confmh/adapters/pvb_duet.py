@@ -64,6 +64,8 @@ class PVBParticleState:
     noise_seeds: np.ndarray
     cached_drift: Any = None
     cached_velocity: Any = None
+    cached_guidance_grad: Any = None
+    cached_guidance_log_phi: Any = None
     final_xt: Any = None
     realised_progress: list[float] = field(default_factory=list)
 
@@ -113,6 +115,9 @@ class PVBDuETAdapter(IterativeFrameAdapter):
         self._batches: dict[int, dict[str, Any]] = {}
         self._initial_frame: ConfRoverFrame | None = None
         self._peptide_pairs: list[tuple[int, int]] = []
+        self._guidance_potential: Any = None
+        self._guidance_strength: float = 0.0
+        self._guidance_update_steps: frozenset[int] = frozenset()
 
     # ------------------------------------------------------------------ setup
     def load_model(self) -> None:
@@ -134,6 +139,10 @@ class PVBDuETAdapter(IterativeFrameAdapter):
         )
         self.model.to(self.device_name)
         self.model.eval()
+        # Guidance differentiates through the frozen decoder with respect to
+        # coordinates only.  Keeping parameters frozen avoids allocating their
+        # gradients and cannot change the baseline forward pass.
+        self.model.requires_grad_(False)
         torch.set_grad_enabled(False)
 
         from data import make_batch
@@ -148,6 +157,54 @@ class PVBDuETAdapter(IterativeFrameAdapter):
         self._initial_frame = self.frame_from_coordinates(
             np.asarray(kept.xyz[0], dtype=float) * 10.0
         )
+
+    def configure_guidance(
+        self,
+        potential: Any,
+        *,
+        strength: float,
+        update_steps: Sequence[int] | None = None,
+    ) -> None:
+        """Attach a frozen differentiable endpoint potential to the bridge.
+
+        ``update_steps`` contains zero-based PVB update indices.  The final
+        deterministic update is intentionally excluded: it has no Gaussian
+        base/proposal density ratio and therefore cannot be shifted while
+        retaining the exact importance correction used here.
+        """
+        self.load_model()
+        eta = float(strength)
+        if not np.isfinite(eta) or eta < 0.0:
+            raise ValueError("guidance strength must be finite and non-negative")
+        if int(getattr(potential, "atom_count", -1)) != int(self.topology.n_atoms):
+            raise ValueError("Guidance potential atom count does not match PVB")
+        if update_steps is None:
+            steps = frozenset(range(self.sde_step - 1))
+        else:
+            steps = frozenset(int(item) for item in update_steps)
+            invalid = sorted(
+                item for item in steps if item < 0 or item >= self.sde_step - 1
+            )
+            if invalid:
+                raise ValueError(
+                    "Guidance can only target stochastic PVB updates; invalid "
+                    f"indices: {invalid}"
+                )
+        self._guidance_potential = potential.to(self.device_name)
+        self._guidance_potential.eval()
+        self._guidance_potential.requires_grad_(False)
+        self._guidance_strength = eta
+        self._guidance_update_steps = steps
+
+    @property
+    def guidance_metadata(self) -> dict[str, Any]:
+        return {
+            "enabled": self._guidance_potential is not None,
+            "strength": float(self._guidance_strength),
+            "update_steps": sorted(self._guidance_update_steps),
+            "stochastic_update_count": self.sde_step - 1,
+            "final_deterministic_update_guided": False,
+        }
 
     def _build_atom37_mapping(self) -> None:
         """Map each retained PVB atom onto its atom37 slot.
@@ -359,14 +416,159 @@ class PVBDuETAdapter(IterativeFrameAdapter):
         state.cached_drift = drift
         self.accounting.reverse_decoder_evaluations += state.count
 
-    def _integrate(self, state: PVBParticleState) -> None:
-        """Take one Euler-Maruyama step using the cached drift."""
+    def _predicted_endpoint_tensor(self, state: PVBParticleState):
+        if state.cached_drift is None:
+            self._decode(state)
+        t = float(self._grid()[state.step])
+        return state.xt + (1.0 - t) * state.cached_drift
+
+    def _guided_decode(self, state: PVBParticleState) -> None:
+        """Decode once and cache both endpoint score and its coordinate gradient."""
+        if self._guidance_potential is None:
+            raise RuntimeError("configure_guidance() must be called first")
+        import torch
+        from module.graph import construct_edges
+
+        should_differentiate = bool(
+            self._guidance_strength > 0.0
+            and state.step in self._guidance_update_steps
+            and state.step < self.sde_step - 1
+        )
+        if not should_differentiate:
+            # This branch deliberately calls the unchanged baseline decoder so
+            # eta=0 is bitwise-identical to ordinary PVB given identical seeds.
+            if state.cached_drift is None:
+                self._decode(state)
+            with torch.no_grad():
+                predicted = self._predicted_endpoint_tensor(state)
+                state.cached_guidance_log_phi = self._guidance_potential.forward_flat(
+                    predicted, state.count
+                ).detach()
+            self.accounting.predicted_clean_evaluations += state.count
+            self.accounting.guidance_potential_evaluations += state.count
+            state.cached_guidance_grad = None
+            return
+
+        batch = self._batch_for(state.count)
+        z, b = batch["atype"], batch["btype"]
+        abid, edge_mask, bond_index = (
+            batch["abid"], batch["edge_mask"], batch["bond_index"],
+        )
+        t = float(self._grid()[state.step])
+        with torch.enable_grad():
+            current = state.xt.detach().requires_grad_(True)
+            ones = torch.ones(
+                current.shape[0], 1, dtype=current.dtype, device=current.device
+            )
+            d_index, d_weight_t, d_vec_t, bond_type = construct_edges(
+                Z=z, X=current, bid=abid, mask=edge_mask, bond_index=bond_index,
+                cutoff_lower=self.model.cutoff_lower,
+                cutoff_upper=self.model.cutoff_upper,
+                cutoff_H=self.model.cutoff_H,
+                k_neighbors=self.model.k_neighbors,
+            )
+            x_rep = state.x_rep.detach()
+            atoms_0 = x_rep[d_index.transpose(0, 1)]
+            d_vec_0 = atoms_0[:, 0] - atoms_0[:, 1]
+            d_weight_0 = torch.norm(d_vec_0, dim=-1)
+            velocity, drift = self.model.decode(
+                z, b, current, ones * t, abid, d_index, d_weight_0, d_vec_0,
+                d_weight_t, d_vec_t, bond_type,
+            )
+            predicted = current + (1.0 - t) * drift
+            log_phi = self._guidance_potential.forward_flat(predicted, state.count)
+            gradient = torch.autograd.grad(log_phi.sum(), current, create_graph=False)[0]
+        if not bool(torch.isfinite(gradient).all()):
+            raise FloatingPointError("Non-finite PVB guidance gradient")
+        state.cached_velocity = velocity.detach()
+        state.cached_drift = drift.detach()
+        state.cached_guidance_grad = gradient.detach()
+        state.cached_guidance_log_phi = log_phi.detach()
+        self.accounting.reverse_decoder_evaluations += state.count
+        self.accounting.predicted_clean_evaluations += state.count
+        self.accounting.guidance_backward_evaluations += state.count
+        self.accounting.guidance_potential_evaluations += state.count
+
+    @staticmethod
+    def _gaussian_shift_log_ratio(
+        noise: Any, mean_shift: Any, standard_deviation: Any, count: int
+    ):
+        """Return per-candidate log p_base/q_guided for a guided draw.
+
+        The actual draw is ``guided_mean + std * noise``.  Consequently the
+        standardized residual under the base kernel is ``noise + shift/std``.
+        This yields ``-noise.dot(shift/std) - 0.5*||shift/std||^2``.
+        """
+        scaled = mean_shift / standard_deviation
+        atoms = noise.shape[0] // int(count)
+        return (
+            -(noise * scaled).reshape(count, atoms * 3).sum(-1)
+            - 0.5 * scaled.square().reshape(count, atoms * 3).sum(-1)
+        )
+
+    def _guided_integrate(self, state: PVBParticleState):
+        """Take one base/guided update and return its exact proposal correction."""
         import torch
 
+        should_guide = bool(
+            self._guidance_strength > 0.0
+            and state.step in self._guidance_update_steps
+            and state.step < self.sde_step - 1
+        )
+        if state.cached_drift is None:
+            if should_guide:
+                self._guided_decode(state)
+            else:
+                self._decode(state)
+        dt = float(self._grid()[1] - self._grid()[0])
+        drift = state.cached_drift
+        correction = torch.zeros(
+            state.count, dtype=state.xt.dtype, device=state.xt.device
+        )
+        if state.step == self.sde_step - 1:
+            # The published PVB loop ends in a deterministic update.  It stays
+            # unmodified because no Gaussian density correction exists here.
+            state.xt = state.xt + drift * dt
+        else:
+            noise = self._particle_noise(state)
+            sigma = torch.as_tensor(
+                self.model.sigma, dtype=state.xt.dtype, device=state.xt.device
+            )
+            standard_deviation = sigma * np.sqrt(dt)
+            if state.cached_guidance_grad is not None:
+                mean_shift = (
+                    self._guidance_strength * sigma.square()
+                    * state.cached_guidance_grad * dt
+                )
+                correction = self._gaussian_shift_log_ratio(
+                    noise, mean_shift, standard_deviation, state.count
+                )
+                state.xt = (
+                    state.xt + drift * dt + mean_shift
+                    + standard_deviation * noise
+                )
+                self.accounting.guidance_log_ratio_evaluations += state.count
+            else:
+                state.xt = state.xt + drift * dt + standard_deviation * noise
+        if not bool(torch.isfinite(state.xt).all()) or not bool(
+            torch.isfinite(correction).all()
+        ):
+            raise FloatingPointError("Non-finite guided PVB update")
+        state.final_xt = state.xt
+        state.cached_drift = None
+        state.cached_velocity = None
+        state.cached_guidance_grad = None
+        state.cached_guidance_log_phi = None
+        state.step += 1
+        # Keep corrections on device across a bridge segment.  The public
+        # checkpoint methods synchronize once, rather than once per SDE step.
+        return correction.detach().to(torch.float64)
+
+    def _integrate(self, state: PVBParticleState) -> None:
+        """Take one Euler-Maruyama step using the cached drift."""
         if state.cached_drift is None:
             self._decode(state)
         grid = self._grid()
-        t = float(grid[state.step])
         dt = float(grid[1] - grid[0])
         drift = state.cached_drift
         if state.step == self.sde_step - 1:
@@ -422,11 +624,9 @@ class PVBDuETAdapter(IterativeFrameAdapter):
     def predict_clean(self, particle_state: PVBParticleState) -> list[Any]:
         if particle_state.cached_drift is None:
             self._decode(particle_state)
-        grid = self._grid()
-        t = float(grid[particle_state.step])
         # Drift head target is (x1 - xt) / (1 - t); inverting it gives the
         # model's own endpoint estimate.
-        predicted = particle_state.xt + (1.0 - t) * particle_state.cached_drift
+        predicted = self._predicted_endpoint_tensor(particle_state)
         self.accounting.predicted_clean_evaluations += particle_state.count
         return self._split_frames(predicted, particle_state.count)
 
@@ -462,10 +662,18 @@ class PVBDuETAdapter(IterativeFrameAdapter):
             noise_seeds=particle_state.noise_seeds[ancestors].copy(),
             realised_progress=list(particle_state.realised_progress),
         )
-        for name in ("cached_drift", "cached_velocity"):
+        for name in ("cached_drift", "cached_velocity", "cached_guidance_grad"):
             value = getattr(particle_state, name)
             if value is not None:
                 setattr(gathered, name, value.index_select(0, order).clone())
+        if particle_state.cached_guidance_log_phi is not None:
+            selected = torch.as_tensor(
+                ancestors, dtype=torch.long,
+                device=particle_state.cached_guidance_log_phi.device,
+            )
+            gathered.cached_guidance_log_phi = (
+                particle_state.cached_guidance_log_phi.index_select(0, selected).clone()
+            )
         return gathered
 
     def reseed_particle_state(
@@ -483,6 +691,77 @@ class PVBDuETAdapter(IterativeFrameAdapter):
         while particle_state.step < self.sde_step:
             self._integrate(particle_state)
         return particle_state
+
+    # ----------------------------------------------------------- guided PVB
+    def guided_denoise_to_checkpoint(
+        self, particle_state: PVBParticleState, checkpoint_progress: float
+    ) -> tuple[PVBParticleState, np.ndarray]:
+        target = int(round(self.sde_step * float(checkpoint_progress)))
+        target = max(1, min(target, self.sde_step - 1))
+        correction = None
+        while particle_state.step < target:
+            step_correction = self._guided_integrate(particle_state)
+            correction = (
+                step_correction if correction is None
+                else correction + step_correction
+            )
+        if particle_state.cached_guidance_log_phi is None:
+            self._guided_decode(particle_state)
+        particle_state.realised_progress.append(target / self.sde_step)
+        if correction is None:
+            correction_array = np.zeros(particle_state.count, dtype=np.float64)
+        else:
+            correction_array = correction.cpu().numpy()
+        return particle_state, correction_array
+
+    def guided_checkpoint_log_potential(
+        self, particle_state: PVBParticleState
+    ) -> np.ndarray:
+        import torch
+
+        if particle_state.cached_guidance_log_phi is None:
+            self._guided_decode(particle_state)
+        return (
+            particle_state.cached_guidance_log_phi.detach()
+            .to("cpu", dtype=torch.float64)
+            .numpy()
+        )
+
+    def guided_denoise_to_end(
+        self,
+        particle_state: PVBParticleState,
+        independent_seeds: Sequence[int] | None,
+    ) -> tuple[PVBParticleState, np.ndarray]:
+        if independent_seeds is not None:
+            particle_state = self.reseed_particle_state(
+                particle_state, independent_seeds
+            )
+        correction = None
+        while particle_state.step < self.sde_step:
+            step_correction = self._guided_integrate(particle_state)
+            correction = (
+                step_correction if correction is None
+                else correction + step_correction
+            )
+        if correction is None:
+            correction_array = np.zeros(particle_state.count, dtype=np.float64)
+        else:
+            correction_array = correction.cpu().numpy()
+        return particle_state, correction_array
+
+    def guided_endpoint_log_potential(
+        self, particle_state: PVBParticleState
+    ) -> np.ndarray:
+        if self._guidance_potential is None or particle_state.final_xt is None:
+            raise RuntimeError("Guided PVB bridge has not been configured/completed")
+        import torch
+
+        with torch.no_grad():
+            values = self._guidance_potential.forward_flat(
+                particle_state.final_xt, particle_state.count
+            )
+        self.accounting.guidance_potential_evaluations += particle_state.count
+        return values.detach().to("cpu", dtype=torch.float64).numpy()
 
     def finalize_frames(self, particle_state: PVBParticleState) -> list[Any]:
         if particle_state.final_xt is None:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import math
 import os
 from pathlib import Path
 from typing import Any
@@ -17,6 +18,7 @@ SUPPORTED_METHODS = {
     "naive_dual",
     "complete_nested",
     "duet",
+    "guided_duet",
 }
 
 
@@ -65,6 +67,27 @@ def inner_checkpoint_progresses(cfg: dict[str, Any]) -> tuple[float, ...]:
     return tuple(float(item) for item in raw_progresses)
 
 
+def guidance_update_steps(cfg: dict[str, Any]) -> tuple[int, ...] | None:
+    """Resolve optional zero-based guided PVB stochastic update indices."""
+    guidance = cfg.get("guidance", {})
+    schedule = guidance.get("schedule", "all_stochastic")
+    if schedule == "all_stochastic":
+        if guidance.get("update_steps") is not None:
+            raise ValueError(
+                "guidance.update_steps must be omitted for all_stochastic schedule"
+            )
+        return None
+    if schedule != "explicit":
+        raise ValueError("guidance.schedule must be all_stochastic or explicit")
+    raw = guidance.get("update_steps")
+    if not isinstance(raw, list) or not raw:
+        raise ValueError("explicit guidance schedule requires update_steps")
+    steps = tuple(int(item) for item in raw)
+    if len(set(steps)) != len(steps) or tuple(sorted(steps)) != steps:
+        raise ValueError("guidance.update_steps must be unique and increasing")
+    return steps
+
+
 def validate_duet_config(cfg: dict[str, Any]) -> None:
     missing = [section for section in REQUIRED_SECTIONS if section not in cfg]
     if missing:
@@ -97,12 +120,43 @@ def validate_duet_config(cfg: dict[str, Any]) -> None:
         raise ValueError("particles.outer_resampling_ess_fraction must be in (0, 1]")
     if program.get("type") not in {"terminal", "windowed", "ordered"}:
         raise ValueError("program.type must be terminal, windowed, or ordered")
+    potential = str(program.get("potential", "rmsd"))
+    if potential not in {"rmsd", "tica"}:
+        raise ValueError("program.potential must be rmsd or tica")
+    if potential == "tica":
+        tica = program.get("tica", {})
+        if not isinstance(tica, dict):
+            raise ValueError("program.tica must be a mapping")
+        if int(tica.get("dimensions", 2)) < 1:
+            raise ValueError("program.tica.dimensions must be positive")
     if float(program.get("potential_floor", 0.0)) <= 0.0:
         raise ValueError("program.potential_floor must be positive")
     methods = experiment.get("methods", [experiment.get("method", "duet")])
     unknown = set(methods) - SUPPORTED_METHODS
     if unknown:
         raise ValueError(f"Unsupported methods: {sorted(unknown)}")
+    if "guided_duet" in methods:
+        if str(model.get("backend", "confrover")) != "pvb":
+            raise ValueError("guided_duet currently supports only model.backend=pvb")
+        if potential != "tica":
+            raise ValueError("guided_duet requires program.potential=tica")
+        guidance = cfg.get("guidance")
+        if not isinstance(guidance, dict):
+            raise ValueError("guided_duet requires a top-level guidance mapping")
+        if guidance.get("enabled", True) is not True:
+            raise ValueError("guided_duet requires guidance.enabled=true")
+        strength = float(guidance.get("strength", -1.0))
+        if not math.isfinite(strength) or strength < 0.0:
+            raise ValueError("guidance.strength must be non-negative")
+        if not isinstance(guidance.get("inner_resampling", True), bool):
+            raise ValueError("guidance.inner_resampling must be boolean")
+        steps = guidance_update_steps(cfg)
+        if steps is not None:
+            sde_step = int(model.get("sde_step", 20))
+            if any(item < 0 or item >= sde_step - 1 for item in steps):
+                raise ValueError(
+                    "guidance.update_steps may only select stochastic PVB updates"
+                )
 
 
 def resolved_copy(cfg: dict[str, Any]) -> dict[str, Any]:
@@ -166,6 +220,10 @@ def missing_assets(cfg: dict[str, Any]) -> list[str]:
             values.append((f"reference.{key}[{index}]", item))
     if program.get("catalog"):
         values.append(("program.catalog", program["catalog"]))
+    if isinstance(program.get("tica"), dict) and program["tica"].get(
+        "projection_npz"
+    ):
+        values.append(("program.tica.projection_npz", program["tica"]["projection_npz"]))
     case_study = cfg.get("case_study", {})
     if case_study.get("benchmark_spec"):
         values.append(("case_study.benchmark_spec", case_study["benchmark_spec"]))

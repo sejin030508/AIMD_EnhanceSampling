@@ -8,6 +8,7 @@ import numpy as np
 
 from confmh.adapters.base_iterative_frame import IterativeFrameAdapter
 from confmh.duet.baselines import complete_frame_nested_step
+from confmh.duet.guided_inner import guided_multi_checkpoint_inner_step
 from confmh.duet.inner_fkc import multi_checkpoint_inner_step
 from confmh.duet.potentials import PrefixPotential
 from confmh.duet.programs import ProgressState
@@ -21,6 +22,7 @@ METHODS = {
     "naive_dual",
     "complete_nested",
     "duet",
+    "guided_duet",
 }
 
 
@@ -50,8 +52,14 @@ class StepRecord:
     inner_checkpoint_progresses: list[float] | None
     inner_checkpoint_ess: list[float] | None
     inner_checkpoint_ancestors_history: list[list[int]] | None
+    inner_checkpoint_log_potentials_history: list[list[float]] | None
+    inner_endpoint_log_potentials: list[float] | None
     inner_selected_index: int | None
     telescoping_max_abs_log_error: float | None
+    guided_path_log_proposal_ratios: list[float] | None
+    guided_selected_path_log_proposal_ratio: float | None
+    guided_endpoint_ess: float | None
+    guided_inner_resampling_enabled: bool | None
     progress_stage: int
     progress_failed: bool
     progress_completed_frames: list[int]
@@ -74,6 +82,8 @@ class DuETRunResult:
     # not distorted by multinomial duplicates.
     pre_final_particles: list[OuterParticle] = field(default_factory=list)
     pre_final_normalized_weights: list[float] = field(default_factory=list)
+    snapshot_particles: dict[int, list[OuterParticle]] = field(default_factory=dict)
+    snapshot_normalized_weights: dict[int, list[float]] = field(default_factory=dict)
 
 
 def _seed_family(base_seed: int, t: int, parent: int, count: int, stream: int) -> list[int]:
@@ -93,6 +103,8 @@ class OuterSMC:
         checkpoint_progress: float | Sequence[float],
         seed: int,
         outer_resampling_ess_fraction: float = 1.0,
+        guided_inner_resampling: bool = True,
+        snapshot_times: Sequence[int] = (),
     ) -> None:
         if method not in METHODS:
             raise ValueError(f"Unsupported method: {method}")
@@ -123,7 +135,11 @@ class OuterSMC:
         if not 0.0 < self.outer_resampling_ess_fraction <= 1.0:
             raise ValueError("outer_resampling_ess_fraction must be in (0, 1]")
         self.seed = int(seed)
+        self.guided_inner_resampling = bool(guided_inner_resampling)
         self.rng = np.random.default_rng(seed)
+        self.snapshot_times = frozenset(int(item) for item in snapshot_times)
+        if any(item < 1 for item in self.snapshot_times):
+            raise ValueError("snapshot_times must contain positive physical steps")
 
     def run(self, initial_history: Sequence[Any], horizon: int) -> DuETRunResult:
         if not initial_history:
@@ -148,6 +164,8 @@ class OuterSMC:
         log_normalizer_increments: list[float] = []
         pre_final_particles: list[OuterParticle] = []
         pre_final_normalized_weights: list[float] = []
+        snapshot_particles: dict[int, list[OuterParticle]] = {}
+        snapshot_normalized_weights: dict[int, list[float]] = {}
 
         for t in range(1, int(horizon) + 1):
             children: list[OuterParticle] = []
@@ -174,10 +192,16 @@ class OuterSMC:
                 inner_checkpoint_progresses: list[float] | None = None
                 inner_checkpoint_ess: list[float] | None = None
                 inner_checkpoint_ancestors_history: list[list[int]] | None = None
+                inner_checkpoint_log_potentials_history: list[list[float]] | None = None
+                inner_endpoint_log_potentials: list[float] | None = None
                 inner_selected_index: int | None = None
                 telescoping_error: float | None = None
+                guided_path_ratios: list[float] | None = None
+                guided_selected_ratio: float | None = None
+                guided_endpoint_ess: float | None = None
+                guided_resampling: bool | None = None
 
-                if self.method in {"duet", "naive_dual", "inner_only"}:
+                if self.method in {"duet", "guided_duet", "naive_dual", "inner_only"}:
                     continuation_seed_families = [
                         _seed_family(
                             self.seed,
@@ -188,21 +212,65 @@ class OuterSMC:
                         )
                         for checkpoint_index in range(len(self.checkpoint_progresses))
                     ]
-                    result = multi_checkpoint_inner_step(
-                        adapter=self.adapter,
-                        history_state=history_state,
-                        count=self.inner_m,
-                        seeds=proposal_seeds,
-                        continuation_seed_families=continuation_seed_families,
-                        checkpoint_progresses=self.checkpoint_progresses,
-                        candidate_potential=candidate,
-                        rng=self.rng,
-                    )
+                    if self.method == "guided_duet":
+                        result = guided_multi_checkpoint_inner_step(
+                            adapter=self.adapter,
+                            history_state=history_state,
+                            count=self.inner_m,
+                            seeds=proposal_seeds,
+                            continuation_seed_families=continuation_seed_families,
+                            checkpoint_progresses=self.checkpoint_progresses,
+                            candidate_potential=candidate,
+                            rng=self.rng,
+                            resampling_enabled=self.guided_inner_resampling,
+                        )
+                    else:
+                        result = multi_checkpoint_inner_step(
+                            adapter=self.adapter,
+                            history_state=history_state,
+                            count=self.inner_m,
+                            seeds=proposal_seeds,
+                            continuation_seed_families=continuation_seed_families,
+                            checkpoint_progresses=self.checkpoint_progresses,
+                            candidate_potential=candidate,
+                            rng=self.rng,
+                        )
                     frame, progress, values = result.frame, result.progress, result.values
                     log_psi, log_z_hat = result.log_psi, result.log_z_hat
-                    inner_ess_1 = result.diagnostics.first_stage_ess
-                    inner_ess_2 = result.diagnostics.second_stage_ess
-                    inner_checkpoint_ancestors = result.diagnostics.checkpoint_ancestors.tolist()
+                    if self.method == "guided_duet":
+                        inner_ess_1 = result.diagnostics.checkpoint_ess[0]
+                        inner_ess_2 = result.diagnostics.endpoint_ess
+                        inner_checkpoint_ancestors = (
+                            result.diagnostics.checkpoint_ancestors_history[-1].tolist()
+                        )
+                        guided_path_ratios = (
+                            result.diagnostics.path_log_proposal_ratios.tolist()
+                        )
+                        guided_selected_ratio = (
+                            result.diagnostics.selected_path_log_proposal_ratio
+                        )
+                        guided_endpoint_ess = result.diagnostics.endpoint_ess
+                        guided_resampling = result.diagnostics.resampling_enabled
+                        inner_checkpoint_log_potentials_history = [
+                            item.tolist()
+                            for item in result.diagnostics.checkpoint_log_potentials_history
+                        ]
+                        inner_endpoint_log_potentials = (
+                            result.diagnostics.endpoint_log_potentials.tolist()
+                        )
+                    else:
+                        inner_ess_1 = result.diagnostics.first_stage_ess
+                        inner_ess_2 = result.diagnostics.second_stage_ess
+                        inner_checkpoint_ancestors = (
+                            result.diagnostics.checkpoint_ancestors.tolist()
+                        )
+                        inner_checkpoint_log_potentials_history = [
+                            item.tolist()
+                            for item in result.diagnostics.checkpoint_log_potentials_history
+                        ]
+                        inner_endpoint_log_potentials = (
+                            result.diagnostics.endpoint_log_potentials.tolist()
+                        )
                     inner_checkpoint_progresses = list(
                         result.diagnostics.checkpoint_progresses
                     )
@@ -212,7 +280,11 @@ class OuterSMC:
                         for item in result.diagnostics.checkpoint_ancestors_history
                     ]
                     inner_selected_index = result.diagnostics.selected_index
-                    telescoping_error = result.diagnostics.telescoping_max_abs_log_error
+                    telescoping_error = (
+                        result.diagnostics.potential_telescoping_max_abs_log_error
+                        if self.method == "guided_duet"
+                        else result.diagnostics.telescoping_max_abs_log_error
+                    )
                 elif self.method == "complete_nested":
                     result = complete_frame_nested_step(
                         adapter=self.adapter,
@@ -236,7 +308,7 @@ class OuterSMC:
                     frame = frames[0]
                     log_psi, progress, values = candidate(frame)
 
-                if self.method in {"duet", "complete_nested"}:
+                if self.method in {"duet", "guided_duet", "complete_nested"}:
                     assert log_z_hat is not None
                     increment = log_z_hat - parent.last_log_psi
                 elif self.method in {"outer_only", "naive_dual"}:
@@ -281,8 +353,16 @@ class OuterSMC:
                         inner_checkpoint_ancestors_history=(
                             inner_checkpoint_ancestors_history
                         ),
+                        inner_checkpoint_log_potentials_history=(
+                            inner_checkpoint_log_potentials_history
+                        ),
+                        inner_endpoint_log_potentials=inner_endpoint_log_potentials,
                         inner_selected_index=inner_selected_index,
                         telescoping_max_abs_log_error=telescoping_error,
+                        guided_path_log_proposal_ratios=guided_path_ratios,
+                        guided_selected_path_log_proposal_ratio=guided_selected_ratio,
+                        guided_endpoint_ess=guided_endpoint_ess,
+                        guided_inner_resampling_enabled=guided_resampling,
                         progress_stage=progress.stage,
                         progress_failed=progress.failed,
                         progress_completed_frames=list(progress.completed_frames),
@@ -290,14 +370,26 @@ class OuterSMC:
                         values=values,
                     )
                 )
+                history_state = None
+                release_transient = getattr(
+                    self.adapter, "release_transient_memory", None
+                )
+                if callable(release_transient):
+                    release_transient()
 
             if self.outer_k > 1 and self.method not in {"frozen", "inner_only"}:
                 weights, log_weight_sum = normalize_log_weights(
                     np.asarray([p.log_weight for p in children])
                 )
-                if t == int(horizon):
-                    pre_final_particles = copy.deepcopy(children)
-                    pre_final_normalized_weights = weights.tolist()
+                if t in self.snapshot_times or t == int(horizon):
+                    captured = copy.deepcopy(children)
+                    captured_weights = weights.tolist()
+                    if t in self.snapshot_times:
+                        snapshot_particles[t] = captured
+                        snapshot_normalized_weights[t] = captured_weights
+                    if t == int(horizon):
+                        pre_final_particles = captured
+                        pre_final_normalized_weights = captured_weights
                 log_normalizer += float(log_weight_sum)
                 log_normalizer_increments.append(float(log_weight_sum))
                 ess = effective_sample_size(weights)
@@ -319,7 +411,7 @@ class OuterSMC:
                         particle.log_weight -= float(log_weight_sum)
                 outer_resampled.append(should_resample)
             else:
-                if t == int(horizon):
+                if t in self.snapshot_times or t == int(horizon):
                     if self.method in {"frozen", "inner_only"}:
                         terminal_weights = np.full(
                             len(children), 1.0 / max(len(children), 1), dtype=float
@@ -328,8 +420,14 @@ class OuterSMC:
                         terminal_weights, _ = normalize_log_weights(
                             np.asarray([p.log_weight for p in children])
                         )
-                    pre_final_particles = copy.deepcopy(children)
-                    pre_final_normalized_weights = terminal_weights.tolist()
+                    captured = copy.deepcopy(children)
+                    captured_weights = terminal_weights.tolist()
+                    if t in self.snapshot_times:
+                        snapshot_particles[t] = captured
+                        snapshot_normalized_weights[t] = captured_weights
+                    if t == int(horizon):
+                        pre_final_particles = captured
+                        pre_final_normalized_weights = captured_weights
                 if self.method not in {"frozen", "inner_only"}:
                     _, log_weight_sum = normalize_log_weights(
                         np.asarray([p.log_weight for p in children])
@@ -354,4 +452,6 @@ class OuterSMC:
             log_normalizer_increments=log_normalizer_increments,
             pre_final_particles=pre_final_particles,
             pre_final_normalized_weights=pre_final_normalized_weights,
+            snapshot_particles=snapshot_particles,
+            snapshot_normalized_weights=snapshot_normalized_weights,
         )
