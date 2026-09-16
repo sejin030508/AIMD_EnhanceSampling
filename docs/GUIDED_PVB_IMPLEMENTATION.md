@@ -53,5 +53,20 @@ Validation completed before any production launch:
   measured CUDA base/base repeatability floor for a real full checkpoint);
 - full existing `tests/duet` regression suite.
 
-The real-checkpoint GPU smoke must be run on A6000, not on an active H100
-confirmatory checkout. No production sweep is launched automatically.
+The real-checkpoint smoke was completed on A6000 GPU 1 on 2026-09-16 with
+BBA, `sde_step=20`, one candidate, checkpoints 0.50/0.75, and `eta=0.01`.
+It passed all checks:
+
+- Torch/production initial-potential absolute error: `7.40e-7`;
+- base/base CUDA repeat maximum coordinate difference: `2.06e-4 A`;
+- eta-zero/base maximum coordinate difference: `3.13e-4 A`, below the
+  measured-backend tolerance `4.12e-4 A`;
+- eta-zero proposal correction: exactly `0`;
+- guided proposal correction: finite (`0.0167544`);
+- guidance backward evaluations: `19`;
+- peak allocated GPU memory: `1,815,401,984` bytes;
+- measured validation wall time: `1.76 s`.
+
+The machine-readable result is stored on A6000 at
+`/home/sejin/AI_MD_NSMC_guided_pvb_validation/validation_outputs/guided_pvb_checkpoint_gpu1.json`.
+No production sweep was launched.
