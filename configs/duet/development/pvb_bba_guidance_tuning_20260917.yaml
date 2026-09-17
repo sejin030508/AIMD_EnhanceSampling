@@ -1,0 +1,62 @@
+# Fixed BBA development benchmark for the first real Guided-PVB tuning matrix.
+# Per-condition method/guidance fields are applied by
+# scripts/duet/run_pvb_bba_guidance_tuning.py.
+project_root: /workspace/sejin/AI_MD_NSMC_guided_pvb_perf
+
+model:
+  backend: pvb
+  repository_path: /workspace/sejin/pvb_assets/PVB
+  checkpoint: /workspace/sejin/pvb_assets/ckpt/pvb_atlas.ckpt
+  device: cuda:0
+  sde_step: 20
+  reverse_steps: 20
+  physical_lag_in_10ps: 10
+  sampler_mode: sde
+
+trajectory:
+  case_id: pvb_bba_guidance_tuning_20260917
+  seqres: EQYTAKYKGRTFRNEKELRDFIEKFKGR
+  horizon: 48
+  initial_structure: /workspace/sejin/AI_MD_NSMC_phase_b_recovery/data/small_protein_transition_pilot/prepared/bba/unfolded_minimized_allatom.pdb
+
+particles:
+  outer_k: 8
+  inner_m: 8
+  inner_checkpoint_progresses: [0.50, 0.75]
+  outer_resampling: systematic
+  outer_resampling_ess_fraction: 0.5
+  inner_resampling: systematic
+
+program:
+  type: terminal
+  potential: tica
+  reward_coefficient: 16.0
+  reward_log_floor: null
+  potential_floor: 1.0e-300
+  tica:
+    dimensions: 2
+    expected_folded_target: [0.845908191696739, 0.7132769750535218]
+    expected_start_to_target_distance: 2.959432690192377
+    binary_target_cutoff: 0.75
+
+pocket:
+  manifest: /workspace/sejin/AI_MD_NSMC_phase_b_recovery/data/small_protein_transition_pilot/prepared/bba/manifest.json
+  reference_npz: /workspace/sejin/AI_MD_NSMC_phase_b_recovery/data/small_protein_transition_pilot/prepared/bba/whole_backbone_reference_atom37.npz
+
+experiment:
+  stage: pvb_bba_guidance_tuning_20260917_base
+  methods: [complete_nested]
+  method_settings:
+    complete_nested: {outer_k: 8, inner_m: 8}
+  seeds: [20001, 20002, 20003]
+  analysis_transitions: [48]
+  task_count: 21
+  decoder_population_budget: 64
+  output_directory: /workspace/sejin/AI_MD_NSMC_guided_pvb_perf/outputs/pvb_bba_guidance_tuning_20260917
+
+preflight:
+  gate:
+    ca_adjacent_quality_threshold_a: 4.5
+    ca_adjacent_hard_threshold_a: 5.5
+    enforce_peptide_bond: true
+
