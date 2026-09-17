@@ -13,7 +13,12 @@ CONFIG="$ROOT/configs/duet/development/pvb_bba_guidance_tuning_20260917.yaml"
 OUTPUT_ROOT="$ROOT/outputs/pvb_bba_guidance_tuning_20260917"
 LOG_ROOT="$OUTPUT_ROOT/_launcher"
 NO_NEW_RUN_AFTER_EPOCH="${NO_NEW_RUN_AFTER_EPOCH:-0}"
-CONDITIONS=(G2 C0 D0 G1 G3 G4 G5)
+DEFAULT_CONDITIONS=(G2 C0 D0 G1 G3 G4 G5)
+if [ -n "${GUIDED_CONDITIONS:-}" ]; then
+  read -r -a CONDITIONS <<< "$GUIDED_CONDITIONS"
+else
+  CONDITIONS=("${DEFAULT_CONDITIONS[@]}")
+fi
 
 mkdir -p "$LOG_ROOT"
 export PYTHONPATH="$ROOT/src:/workspace/sejin/pvb_assets/site"
